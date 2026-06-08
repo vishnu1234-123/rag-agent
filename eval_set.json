@@ -1,0 +1,65 @@
+[
+    {
+      "id": 1,
+      "question": "What is task decomposition?",
+      "ideal_answer": "Task decomposition breaks large tasks into smaller manageable subgoals using techniques like Chain of Thought prompting or Tree of Thoughts. It can be done by LLM with simple prompting, task-specific instructions, or human inputs. LLM+P is a distinct approach that uses an external classical planner with PDDL as an intermediate interface for long-horizon planning.",
+      "expected_keywords": ["task decomposition", "chain of thought", "LLM+P"]
+    },
+    {
+      "id": 2,
+      "question": "What is the ReAct framework?",
+      "ideal_answer": "ReAct integrates reasoning and acting in LLMs by extending the action space to combine task-specific discrete actions and language space, enabling LLM to interact with the environment and generate reasoning traces in natural language",
+      "expected_keywords":["ReAct", "reasoning", "acting", "action space"]
+
+    },
+    {
+      "id": 3,
+      "question": "What is chain of thought prompting?",
+      "ideal_answer": "Chain of thought prompting instructs the model to think step by step to decompose hard tasks into simpler steps",
+      "expected_keywords": ["chain of thought", "step by step", "decompose"]
+    },
+    {
+      "id": 4,
+      "question": "What are the three components of an LLM agent?",
+      "ideal_answer": "Planning, memory and tool use are the three core components of an LLM powered agent",
+      "expected_keywords": ["planning", "memory", "tool"]
+    },
+    {
+        "id": 5,
+        "question": "What is Generative Agents?",
+        "ideal_answer": "Generative Agents is an experiment where 25 virtual characters each controlled by a LLM-powered agent live and interact in a sandbox environment. The design combines LLM with memory, planning and reflection mechanisms to enable agents to behave conditioned on past experience and interact with other agents.",
+        "expected_keywords": ["memory", "planning", "reflection", "retrieval"]
+    },
+    {
+      "id": 6,
+      "question": "What is self reflection in LLM agents?",
+      "ideal_answer": "Self reflection allows agents to critique and refine their past actions and outputs to improve future results",
+      "expected_keywords":["reflection", "self-criticism", "refine"]
+
+    },
+    {
+      "id": 7,
+      "question": "What is the difference between short term and long term memory in agents?",
+      "ideal_answer": "Short term memory is in-context learning restricted by finite context window length. Long term memory uses external vector store with fast retrieval for infinite storage over extended periods",
+      "expected_keywords": ["short-term", "long-term", "context window", "external vector store"]
+    },
+    {
+      "id": 8,
+      "question": "What is Tree of Thoughts?",
+      "ideal_answer": "Tree of Thoughts extends chain of thought by exploring multiple reasoning paths at each step creating a tree structure searched with BFS or DFS",
+      "expected_keywords": ["tree", "thoughts", "BFS", "DFS"]
+    },
+    {
+      "id": 9,
+      "question": "How do LLM agents use external APIs and what information can they access?",
+      "ideal_answer": "LLM agents use external APIs for current information, code execution, and access to proprietary information sources missing from model weights",
+      "expected_keywords": ["external APIs", "code execution", "model weights"]
+    },
+    {
+      "id": 10,
+      "question": "What is MIPS in the context of memory?",
+      "ideal_answer": "MIPS stands for Maximum Inner Product Search, used to save embedding representations into a vector store database that supports fast retrieval using approximate nearest neighbor algorithms to trade off a little accuracy for huge speedup",
+      "expected_keywords": ["MIPS", "maximum inner product", "approximate nearest neighbor"]
+
+    }
+]
