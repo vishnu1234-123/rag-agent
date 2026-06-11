@@ -92,3 +92,28 @@ pip install -r requirements.txt
 ```
 
 Add your OpenAI key to `.env`:
+
+
+## Week 4 — CRAG + Self-RAG Results
+
+### RAGAS Evaluation
+| Pipeline    | Faithfulness | Context Recall | Factual Correctness |
+|-------------|-------------|----------------|---------------------|
+| Vanilla RAG | 0.85        | 0.75           | 0.58                |
+| CRAG        | 0.94        | 0.80           | 0.52                |
+| Self-RAG    | 0.83        | 0.80           | 0.46                |
+| Combined    | 0.87        | 0.60           | 0.49                |
+
+**Key findings:**
+- CRAG achieves highest faithfulness (0.94) by filtering irrelevant chunks before generation
+- Combined pipeline shows lower context recall (0.60) due to double filtering
+- Vanilla RAG highest factual correctness (0.58) — uses all chunks including borderline ones
+- CRAG is best choice for financial Q&A where grounded answers matter most
+
+### What was built
+- CRAG with LangGraph — retrieval quality guard
+- Self-RAG with LangGraph — generation quality guard
+- Combined CRAG + Self-RAG — unified pipeline
+- Refactored into OOP classes (VanillaRAG, CRAGPipeline, SelfRAGPipeline, CombinedRAGPipeline)
+- LangSmith tracing — token cost and latency per node
+- RAGAS evaluation pipeline
