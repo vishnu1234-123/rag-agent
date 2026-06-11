@@ -13,6 +13,9 @@ from langchain_tavily import TavilySearch
 from langgraph.graph import StateGraph,END
 
 load_dotenv()
+os.environ["LANGCHAIN_TRACING_V2"]  = os.getenv("LANGCHAIN_TRACING_V2")
+os.environ["LANGCHAIN_API_KEY"]     = os.getenv("LANGCHAIN_API_KEY")
+os.environ["LANGCHAIN_PROJECT"]     = os.getenv("LANGCHAIN_PROJECT")
 
 os.environ["USER_AGENT"]="rag-agent/1.0"
 

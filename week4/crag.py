@@ -12,6 +12,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import StateGraph,END
 from langchain_tavily import TavilySearch
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
+os.environ["LANGCHAIN_TRACING_V2"]  = os.getenv("LANGCHAIN_TRACING_V2")
+os.environ["LANGCHAIN_API_KEY"]     = os.getenv("LANGCHAIN_API_KEY")
+os.environ["LANGCHAIN_PROJECT"]     = os.getenv("LANGCHAIN_PROJECT")
 
 os.environ["USER_AGENT"]="rag-agent/1.0"
 

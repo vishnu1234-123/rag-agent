@@ -75,19 +75,4 @@ print(f"\nWinner: {'Similarity' if avg_sim > avg_mmr else 'MMR' if avg_mmr > avg
 
 
 
-# debug ID 9 similarity
-query = "How do LLM agents use external APIs and what information can they access?"
-results = vector_store.similarity_search(query, k=5)
 
-print("\nDEBUG ID 9 SIMILARITY chunks:")
-for i, doc in enumerate(results):
-    print(f"\nChunk {i+1}:")
-    print(doc.page_content[:400])
-    print("---")
-    
-# check if keywords exist in chunks
-keywords = ["external APIs", "code execution", "model weights"]
-combined = " ".join([doc.page_content.lower() for doc in results])
-print("\nKeyword check:")
-for kw in keywords:
-    print(f"  '{kw}' found: {kw.lower() in combined}")
