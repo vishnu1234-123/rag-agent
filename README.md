@@ -158,3 +158,25 @@ CRAG and Self-RAG each filter retrieved chunks for relevance. When composed sequ
 
 ### Multi-hop Questions (Deferred)
 RAGAS 0.3.3's multi-hop synthesizer has a pydantic validation bug (NER overlap returns tuples). For a single-document eval set, multi-hop reasoning is less critical anyway — true multi-hop value emerges in Week 8+ when comparing across multiple companies' filings. Plan: either try a different RAGAS version, or manually write 10-15 cross-section questions (e.g., connecting Risk Factors ↔ MD&A) at that point.
+
+## Testing
+
+Added `tests/` (project-wide, not tied to a specific week) using pytest.
+
+### tests/test_splitting.py
+Unit tests for `RecursiveCharacterTextSplitter` — the foundation of every 
+pipeline's indexing step. Verifies:
+- chunks respect `chunk_size`
+- consecutive chunks share `chunk_overlap` content
+- `add_start_index` correctly tracks position in the original document
+
+These are fast, no-API-call sanity checks that catch silent breakage if 
+the splitting library's behavior changes in a future update.
+
+Run with:
+```bash
+pytest tests/ -v
+```
+
+More tests will be added incrementally in Week 5 (retry logic, caching, auth) 
+as each feature is built, rather than as a separate testing phase.
