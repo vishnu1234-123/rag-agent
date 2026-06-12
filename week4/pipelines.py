@@ -35,16 +35,20 @@ class RAGState(TypedDict):
 class BaseRAGPipeline:
     "Base class for all RAG pipelines"
 
-    def __init__(self,model:str="gpt-4o-mini"):
+    def __init__(self,model:str="gpt-4o-mini",documents=None):
         self.model=model
         self.llm=ChatOpenAI(model=model,temperature=0)
         self.embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
+        self.documents=documents
         self.vector_store=self._build_index()
         self.app=self._build_graph()
         print(f"{self.__class__.__name__} initialized")
     
     def _build_index(self):
         "load document and build FAISS index"
+        if self.documents is not None:
+            print(f"  Using provided documents: {len(self.documents)} chunks")
+            return FAISS.from_documents(self.documents,self.embeddings)
         loader=WebBaseLoader(
             web_paths=["https://lilianweng.github.io/posts/2023-06-23-agent/"],
             bs_kwargs={
@@ -124,9 +128,9 @@ class VanillaRAG(BaseRAGPipeline):
     
 
 class CRAGPipeline(BaseRAGPipeline):
-    def __init__(self, model = "gpt-4o-mini"):
+    def __init__(self, model = "gpt-4o-mini",documents=None):
         self.web_search=TavilySearch(max_results=3)
-        super().__init__(model)
+        super().__init__(model,documents=documents)
     
     def _build_graph(self):
         grade_prompt = ChatPromptTemplate.from_messages([
@@ -464,9 +468,9 @@ class CombinedRAGPipeline(BaseRAGPipeline):
     Generate
     Self-RAG [IsSup]+[IsUse]→ validates generation quality
     """
-    def __init__(self, model = "gpt-4o-mini"):
+    def __init__(self, model = "gpt-4o-mini",documents=None):
         self.web_search_tool=TavilySearch(max_results=3)
-        super().__init__(model)
+        super().__init__(model,documents=documents)
     
     def _build_graph(self):
         #prompts

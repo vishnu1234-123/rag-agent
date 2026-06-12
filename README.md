@@ -117,3 +117,44 @@ Add your OpenAI key to `.env`:
 - Refactored into OOP classes (VanillaRAG, CRAGPipeline, SelfRAGPipeline, CombinedRAGPipeline)
 - LangSmith tracing — token cost and latency per node
 - RAGAS evaluation pipeline
+
+
+## Week 4 (continued): Apple 10-K Evaluation
+
+### Eval Set Construction
+Generated a 100-question golden eval set from Apple's FY2025 10-K filing using RAGAS `TestsetGenerator`:
+- Downloaded directly from SEC EDGAR (required custom User-Agent header)
+- Split into 151 chunks (chunk_size=1500, overlap=200)
+- Used `SingleHopSpecificQuerySynthesizer` (multi-hop synthesizer has a known RAGAS 0.3.3 bug with NER-based theme extraction returning tuples instead of strings — deferred to a later week)
+
+### Cleanup Process
+- Removed exact and near-duplicate questions (string normalization + semantic similarity via embeddings, threshold 0.92)
+- Flagged 1 "unanswerable" question as an intentional hallucination test case
+- Manually caught and fixed 2 ground-truth errors during verification:
+  - A shareholders' equity question had the wrong year's figure ($73,733M vs correct $56,950M for Sept 28, 2024)
+  - A product-release question was missing "Mac Studio" from its answer
+- Final set: 99 questions + 1 hallucination test case
+
+### RAGAS Results (20-question subset, all 4 pipelines)
+
+| Pipeline   | Faithfulness | Context Recall | Factual Correctness |
+|------------|-------------|-----------------|----------------------|
+| VanillaRAG | 0.87        | 1.00            | 0.71                 |
+| CRAG       | 0.93        | 0.95            | 0.68                 |
+| SelfRAG    | 0.86        | 1.00            | 0.61                 |
+| Combined   | 0.75        | 0.78            | 0.50                 |
+
+### Key Findings
+
+**1. Chunking strategy affects retrieval quality in dense sections.**
+The "Services" section of the 10-K lists 8+ sub-services (Advertising, AppleCare, Cloud Services, Apple Music, etc.) in rapid succession. At chunk_size=1500, a single chunk spans 6-8 of these topics, diluting the chunk's semantic embedding and making it harder for any single query to retrieve cleanly. Smaller chunks (500-800) or semantic chunking would likely improve precision for this document type. **(Week 6 tuning candidate.)**
+
+**2. Combined pipeline underperforms on every metric — a real finding, not a bug.**
+CRAG and Self-RAG each filter retrieved chunks for relevance. When composed sequentially (Combined), the filters compound: roughly 70% × 70% ≈ 49% of relevant chunks survive both passes. This is most damaging on the "mixed-topic" chunks from Finding 1 — both filters may independently reject a chunk that actually contains the answer, just surrounded by unrelated content. Result: lowest context recall (0.78), faithfulness (0.75), and factual correctness (0.50) of all four pipelines.
+
+**Hypothesis for Week 6:** loosen the second filter's threshold when the first has already filtered, or use OR-logic rather than AND-logic between the two grading steps.
+
+**3. CRAG alone remains the most faithful pipeline** (0.93), consistent with the blog-post eval from earlier in Week 4 — its single relevance-grading step filters out clearly bad chunks without over-pruning.
+
+### Multi-hop Questions (Deferred)
+RAGAS 0.3.3's multi-hop synthesizer has a pydantic validation bug (NER overlap returns tuples). For a single-document eval set, multi-hop reasoning is less critical anyway — true multi-hop value emerges in Week 8+ when comparing across multiple companies' filings. Plan: either try a different RAGAS version, or manually write 10-15 cross-section questions (e.g., connecting Risk Factors ↔ MD&A) at that point.
