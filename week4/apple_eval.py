@@ -96,10 +96,10 @@ if __name__ == "__main__":
     references = testset_subset["reference"].tolist()
 
     print("Initializing pipelines on Apple 10-K...")
-    vanilla  = VanillaRAG(documents=apple_splits)
-    crag     = CRAGPipeline(documents=apple_splits)
-    self_rag = SelfRAGPipeline(documents=apple_splits)
-    combined = CombinedRAGPipeline(documents=apple_splits)
+    vanilla  = VanillaRAG(documents=apple_splits,dataset_name="apple_10k")
+    crag     = CRAGPipeline(documents=apple_splits,dataset_name="apple_10k")
+    self_rag = SelfRAGPipeline(documents=apple_splits,dataset_name="apple_10k")
+    combined = CombinedRAGPipeline(documents=apple_splits,dataset_name="apple_10k")
 
     all_scores = []
     all_scores.append(run_ragas(vanilla,  "VanillaRAG", questions, references))

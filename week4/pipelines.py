@@ -2,6 +2,10 @@ import os
 import bs4
 from dotenv import load_dotenv
 from typing import TypedDict, List
+from tenacity import retry,stop_after_attempt,wait_exponential
+import redis
+import json
+import hashlib
 
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -35,14 +39,23 @@ class RAGState(TypedDict):
 class BaseRAGPipeline:
     "Base class for all RAG pipelines"
 
-    def __init__(self,model:str="gpt-4o-mini",documents=None):
+    def __init__(self,model:str="gpt-4o-mini",documents=None,dataset_name:str="blog_post"):
         self.model=model
         self.llm=ChatOpenAI(model=model,temperature=0)
         self.embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
         self.documents=documents
+        self.dataset_name=dataset_name
         self.vector_store=self._build_index()
         self.app=self._build_graph()
+        self.redis_client=redis.Redis(host="localhost",port=6379,decode_responses=True)
         print(f"{self.__class__.__name__} initialized")
+
+    def _cache_key(self,query:str)->str:
+        normalized=query.strip().lower()
+        pipeline_name=self.__class__.__name__
+        combined=f"{self.dataset_name}:{pipeline_name}:{normalized}"
+        return f"rag_cache:{hashlib.md5(combined.encode()).hexdigest()}"
+    
     
     def _build_index(self):
         "load document and build FAISS index"
@@ -70,13 +83,23 @@ class BaseRAGPipeline:
         "override in subclass to build langgraph pipeline"
         raise NotImplementedError
     
+    @retry(stop=stop_after_attempt(3),wait=wait_exponential(multiplier=1,min=1,max=10))
     def run(self,query:str)->dict:
+        #check cache first
+        key=self._cache_key(query)
+        cached=self.redis_client.get(key)
+        if cached:
+            print("[CACHE HIT]")
+            return json.loads(cached)
+        print("[CACHE MISS]")
         result=self.app.invoke({"query":query})
-        return{
+        output={
             "question":query,
             "answer":result["generation"],
             "contexts":[doc.page_content for doc in result["documents"]]
         }
+        self.redis_client.set(key,json.dumps(output))
+        return output
     
     def evaluate(self,questions:list)->list:
         "run pipeline on multiple questions"
@@ -128,9 +151,9 @@ class VanillaRAG(BaseRAGPipeline):
     
 
 class CRAGPipeline(BaseRAGPipeline):
-    def __init__(self, model = "gpt-4o-mini",documents=None):
+    def __init__(self, model = "gpt-4o-mini",documents=None,dataset_name="blog_post"):
         self.web_search=TavilySearch(max_results=3)
-        super().__init__(model,documents=documents)
+        super().__init__(model,documents=documents,dataset_name=dataset_name)
     
     def _build_graph(self):
         grade_prompt = ChatPromptTemplate.from_messages([
@@ -468,9 +491,9 @@ class CombinedRAGPipeline(BaseRAGPipeline):
     Generate
     Self-RAG [IsSup]+[IsUse]→ validates generation quality
     """
-    def __init__(self, model = "gpt-4o-mini",documents=None):
+    def __init__(self, model = "gpt-4o-mini",documents=None,dataset_name="blog_post"):
         self.web_search_tool=TavilySearch(max_results=3)
-        super().__init__(model,documents=documents)
+        super().__init__(model,documents=documents,dataset_name=dataset_name)
     
     def _build_graph(self):
         #prompts
