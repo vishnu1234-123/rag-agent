@@ -6,6 +6,9 @@ from tenacity import retry,stop_after_attempt,wait_exponential
 import redis
 import json
 import hashlib
+import numpy as np
+import re
+from sklearn.metrics.pairwise import cosine_similarity
 
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -48,6 +51,10 @@ class BaseRAGPipeline:
         self.vector_store=self._build_index()
         self.app=self._build_graph()
         self.redis_client=redis.Redis(host="localhost",port=6379,decode_responses=True)
+        self.semantic_cache_embeddings=[]
+        self.semantic_cache_keys=[]
+        self.semantic_cache_questions=[]
+        self.semantic_threshold=0.90
         print(f"{self.__class__.__name__} initialized")
 
     def _cache_key(self,query:str)->str:
@@ -56,6 +63,9 @@ class BaseRAGPipeline:
         combined=f"{self.dataset_name}:{pipeline_name}:{normalized}"
         return f"rag_cache:{hashlib.md5(combined.encode()).hexdigest()}"
     
+    def _extract_numbers(self,text:str)->set:
+        "extract all numeric tokens(years,figures,percentages) from text"
+        return set(re.findall(r'\d+',text))
     
     def _build_index(self):
         "load document and build FAISS index"
@@ -88,9 +98,32 @@ class BaseRAGPipeline:
         #check cache first
         key=self._cache_key(query)
         cached=self.redis_client.get(key)
+        
         if cached:
-            print("[CACHE HIT]")
+            print("[EXACT CACHE HIT]")
             return json.loads(cached)
+        
+        query_embedding=self.embeddings.embed_query(query)
+        if self.semantic_cache_embeddings:
+            sims=cosine_similarity([query_embedding],self.semantic_cache_embeddings)[0]
+            best_idx=int(np.argmax(sims))
+            best_sim=sims[best_idx]
+            print(f"  [DEBUG] best similarity={best_sim:.3f} (threshold={self.semantic_threshold})")
+
+            if best_sim>self.semantic_threshold:
+                current_numbers=self._extract_numbers(query)
+                cached_numbers=self._extract_numbers(self.semantic_cache_questions[best_idx])
+
+                if current_numbers==cached_numbers:
+                    matched_key=self.semantic_cache_keys[best_idx]
+                    cached=self.redis_client.get(matched_key)
+                    if cached:
+                        print("[SEMANTIC CACHE HIT ] similarity={best_sim:.3f}")
+                        return json.loads(cached)
+                else:
+                    print("[SEMANTIC NEAR MISS] similarity={best_sim:.3f} but numbers differ")
+
+        #cache miss - run full pipeline
         print("[CACHE MISS]")
         result=self.app.invoke({"query":query})
         output={
@@ -98,7 +131,11 @@ class BaseRAGPipeline:
             "answer":result["generation"],
             "contexts":[doc.page_content for doc in result["documents"]]
         }
-        self.redis_client.set(key,json.dumps(output))
+        self.redis_client.set(key,json.dumps(output),ex=86400)
+        self.semantic_cache_embeddings.append(query_embedding)
+        self.semantic_cache_keys.append(key)
+        self.semantic_cache_questions.append(query)
+        
         return output
     
     def evaluate(self,questions:list)->list:

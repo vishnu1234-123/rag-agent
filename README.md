@@ -180,3 +180,49 @@ pytest tests/ -v
 
 More tests will be added incrementally in Week 5 (retry logic, caching, auth) 
 as each feature is built, rather than as a separate testing phase.
+
+
+## Week 5: Security + Reliability
+
+### Retry logic (tenacity)
+Wrapped `BaseRAGPipeline.run()` with exponential backoff retry 
+(3 attempts, 1-10s wait) to handle transient API failures (rate 
+limits, network blips) without crashing eval runs.
+
+### Caching (Redis)
+**Exact-match cache**: keyed by `hash(dataset_name + pipeline_class + 
+normalized_question)`. Namespacing by both dataset and pipeline class 
+was essential — without it, all 4 pipelines (Vanilla/CRAG/SelfRAG/
+Combined) collided on identical questions and returned whichever 
+pipeline answered first. 24h TTL added so cached answers don't go 
+stale when underlying filings update.
+
+**Semantic cache**: in-memory FAISS-style nearest-neighbor over 
+question embeddings (cosine similarity, threshold=0.90), combined 
+with a number-extraction guard (`_extract_numbers`).
+
+**Key finding**: dense embeddings rank "same phrasing, different 
+year" pairs as MORE similar (0.947) than "different phrasing, same 
+year" pairs (0.933) — both correct paraphrase detection. Without the 
+number-guard, a naive semantic cache would return 2025's net income 
+($112,010M) for a question about 2024 ($93,736M). The guard checks 
+extracted numeric tokens match before allowing a semantic hit, 
+catching exactly this case while still allowing genuine paraphrase 
+reuse.
+
+### Auth (JWT + RBAC)
+`auth.py`: token creation/verification with HS256, 1-hour expiry, 
+proper tamper detection via signature validation.
+`rbac.py`: role→permission mapping (admin/user/guest), gates access 
+via `check_access(token, permission)`. Designed for Week 7's FastAPI 
+integration — every endpoint will verify a JWT and check role 
+permissions before processing.
+
+### Encryption (AES-256-GCM)
+`AESGCM` from `cryptography` library — 256-bit key, 96-bit nonce, 
+built-in authentication tag (no separate HMAC needed). Validated 
+encrypt/decrypt round-trip and tamper detection (`InvalidTag` on 
+modified ciphertext). Demonstrates the mechanism for encrypting 
+API keys/credentials at rest; not yet wired into the live .env 
+workflow (single-developer local setup doesn't currently need it, 
+but the capability is proven for when multi-user storage arrives).
