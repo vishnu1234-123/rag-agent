@@ -226,3 +226,50 @@ modified ciphertext). Demonstrates the mechanism for encrypting
 API keys/credentials at rest; not yet wired into the live .env 
 workflow (single-developer local setup doesn't currently need it, 
 but the capability is proven for when multi-user storage arrives).
+
+## Week 6: Scale + Advanced Retrieval
+
+### Pinecone Migration (FAISS → Pinecone Serverless)
+Migrated from local FAISS index to Pinecone serverless 
+(us-east-1, AWS). Apple 10-K ingested as 151 chunks 
+(chunk_size=1500, overlap=200) with `text-embedding-3-small` 
+embeddings. Pinecone persists the index across sessions — 
+no rebuild cost on every script run.
+
+### Hybrid Search: BM25 + Dense + RRF Fusion
+Implemented Reciprocal Rank Fusion (RRF) combining BM25 
+(keyword/sparse) and Pinecone dense retrieval:
+
+```python
+rrf_score(chunk) = 1/(k + dense_rank) + 1/(k + bm25_rank)
+# k=60 (standard constant dampening outlier ranks)
+```
+
+RRF chosen over weighted score averaging because ranks are 
+comparable across retrievers (BM25 score of 5.2 and cosine 
+similarity of 0.67 are not on the same scale — ranks are).
+
+### Reranking: Cohere rerank-english-v3.0
+Added Cohere reranker as a precision layer on top of RRF 
+(retrieve top 10 via RRF → rerank → return top 3):
+
+**Measured results on 3 test queries:**
+
+| Query | Dense #1 | RRF #1 | Reranked #1 |
+|-------|----------|--------|-------------|
+| Net income 2025 | ❌ deferred revenue | ⚠️ gross margin | ✅ Statements of Operations (0.9981) |
+| Main risk factors | ✅ cybersecurity risk | ❌ investor relations | ⚠️ investor relations (chunking issue) |
+| Q2 2025 products | ❌ stock graph | ✅ product list | ✅ product list (0.9964) |
+
+**Key finding:** reranker surfaced the exact net income chunk 
+("Net income $112,010M") at #1 from being completely absent 
+in dense-only top 3 — demonstrating that retrieval (recall) 
+and reranking (precision) solve different problems and 
+compound each other.
+
+### Chunking Experiment: chunk_size=800 vs 1500
+Tested smaller chunks (800 chars → 280 chunks) to reduce 
+cross-topic pollution. Result: **worse** across all queries.
+
+Root cause: Apple's 10-K contains two fundamentally different 
+section types:
