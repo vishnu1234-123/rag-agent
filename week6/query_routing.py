@@ -1,5 +1,6 @@
 import os
 import sys
+from typing import Annotated, TypedDict
 import numpy as np
 import requests
 import bs4
@@ -15,6 +16,10 @@ from pinecone import Pinecone
 from rank_bm25 import BM25Okapi
 import re
 from langchain_tavily import TavilySearch
+from pydantic import BaseModel,Field
+from langgraph.graph import StateGraph,END
+import operator
+
 
 
 load_dotenv()
@@ -41,6 +46,22 @@ pc=Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 index=pc.Index("filingsiq-dev")
 embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
 llm=ChatOpenAI(model="gpt-4o-mini",temperature=0)
+
+#pydantic 
+
+class MetricValue(BaseModel):
+    metric:str|None=Field(None,description="What was measured:net_income,revenue,gross_margin,etc.")
+    value:float|None=Field(None,description="The numerical value")
+    year:int|None=Field(None,description="Fiscal year this value refers to")
+    unit:str|None=Field(None,description="Unit:millions,billions,percent,etc.")
+
+class FinancialAnswer(BaseModel):
+    answer:str=Field(description="Full answer in plain English")
+    values:list[MetricValue]=Field(default_factory=list,description="List of all numerical values extracted. Empty list if no numbers.")
+    confidence:str=Field(description="high/medium/low based on context clarity")
+    source_section:str|None=Field(None,description="10-K section this came from,or null")
+
+structured_llm=llm.with_structured_output(FinancialAnswer)
 
 #prompts
 
@@ -110,8 +131,16 @@ RETURN ONLY WORD: DIRECT,WEB,KEYWORD OR CONCEPTUAL
 Query:{query}
 """)
 
+STRUCTURED_PROMPT = ChatPromptTemplate.from_template("""
+You are an expert analyst answering questions about Apple's SEC filings.
+Use ONLY the provided context to answer the question.
+Extract any numerical values, units, years, and metrics precisely.
+If a field is not applicable, return null.
 
+Context:
+{context}
 
+Question: {question}""")
 
 
 decompose_chain = DECOMPOSE_PROMPT | llm | StrOutputParser()
@@ -119,6 +148,10 @@ hyde_chain      = HYDE_PROMPT      | llm | StrOutputParser()
 generate_chain  = GENERATE_PROMPT  | llm | StrOutputParser()
 check_chain     = CHECK_PROMPT     | llm | StrOutputParser()
 classify_chain  = CLASSIFY_PROMPT  | llm | StrOutputParser()
+structured_chain = STRUCTURED_PROMPT | structured_llm
+
+
+
 
 #retrieval helpers
 
@@ -214,7 +247,7 @@ def classify_query(query:str)->str:
     route=result if result in valid else "KEYWORD"
     print(f"[CLASSIFIER] -> {route}")
     return route
-
+"""
 def decompose_rag(question:str)->dict:
     result=decompose_chain.invoke({"question":question})
     sub_queries=[q.strip() for q in result.strip().split("\n") if q.strip()]
@@ -237,7 +270,9 @@ def decompose_rag(question:str)->dict:
     })
     return {"question": question, "answer": answer,
             "route": "decomposition", "num_contexts": len(all_contexts)}
+"""
 tavily=TavilySearch(max_results=3)
+
 def web_search_retrieve(query:str)->list:
     print(f"[WEB SEARCH] searching: {query}")
     results=tavily.invoke(query)
@@ -260,6 +295,70 @@ def web_search_retrieve(query:str)->list:
     return extracted_contexts
 
 
+class DecompositionState(TypedDict):
+    question:str
+    sub_queries:list[str]
+    contexts:Annotated[list[str],operator.add]
+    answer:str
+
+#langgraph nodes
+def decompose_node(state:DecompositionState)->dict:
+    result=decompose_chain.invoke({"question":state["question"]})
+    sub_queries=[q.strip() for q in result.strip().split("\n") if q.strip()]
+    print(f"[DECOMPOSE] {len(sub_queries)} sub-queries")
+
+    for i,q in enumerate(sub_queries):
+        print(f"{i+1}.{q}")
+    return {"sub_queries":sub_queries,"contexts":[]}
+
+def make_retrieve_node(sub_query_idx:int):
+    def retrieve_node(state:DecompositionState)->dict:
+        if sub_query_idx>=len(state["sub_queries"]):
+            return {"contexts":[]}
+        sub_q=state["sub_queries"][sub_query_idx]
+        print(f"[RETRIEVE {sub_query_idx+1}].{sub_q[:60]}...")
+        chunks=retrieve_and_rerank(sub_q,top_k=2)
+        return {"contexts":chunks}
+    return retrieve_node
+
+def generate_node(state:DecompositionState)->dict:
+    seen=set()
+    unique_contexts=[]
+    for chunk in state["contexts"]:
+        if chunk not in seen:
+            seen.add(chunk)
+            unique_contexts.append(chunk)
+    
+    print(f"[GENERATE] {len(unique_contexts)} unique chunks")
+
+    answer=generate_chain.invoke({
+        "context":"\n\n---\n\n".join(unique_contexts),
+        "question":state["question"]
+    })
+    return {"answer":answer}
+
+#build langgraph
+
+def build_parllel_graph(max_sub_queries:int=4):
+    graph=StateGraph(DecompositionState)
+
+    #add nodes
+    graph.add_node("decompose",decompose_node)
+    for i in range(max_sub_queries):
+        graph.add_node(f"retrieve_{i}",make_retrieve_node(i))
+    graph.add_node("generate",generate_node)
+
+    #add edges
+    graph.set_entry_point("decompose")
+    for i in range(max_sub_queries):
+        graph.add_edge("decompose",f"retrieve_{i}")
+    
+    for i in range(max_sub_queries):
+        graph.add_edge(f"retrieve_{i}","generate")
+    graph.add_edge("generate",END)
+
+    return graph.compile()
+
 
 #main router
 
@@ -270,7 +369,9 @@ def smart_rag(question:str)->dict:
     #decomposition check
     if needs_decomposition(question):
         print("[ROUTER]->[DECOMPOSITION]")
-        decompose_rag(question)
+        parllel_app=build_parllel_graph(max_sub_queries=4)
+        parllel_app.invoke({"question":question,"sub_queries":[],"contexts":[],"answer":""})
+
     
     query_type=classify_query(question)
 
@@ -288,14 +389,20 @@ def smart_rag(question:str)->dict:
         print("[ROUTER]->[HYDE+DENSE]")
         contexts=hyde_retrieve(question,top_k=3)
 
-    answer=generate_chain.invoke({
-        "context":"\n\n---\n\n".join(contexts),
-        "question":question
+    structured_answer = structured_chain.invoke({
+    "context": "\n\n---\n\n".join(contexts),
+    "question": question
     })
 
-    return{"question":question,"answer":answer,
-           "route":query_type,"contexts":contexts}
-
+    return {
+        "question":       question,
+        "route":          query_type,
+        "answer":         structured_answer.answer,
+        "values":         structured_answer.values,
+        "confidence":     structured_answer.confidence,
+        "source_section": structured_answer.source_section,
+        "contexts":       contexts
+    }   
 # ── 7. test ───────────────────────────────────────────────────────────────
 test_queries = [
     "How did Apple's revenue and net income change from 2023 to 2025?",
@@ -307,9 +414,11 @@ test_queries = [
 
 for q in test_queries:
     result = smart_rag(q)
-    print(f"\nROUTE: {result['route']}")
-    print(f"ANSWER: {result['answer'][:300]}")
-
+    print(f"\nROUTE:      {result['route']}")
+    print(f"ANSWER:     {result['answer'][:200]}")
+    print(f"VALUES:     {result.get('values')}")
+    print(f"CONFIDENCE: {result.get('confidence')}")
+    print(f"SOURCE:     {result.get('source_section')}")
 
     
     
