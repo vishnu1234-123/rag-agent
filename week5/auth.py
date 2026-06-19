@@ -2,7 +2,7 @@ import jwt
 import datetime
 import os
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 SECRET_KEY=os.getenv("JWT_SECRET_KEY")
 ALGORITHM="HS256"
