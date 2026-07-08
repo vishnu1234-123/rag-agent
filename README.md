@@ -663,6 +663,52 @@ week5/auth.py              — load_dotenv() absolute path fix
 
 ---
 
+
+### Prompt Caching Investigation
+
+Tested OpenAI's automatic prompt caching to reduce input costs 
+on repeated RAG prefixes (system prompts + guardrail rules).
+
+**Finding:** Prompt caching is not available on gpt-4o-mini. 
+The model resolves to snapshot `gpt-4o-mini-2024-07-18` which 
+predates OpenAI's caching feature launch (October 2024). No 
+newer gpt-4o-mini snapshot has been released.
+
+**Verified via API response inspection:**
+```python
+r = client.chat.completions.create(model="gpt-4o-mini", ...)
+r.usage.prompt_tokens_details.cached_tokens  # always 0
+```
+
+**Cost analysis — would switching to gpt-4o (which supports 
+caching) be worthwhile?**
+
+| Model | Input (per 1M) | With cache | Query cost |
+|-------|---------------|------------|------------|
+| gpt-4o-mini | $0.15 | N/A | ~$0.00057 |
+| gpt-4o | $2.50 | $1.25 (50% off) | ~$0.00825 |
+
+Switching to gpt-4o "for caching benefits" would make each 
+query 14.5x more expensive. Caching provides 50% off 
+gpt-4o's base price, but gpt-4o is 15x more expensive than 
+gpt-4o-mini to begin with.
+
+**Decision: Stay with gpt-4o-mini.** The base price advantage 
+dominates any caching savings on premium models.
+
+**Cost optimization strategy for FilingsIQ (what actually works):**
+- Redis exact-match + semantic caching (Week 5) → 100% savings 
+  on cache hits (not 50%) — more impactful than provider caching
+- REJECT route in classifier → sensitive/off-topic queries never 
+  reach the LLM at all
+- temperature=0 → deterministic outputs = predictable costs
+- Top-3 reranking (not top-10) → smaller context window per query
+
+**Key insight:** "50% cheaper" sounds attractive but requires 
+context — a discount on an expensive model can cost more than 
+paying full price on a cheaper model. Always compare TOTAL costs, 
+not discount percentages.
+
 ## Stack
 - LangChain + LangGraph
 - OpenAI (gpt-4o-mini, text-embedding-3-small)

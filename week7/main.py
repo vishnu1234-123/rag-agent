@@ -3,8 +3,11 @@ from fastapi import FastAPI,HTTPException,Depends
 from fastapi.security import HTTPBearer,HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import sys,os
+from fastapi.responses import StreamingResponse
+import json
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'week5'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'week6'))
+from guardrails import check_output
 from query_routing import smart_rag
 
 from auth import verify_token,create_access_token
@@ -115,4 +118,34 @@ def get_permissions(user:dict=Depends(get_current_user)):
         "can_query":"read" in ROLE_PERMISSIONS.get(role,[]),
         "can_delete":"delete" in ROLE_PERMISSIONS.get(role,[])
     }
+@app.post("/query/stream")
+async def query_stream(request:QueryRequest,user:Annotated[dict,Depends(get_current_user)]):
+    role=user["role"]
+    allowed,message=check_access_by_role(role,"read")
+    if not allowed:
+        raise HTTPException(status_code=403,detail=message)
+    
+    async def event_generator():
+        yield f"data :{json.dumps({'type':'status','message':'Searching filing...'})}\n\n"
+
+        result=smart_rag(request.question)
+
+        is_safe,final_answer=check_output(result["answer"])
+
+        yield f"data:{json.dumps({'type':'route','route':result['route']})}\n\n"
+
+        words=final_answer.split()
+        for word in words:
+            yield f"data:{json.dumps({'type':'token','token':word+' '})}\n\n"
+
+            import asyncio
+            await asyncio.sleep(0.03)
+        yield f"data:{json.dumps({'type':'done','source_section':result.get('source_section')})}"
+
+    return StreamingResponse(event_generator(),media_type="text/event-stream",headers={
+        "Cache-Control":"no-cache",
+        "Connection":"keep alive",
+        "X-Accel-Buffering":"no"
+    })
+            
 
