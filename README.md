@@ -709,6 +709,72 @@ context — a discount on an expensive model can cost more than
 paying full price on a cheaper model. Always compare TOTAL costs, 
 not discount percentages.
 
+## Week 8 Progress — Day 1 (Ingestion Foundations)
+
+### Goal for the day
+Validate two separate extraction paths needed for multi-company ingestion: structured financial facts (XBRL) and narrative filing text (Docling) — before scaling either one across all 20 target companies.
+
+---
+
+### 1. XBRL Fact Extraction — `week8/xbrl_companyfacts.py`
+
+**Approach:** Instead of parsing raw XBRL instance documents and manually resolving `contextRef` → period mappings, this uses SEC's `companyfacts` API (`data.sec.gov/api/xbrl/companyfacts/CIK##########.json`), which returns every tagged fact a company has filed, pre-resolved to actual periods, forms, and units.
+
+**Design:**
+- **Preferred-tag lookup first** — a small list of known-correct `us-gaap` tags per financial concept (e.g. `RevenueFromContractWithCustomerExcludingAssessedTax`, `NetIncomeLoss`, `Assets`), checked directly with no ambiguity.
+- **Fuzzy label-match fallback** — for tags not in the preferred list (e.g. an unseen company using nonstandard tagging), searches across *all* taxonomies (not just `us-gaap`) by matching keywords against tag labels, falling back to the tag name itself if no label exists. All matches are pooled together rather than picked by a single heuristic.
+- Values are never assumed to be USD or 10-K only — every fact carries its actual `unit` field, and annual lookups accept `10-K`, `20-F`, and `40-F` form types, so non-USD or foreign-filer data isn't silently dropped.
+
+**Hard bug found and fixed:**
+An early version picked between multiple matching tags by choosing whichever had the most historical data points. This picked the *wrong* tag twice:
+- For revenue, it selected `SalesRevenueNet` — a tag Apple stopped using after a 2018 accounting standard change (ASC 606) — over the tag Apple currently files under, simply because the old tag had more years of accumulated history.
+- For total assets, it selected `IncreaseDecreaseInOtherOperatingAssets` — a cash-flow statement line item — because "assets" appeared in its label and it had more filed data points than the real `Assets` tag.
+
+Fixed by preferring exact known-good tags first, and only pooling fuzzy matches (rather than picking one by count) when no preferred tag exists.
+
+**Validation:** Tested against two companies with very different business models — Apple (hardware/tech) and JPMorgan Chase (banking) — extracting revenue, net income, and total assets for both. All six values were cross-checked against independent public financial data and matched exactly:
+
+| Company | Revenue | Net Income | Total Assets |
+|---|---|---|---|
+| Apple (FY2025) | $416.16B | $112.01B | $359.24B |
+| JPMorgan Chase (FY2025) | $182.45B | $57.05B | $4.42T |
+
+Notably, JPMorgan resolved via the preferred-tag path with zero fallback needed — the standard revenue tag held up even for a fundamentally different business model (interest + fee income vs. product sales).
+
+---
+
+### 2. Docling Prose Extraction — `week8/fetch_filing_doc.py`, `docling_explore.py`, `extract_sections.py`
+
+**Hard bug found and fixed (file discovery):**
+SEC's EDGAR filing index page uses root-relative links (`/Archives/edgar/...`) for both the actual filing documents *and* general site navigation (privacy policy, careers, etc.) — there's no structural difference between them at the link level. An initial filter assumed root-relative links were site nav and skipped them all, which caused the fetcher to fall through to unrelated pages (at one point resolving to SEC's `/privacy.htm`). Fixed by scoping candidate links to the filing's own directory path and excluding known non-content patterns (`R##.htm` XBRL viewer fragments, exhibits, index pages) rather than filtering by link format.
+
+**Result:** Once pointed at the correct file (`aapl-20250927.htm`), Docling successfully extracted clean, readable prose from Apple's full FY2025 10-K (480K+ characters), with headings preserved.
+
+**Confirmed limitation (matches Week 7 finding):** Financial statement tables in the same document rendered as markdown tables with correct row/column structure but entirely empty cells — a direct result of iXBRL tagging, where visible numbers are wrapped in inline XBRL tags rather than plain table-cell text. This is the same failure originally found in Week 7 and reproduced here against the live document, confirming the decision to route all numerical data through the XBRL companyfacts path instead of Docling table extraction.
+
+**Section isolation:** Built simple regex-based boundary matching on the Docling markdown output to isolate named sections rather than working with the full document:
+
+| Section | Length |
+|---|---|
+| Item 1A – Risk Factors | 68,168 chars |
+| Item 7 – MD&A | 28,061 chars |
+
+---
+
+### Design decision locked in today
+- **XBRL owns numbers.** All financial facts (revenue, net income, assets, and future metrics) are extracted via SEC's companyfacts API, never via Docling table parsing.
+- **Docling owns prose.** Risk Factors, MD&A, and other narrative sections are extracted via Docling, with tables in those documents ignored/discarded since XBRL supersedes them entirely.
+- These become **separate chunk types** at ingestion — not merged into one linear document — so numerical queries can route directly to structured facts rather than depending on retrieval to find the right prose chunk.
+
+---
+
+### Not yet done (next session)
+- Scale both XBRL and Docling extraction across the remaining 19 of 20 target companies
+- Expand XBRL preferred-tag list as needed once more companies/industries are tested (revenue tagging in particular may vary further outside tech/banking)
+- Decide chunking strategy for both prose sections and XBRL facts
+- Decide storage target for XBRL facts: Pinecone (as embedded text chunks) vs. Postgres (as structured rows) vs. both
+- Embed and load into Pinecone
+- Wire existing auth/RBAC (from Week 5/7) in front of the new ingested data
 ## Stack
 - LangChain + LangGraph
 - OpenAI (gpt-4o-mini, text-embedding-3-small)
