@@ -40,11 +40,14 @@ def find_matching_tag(facts:dict,keywords:list[str])->list[tuple[str,str]]:
 
 def get_concept_values(facts:dict,concept:str)->list[dict]:
     all_taxonomies=facts.get("facts",{})
+    pooled=[]
     for preferred_tag in CONCEPT_PREFERRED_TAGS.get(concept,[]):
         for taxonomy,tags in all_taxonomies.items():
             if preferred_tag in tags:
                 units=tags[preferred_tag].get("units",{})
-                return [{**e,"unit":u} for u,entries in units.items() for e in entries]
+                pooled.extend({**e,"unit":u,"_source_tag":preferred_tag} for u,entries in units.items() for e in entries)
+    if pooled:
+        return pooled
     print(f"NOTE: no preferred tag found for '{concept}', falling back to fuzzy match")
 
     keywords=CONCEPT_KEYWORDS.get(concept,[])
