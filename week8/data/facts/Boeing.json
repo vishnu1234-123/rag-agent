@@ -1,0 +1,17 @@
+{
+  "entityName": "THE BOEING COMPANY",
+  "cik": "0000012927",
+  "facts": {
+    "concept": {
+      "end": "2025-12-31",
+      "val": 168235000000,
+      "accn": "0001628280-26-004357",
+      "fy": 2025,
+      "fp": "FY",
+      "form": "10-K",
+      "filed": "2026-01-30",
+      "unit": "USD",
+      "_source_tag": "Assets"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "entityName": "ELI LILLY & Co",
+  "cik": "0000059478",
+  "facts": {
+    "concept": {
+      "end": "2025-12-31",
+      "val": 112476000000,
+      "accn": "0000059478-26-000013",
+      "fy": 2025,
+      "fp": "FY",
+      "form": "10-K",
+      "filed": "2026-02-12",
+      "unit": "USD",
+      "_source_tag": "Assets"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "entityName": "MICROSOFT CORPORATION",
+  "cik": "0000789019",
+  "facts": {
+    "concept": {
+      "end": "2025-06-30",
+      "val": 619003000000,
+      "accn": "0000950170-25-100235",
+      "fy": 2025,
+      "fp": "FY",
+      "form": "10-K",
+      "filed": "2025-07-30",
+      "unit": "USD",
+      "_source_tag": "Assets"
+    }
+  }
+}

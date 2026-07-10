@@ -1,0 +1,17 @@
+{
+  "entityName": "JPMORGAN CHASE & CO",
+  "cik": "0000019617",
+  "facts": {
+    "concept": {
+      "end": "2025-12-31",
+      "val": 4424900000000,
+      "accn": "0001628280-26-008131",
+      "fy": 2025,
+      "fp": "FY",
+      "form": "10-K",
+      "filed": "2026-02-13",
+      "unit": "USD",
+      "_source_tag": "Assets"
+    }
+  }
+}

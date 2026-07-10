@@ -1,0 +1,17 @@
+{
+  "entityName": "ALPHABET INC.",
+  "cik": "0001652044",
+  "facts": {
+    "concept": {
+      "end": "2025-12-31",
+      "val": 595281000000,
+      "accn": "0001652044-26-000018",
+      "fy": 2025,
+      "fp": "FY",
+      "form": "10-K",
+      "filed": "2026-02-05",
+      "unit": "USD",
+      "_source_tag": "Assets"
+    }
+  }
+}

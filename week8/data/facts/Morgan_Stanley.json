@@ -1,0 +1,17 @@
+{
+  "entityName": "MORGAN STANLEY",
+  "cik": "0000895421",
+  "facts": {
+    "concept": {
+      "end": "2025-12-31",
+      "val": 1420270000000,
+      "accn": "0000895421-26-000086",
+      "fy": 2025,
+      "fp": "FY",
+      "form": "10-K",
+      "filed": "2026-02-19",
+      "unit": "USD",
+      "_source_tag": "Assets"
+    }
+  }
+}
