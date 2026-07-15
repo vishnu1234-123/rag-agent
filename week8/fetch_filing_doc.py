@@ -10,9 +10,9 @@ HEADERS={
 
 def get_filing_index(cik:str,accession_no:str)->str:
     "return the url of filing index directory "
-    cik_padded=cik.zfill(0)
+    cik_stripped=str(int(cik))
     acc_no_dashless=accession_no.replace("-","")
-    return f"https://www.sec.gov/Archives/edgar/data/{cik_padded}/{acc_no_dashless}/"
+    return f"https://www.sec.gov/Archives/edgar/data/{cik_stripped}/{acc_no_dashless}/"
 
 def find_main_filing_doc(index_url:str)->str:
     resp=requests.get(index_url,headers=HEADERS)

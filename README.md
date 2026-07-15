@@ -766,7 +766,130 @@ SEC's EDGAR filing index page uses root-relative links (`/Archives/edgar/...`) f
 - **Docling owns prose.** Risk Factors, MD&A, and other narrative sections are extracted via Docling, with tables in those documents ignored/discarded since XBRL supersedes them entirely.
 - These become **separate chunk types** at ingestion — not merged into one linear document — so numerical queries can route directly to structured facts rather than depending on retrieval to find the right prose chunk.
 
+**Extended validation — 7 companies, 5 industries, all resolving correctly post-fix:**
+
+| Company | Industry | Revenue | Net Income | Total Assets |
+|---|---|---|---|---|
+| Apple | Tech | $416.16B | $112.01B | $359.24B |
+| Microsoft | Tech | $281.72B | $101.83B | $619.00B |
+| Tesla | Tech/Auto | $94.83B | $3.79B | $137.81B |
+| JPMorgan Chase | Banking | $182.45B | $57.05B | $4.42T |
+| Bank of America | Banking | $113.10B | $30.51B | $3.41T |
+| Johnson & Johnson | Pharma | $94.19B | $26.80B | $199.21B |
+| Boeing | Industrials | $89.46B | $2.24B | $168.24B |
+
+### XBRL extraction — complete for all 20 target companies
+
+All 20 companies (Tech, Banking, Pharma, Industrials) now resolve
+revenue, net_income, and total_assets correctly via the preferred-tag
++ fuzzy-fallback approach validated earlier today. Fixed one CIK typo
+(Ford) along the way. Goldman Sachs required the fuzzy fallback path
+(no exact preferred-tag match) — resolved correctly, but the specific
+tag it matched on hasn't been manually reviewed yet.
+
+Per-company structured facts saved to `week8/data/facts/{company}.json`.
+
+**Scope decision:** 10-K only for this week's ingestion. Most-recent
+10-Q per company is deferred to Week 9, alongside query routing work
+that will need to distinguish annual vs. quarterly queries anyway.
+
+**Not yet done:** Docling prose extraction (Risk Factors, MD&A) has
+not yet been scaled beyond Apple to the remaining 19 companies —
+planned as the first task of the next session.
+
 ---
+
+# Week 8 — Day 2 Session Log (Section Extraction)
+
+## Starting point
+XBRL extraction validated for all 20 companies (Day 1). Goal today: scale Docling prose extraction across all 20 and get clean section boundaries before moving to chunking.
+
+---
+
+## Completed today
+
+### 1. XBRL: fixed preferred-tag pooling bug, validated 20/20
+- **Bug:** `get_concept_values` returned after checking only the *first* preferred tag that had any data, due to an indentation error placing the pooled-results check inside the tag loop rather than after it.
+- **Impact:** Boeing's revenue resolved to a stale **2019** value ($76.6B) instead of its FY2025 figure ($89.5B) — Boeing stopped using `RevenueFromContractWithCustomerExcludingAssessedTax` after 2019 and switched to plain `Revenues`, but the loop never reached the second tag.
+- **Fix:** pool values across *all* preferred tags, then let recency selection pick the current one. Same failure class as the earlier Apple/`SalesRevenueNet` bug, now fixed generically rather than per-company.
+- **Also fixed:** Ford CIK typo (`0000037990` → `0000037996`).
+- **Result:** all 20 companies resolve revenue / net income / total assets to current-period values. Goldman Sachs required the fuzzy fallback path (no exact preferred-tag match) — resolved, but the matched tag hasn't been manually reviewed.
+
+### 2. Docling: fixed EDGAR file discovery (CIK padding)
+- **Bug:** `get_filing_index` applied `cik.zfill(10)` when building the Archives URL. The `companyfacts` JSON API requires the zero-padded 10-digit CIK, but EDGAR's `/Archives/edgar/data/` path uses the **unpadded** CIK. Every filing fetch silently resolved to a wrong-but-valid page, so the href scoping never matched and all 20 companies failed with "No main filing doc found."
+- **Fix:** `str(int(cik))` for the Archives path; keep zero-padding only for the JSON API.
+- **Result:** all 20 companies now fetch and convert successfully.
+
+### 3. Docling: markdown normalization
+- SEC filings use HTML tables for layout, not just tabular data. Docling faithfully converts that structure, producing repeated cell content and pipe clutter around headings (e.g. Amazon: `| Item 1A. | Item 1A. | Item 1A. | Risk Factors | Risk Factors | Risk Factors |`).
+- Added `normalize_table_noise()`: strips pipes, collapses whitespace, and collapses immediately-repeated phrases before any heading detection runs.
+- **Result:** fixed Amazon and General Electric outright (0 sections → 22 each), with no regression on companies that were already working.
+
+### 4. Section extraction: sequential ordered walk
+Final working approach for standard filers:
+1. Normalize markdown (above)
+2. Walk items in canonical order (`1`, `1A`, `1B`, `1C`, `2` … `16`)
+3. For each item, find the first occurrence of its title keyword that is a real heading — rejecting TOC entries and cross-references
+4. Each section's **end** = the next *found* item's start (absent items are skipped, not treated as errors)
+
+**Status: 18 of 20 companies extract cleanly**, with sensible per-section lengths (e.g. Apple — Item 1A: 84,791 chars; Item 1B "None.": 226 chars; Item 7: 18,926 chars).
+
+---
+
+## Two companies not resolved — root causes fully diagnosed
+
+### Morgan Stanley — bare headings with no structural markers
+- Body headings carry **no item number**: the real Item 1A heading is literally just `Risk Factors`, immediately followed by body text **on the same line** with no break. (Confirmed against the live SEC filing — MS's *2007* filing used `Item 1A. Risk Factors.`; the FY2025 filing does not. The convention changed.)
+- Consequence: both discriminating signals are unavailable —
+  - `has_exact_item_number` → never fires (no number)
+  - `looks_like_heading_line` → never fires (heading not isolated on its own line)
+- **Item 1A start detection is correct** (pos 80,670, manually verified against the real filing). The failure is that *intermediate* sections (1C, 2, 3, 4, 5, 6, 7, 7A) are never found, so Item 1A has nothing to cap it and absorbs ~900K chars up to the next item it can find (1B at 980,207).
+- **Scoring model was built and tested** (weighted signals: exact item +5, markdown heading +4, TOC anchor −4, bare heading shape +2, negative context −3, length support +1). It ranks correctly — real candidates score positive, cross-references score −2.0 — but every real candidate tops out at +1.0 because the only signal that fires is length support. It cannot distinguish the real heading from other +1.0 prose mentions.
+
+### Citigroup — Items are NOT contiguous spans
+This is the more fundamental finding.
+- Citi's TOC lists **multiple non-contiguous page groups per item**:
+  - `Cybersecurity 55-57, 113-115`
+  - `Business 4-36, 121-127, 129, 160-164, 299-300`
+- Citigroup does not organize its 10-K into linear, one-block-per-item sections. A single Item's content is **scattered across several disconnected parts of the document**.
+- **This breaks our data model, not just our detection.** The entire approach assumes `section = (start, end)` — one contiguous span. For Citigroup that is structurally false: Item 1C cannot be represented as one span because it exists in at least two separate places.
+- Secondary confirmed issues:
+  - Items with no content (e.g. 1B "Unresolved Staff Comments — Not Applicable") appear **only in the TOC**, with no body heading. This is legitimate and correct; absent items are now skipped rather than erroring.
+  - Single-word keywords collide with prose: `cybersecurity` matched *inside* an Item 1A risk-factor title ("…Susceptible to an Increasing Risk of Evolving, Sophisticated **Cybersecurity** Incidents That Could Result in theft, Loss…"), cutting Item 1A mid-sentence and starting a fake Item 1C at 231,054.
+- **Fix B applied and working:** extended TOC detection to catch page-number-style TOC entries (`Risk Factors 49-62`), which Citi uses instead of anchor links. This correctly stopped the walk from anchoring sections to TOC lines.
+
+---
+
+## Design decisions locked in
+- **XBRL owns numbers, Docling owns prose.** Financial facts come from SEC's `companyfacts` API; narrative sections come from Docling. Tables in prose documents are ignored (iXBRL renders them as empty-cell markdown — confirmed again today on live data).
+- **Prose and facts stay in separate chunk types**, not merged into one linear document.
+- **10-K only this week.** Most-recent 10-Q per company deferred to Week 9, alongside query routing (which needs to distinguish annual vs. quarterly anyway).
+- **Do not pre-attach XBRL facts to prose chunks via semantic similarity.** Keep the two retrieval paths separate (structured lookup for numbers, vector search for prose) and let the query router combine them at answer time. Pre-attaching by embedding similarity would reintroduce fuzziness into the exact-numbers guarantee that is the project's core differentiator.
+
+---
+
+## Next session (6 hr block)
+
+**Decide first — Citigroup's multi-span problem is a design fork, not a bug:**
+- **Option 1:** build multi-span section support — map the TOC's page ranges to document positions using the page markers Docling preserved (e.g. `December 2025 Form 10-K | 26`), then assemble each Item from multiple disjoint spans. Handles Citi correctly; changes the data model from `section = span` to `section = [spans]`.
+- **Option 2:** scope Citi-style filers out as a documented limitation, ship 19/20.
+
+**Then, Morgan Stanley (Fix A) — recover intermediate bare headings:**
+- Text-based scoring has been proven insufficient (the discriminating signals don't exist in the flattened markdown). Two candidate approaches:
+  - Use **Docling's structured document object** rather than its flattened markdown export — heading levels Docling computed internally may survive there even when they don't survive markdown export. This is the more promising path and hasn't been tried.
+  - Require **multi-word context matching** for single-word keywords (`cybersecurity`, `business`, `properties`) so they don't match mid-prose.
+
+**Also outstanding:**
+- Write all 20 companies' extracted sections to `data/prose/` (fixes are currently validated in test scripts only; the real output files still contain older extractions)
+- Review which tag Goldman Sachs' fuzzy fallback actually matched
+- Then: chunking strategy → storage decision (Pinecone for prose / Postgres for facts) → embed + load → wire auth/RBAC
+
+---
+
+## Known limitations to document publicly
+- Company list covers Tech, Banking, Pharma, Industrials. **Insurance, Utilities, and REITs are not represented and not validated** — these sectors use meaningfully different XBRL tagging (e.g. insurers report "premiums earned" rather than "revenue") and may silently produce incomplete results.
+- Docling replaces images with `<!-- image -->` placeholders; no OCR is performed. Not a practical issue for Risk Factors / MD&A (text-only by nature), but content delivered as an image would be silently lost.
+- Bank of America's `companyfacts` response returns `entityName: "BofA Finance LLC"` (a financing subsidiary that co-files under the parent CIK) despite the CIK and all financial figures being correct. Cosmetic; not root-caused.
 
 ### Not yet done (next session)
 - Scale both XBRL and Docling extraction across the remaining 19 of 20 target companies

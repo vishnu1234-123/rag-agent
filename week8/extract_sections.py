@@ -1,44 +1,51 @@
 import re
-def extract_section(markdown_text:str,start_pattern:str,end_pattern:str)->str:
-    start_match=re.search(start_pattern,markdown_text,re.IGNORECASE)
-    if not start_match:
-        print(f"WARNING: start pattern not found: {start_pattern}")
-        return ""
-    start_idx=start_match.start()
-    end_match=re.search(end_pattern,markdown_text[start_idx+1:],re.IGNORECASE)
 
-    if not end_match:
-        print(f"WARNING: end pattern not found, taking rest of document")
-        return markdown_text[start_idx:]
-    end_idx=start_idx+1+end_match.start()
-    return markdown_text[start_idx:end_idx]
+# Loose keyword patterns per item, built from REAL variants observed across our 20 companies.
+# Add more alternatives here (pipe-separated) as new companies surface new phrasing.
+ITEM_KEYWORDS = {
+    "1": r"business",
+    "1A": r"risk\s*factors",
+    "1B": r"unresolved\s*staff\s*comments",
+    "1C": r"cybersecurity",
+    "2": r"properties",
+    "3": r"legal\s*proceedings",
+    "4": r"mine\s*safety\s*disclosures",
+    "5": r"market\s*for\s*registrant",
+    "6": r"reserved|selected\s*financial\s*data",
+    "7": r"management.{0,3}s?\s*discussion",  # handles ' vs ' vs missing apostrophe
+    "7A": r"quantitative\s*and\s*qualitative",
+    "8": r"financial\s*statements\s*and\s*supplementary",
+    "9": r"changes\s*in\s*and\s*disagreements",
+    "9A": r"controls\s*and\s*procedures",
+    "9B": r"other\s*information",
+    "9C": r"disclosure\s*regarding\s*foreign",
+    "10": r"directors,?\s*executive\s*officers",
+    "11": r"executive\s*compensation",
+    "12": r"security\s*ownership",
+    "13": r"certain\s*relationships",
+    "14": r"principal\s*account(?:ant|ing)",
+    "15": r"exhibits",
+    "16": r"form\s*10-k\s*summary",
+}
 
-if __name__=="__main__":
-    with open("week8/.cache/filings/aaple_10k_docling_output.md","r",encoding="utf-8") as f:
-        full_text=f.read()
+def build_item_pattern():
+    parts=[rf"item\s*{num}\.?\s*(?:{kw})" for num, kw in ITEM_KEYWORDS.items()]
+    combined="|".join(parts)
+    return re.compile(rf"\b(?:{combined})", re.IGNORECASE)
 
-    risk_factors=extract_section(
-        full_text,
-        r"item\s*1a\.?\s*risk\s*factors",
-        r"item\s*1b\.?\s*unresolved|item\s*2\.?\s*properties"
-    )
-    print(f"Risk Factors section: {len(risk_factors)} chars")
+ITEM_PATTERN=build_item_pattern()
+ITEM_NUM_EXTRACT=re.compile(r"item\s*(\d{1,2}[a-c]?)", re.IGNORECASE)
 
-    mda = extract_section(
-        full_text,
-        r"item\s*7\.?\s*management.?s\s*discussion",
-        r"item\s*7a\.?\s*quantitative|item\s*8\.?\s*financial\s*statements"
-    )
-    print(f"MD&A section: {len(mda)} chars")
+def extract_section(markdown_text:str)->dict[str,str]:
+    matches=list(ITEM_PATTERN.finditer(markdown_text))
+    sections={}
 
-    import os
-    os.makedirs("week8/.cache/prose",exist_ok=True)
-    with open("week8/.cache/prose/aapl_10k_2025_risk_factors.md", "w", encoding="utf-8") as f:
-        f.write(risk_factors)
-    with open("week8/.cache/prose/aapl_10k_2025_mda.md", "w", encoding="utf-8") as f:
-        f.write(mda)
-
-    print("\nRisk Factors preview:")
-    print(risk_factors[:500])
-    print("\nMD&A preview:")
-    print(mda[:500])
+    for i,match in enumerate(matches):
+        num_match=ITEM_NUM_EXTRACT.search(match.group())
+        item_num=num_match.group(1).upper()
+        start=match.start()
+        end=matches[i+1].start() if i+1<len(matches) else len(markdown_text)
+        if item_num not in sections or (end-start)>len(sections[item_num]):
+            sections[item_num]=markdown_text[start:end]
+    return sections
+    

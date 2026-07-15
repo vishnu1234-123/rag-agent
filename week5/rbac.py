@@ -19,3 +19,9 @@ def check_access(token:str,required_permission:str)->tuple[bool,str]:
         return True,f"Access granted for role '{role}'"
     else:
         return False,f"Role '{role}' lacks permission '{required_permission}'"
+
+def check_access_by_role(role:str,permission:str)->tuple[bool,str]:
+    if has_permission(role,permission):
+        return True,f"Access granted for role'{role}'"
+    return False,f"Role '{role}' lacks permission '{permission}'"
+

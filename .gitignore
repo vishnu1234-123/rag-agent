@@ -4,3 +4,9 @@ faiss_index/
 __pycache__/
 *.pyc
 .DS_Store
+**/.DS_Store
+.vscode/
+data/
+week8/.cache/
+week8/data/
+week8/data/
