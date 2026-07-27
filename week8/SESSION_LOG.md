@@ -1,135 +1,195 @@
-# Week 8 — Session Log
+# SESSION_LOG — Week 8+
 
-**Goal:** Ingestion pipeline for 20 companies (10-K only) + auth/RBAC.
+Engineering log for the ingestion and embedding phases of FilingsIQ. Weeks 3–7 (RAG fundamentals through the FastAPI serving layer) are in [../DEVLOG.md](../DEVLOG.md).
 
----
-
-# Day 1 — Extraction Foundations
-
-## Goal for the day
-Validate two separate extraction paths needed for multi-company ingestion: structured financial facts (XBRL) and narrative filing text (Docling) — before scaling either one across all 20 target companies.
-
-## 1. XBRL Fact Extraction — `week8/xbrl_companyfacts.py`
-
-**Approach:** Instead of parsing raw XBRL instance documents and manually resolving `contextRef` → period mappings, this uses SEC's `companyfacts` API (`data.sec.gov/api/xbrl/companyfacts/CIK##########.json`), which returns every tagged fact a company has filed, pre-resolved to actual periods, forms, and units.
-
-**Design:**
-- **Preferred-tag lookup first** — a small list of known-correct `us-gaap` tags per financial concept (`RevenueFromContractWithCustomerExcludingAssessedTax`, `NetIncomeLoss`, `Assets`), checked directly with no ambiguity.
-- **Fuzzy label-match fallback** — for tags not in the preferred list, searches across *all* taxonomies (not just `us-gaap`) by matching keywords against tag labels, falling back to the tag name itself if no label exists. All matches are pooled rather than picked by a single heuristic.
-- Values are never assumed to be USD or 10-K only — every fact carries its actual `unit` field, and annual lookups accept `10-K`, `20-F`, and `40-F`, so non-USD or foreign-filer data isn't silently dropped.
-
-**Hard bug found and fixed:** An early version picked between multiple matching tags by choosing whichever had the most historical data points. This picked the wrong tag twice:
-- For revenue, it selected `SalesRevenueNet` — a tag Apple stopped using after the 2018 ASC 606 accounting standard change — over the tag Apple currently files under, simply because the old tag had more years of accumulated history.
-- For total assets, it selected `IncreaseDecreaseInOtherOperatingAssets` — a cash-flow statement line item — because "assets" appeared in its label and it had more filed data points than the real `Assets` tag.
-
-Fixed by preferring exact known-good tags first, and only pooling fuzzy matches when no preferred tag exists.
-
-**Validation:** Tested against Apple (hardware/tech) and JPMorgan Chase (banking). All six values cross-checked against independent public financial data and matched exactly:
-
-| Company | Revenue | Net Income | Total Assets |
-|---|---|---|---|
-| Apple (FY2025) | $416.16B | $112.01B | $359.24B |
-| JPMorgan Chase (FY2025) | $182.45B | $57.05B | $4.42T |
-
-JPMorgan resolved via the preferred-tag path with zero fallback needed — the standard revenue tag held up even for a fundamentally different business model (interest + fee income vs. product sales).
-
-## 2. Docling Prose Extraction
-
-**Hard bug found and fixed (file discovery):** SEC's EDGAR filing index page uses root-relative links (`/Archives/edgar/...`) for both actual filing documents *and* general site navigation (privacy policy, careers, etc.) — no structural difference at the link level. An initial filter assumed root-relative links were site nav and skipped them all, causing the fetcher to fall through to unrelated pages (at one point resolving to SEC's `/privacy.htm`). Fixed by scoping candidate links to the filing's own directory path and excluding known non-content patterns (`R##.htm` XBRL viewer fragments, exhibits, index pages).
-
-**Result:** Once pointed at the correct file (`aapl-20250927.htm`), Docling successfully extracted clean prose from Apple's full FY2025 10-K (480K+ characters), with headings preserved.
-
-**Confirmed limitation (matches Week 7 finding):** Financial statement tables rendered as markdown tables with correct row/column structure but entirely empty cells — a direct result of iXBRL tagging, where visible numbers are wrapped in inline XBRL tags rather than plain table-cell text. Reproduced against the live document, confirming the decision to route all numerical data through the XBRL companyfacts path.
-
-**Section isolation:** Regex-based boundary matching on Docling markdown output:
-
-| Section | Length |
-|---|---|
-| Item 1A – Risk Factors | 68,168 chars |
-| Item 7 – MD&A | 28,061 chars |
-
-## Design decisions locked in (Day 1)
-- **XBRL owns numbers.** All financial facts extracted via SEC's companyfacts API, never via Docling table parsing.
-- **Docling owns prose.** Risk Factors, MD&A, and other narrative sections via Docling, with tables in those documents ignored since XBRL supersedes them.
-- These become **separate chunk types** at ingestion — not merged into one linear document — so numerical queries can route directly to structured facts rather than depending on retrieval to find the right prose chunk.
+The recurring theme of this phase: **expect validators to be buggier than the thing they validate.** Nearly every "failure" here turned out to be a check bug, not a pipeline bug.
 
 ---
 
-# Day 2 — Scaling + Section Extraction
+## Extraction validation — Docling table triplication
 
-## Completed today
+**Goal:** Determine whether Docling can reliably extract financial statement tables from SEC HTML filings, or whether XBRL needs to be a separate required extraction path.
 
-### 1. XBRL: fixed preferred-tag pooling bug, validated 20/20
-- **Bug:** `get_concept_values` returned after checking only the *first* preferred tag that had any data, due to an indentation error placing the pooled-results check inside the tag loop rather than after it.
-- **Impact:** Boeing's revenue resolved to a stale **2019** value ($76.6B) instead of its FY2025 figure ($89.5B) — Boeing stopped using `RevenueFromContractWithCustomerExcludingAssessedTax` after 2019 and switched to plain `Revenues`, but the loop never reached the second tag.
-- **Fix:** pool values across *all* preferred tags, then let recency selection pick the current one. Same failure class as the Apple/`SalesRevenueNet` bug from Day 1, now fixed generically rather than per-company.
-- **Also fixed:** Ford CIK typo (`0000037990` → `0000037996`).
-- **Result:** all 20 companies resolve revenue / net income / total assets to current-period values. Goldman Sachs required the fuzzy fallback path — resolved, but the matched tag hasn't been manually reviewed.
+### Method
+Ran Docling against 8 filings across 4 companies chosen for structural diversity (not just industry): Apple (tech, self-filed clean HTML), JPMorgan (bank, different statement shape/filing agent), Microsoft (tech, different filing agent than Apple), ExxonMobil (energy/industrial, different statement shape again). One 10-K and one 10-Q per company.
 
-**Extended validation — 7 companies, 5 industries, all correct post-fix:**
+For each, extracted all `doc.tables`, classified which were balance sheet / income statement / cash flow by keyword match, and checked (a) whether the numbers matched known-correct figures, and (b) whether adjacent columns were identical (a "triplication" artifact suspected from an earlier Apple-only pass).
 
-| Company | Industry | Revenue | Net Income | Total Assets |
-|---|---|---|---|---|
-| Apple | Tech | $416.16B | $112.01B | $359.24B |
-| Microsoft | Tech | $281.72B | $101.83B | $619.00B |
-| Tesla | Tech/Auto | $94.83B | $3.79B | $137.81B |
-| JPMorgan Chase | Banking | $182.45B | $57.05B | $4.42T |
-| Bank of America | Banking | $113.10B | $30.51B | $3.41T |
-| Johnson & Johnson | Pharma | $94.19B | $26.80B | $199.21B |
-| Boeing | Industrials | $89.46B | $2.24B | $168.24B |
+### Result
+| Filing | Numbers correct? | Columns triplicated? |
+|---|---|---|
+| Apple 10-K | Yes | Yes |
+| Apple 10-Q | Yes | Yes |
+| JPMorgan 10-K | Yes | Yes |
+| JPMorgan 10-Q | Yes | Yes |
+| Microsoft 10-K | Yes | **No** |
+| Microsoft 10-Q | Yes | **No** |
+| ExxonMobil 10-K | Yes | Yes |
+| ExxonMobil 10-Q | Yes | **No** |
 
-### 2. Docling: fixed EDGAR file discovery (CIK padding)
-- **Bug:** `get_filing_index` applied `cik.zfill(10)` when building the Archives URL. The `companyfacts` JSON API requires the zero-padded 10-digit CIK, but EDGAR's `/Archives/edgar/data/` path uses the **unpadded** CIK. Every filing fetch silently resolved to a wrong-but-valid page, so href scoping never matched and all 20 companies failed with "No main filing doc found."
-- **Fix:** `str(int(cik))` for the Archives path; keep zero-padding only for the JSON API.
-- **Result:** all 20 companies now fetch and convert successfully.
+**Every filing's underlying numbers were correct and complete** — no data loss. Total net sales, net income, balance sheet line items, cash flow items all matched known-correct figures (cross-checked against companyfacts API and public earnings releases).
 
-### 3. Docling: markdown normalization
-- SEC filings use HTML tables for layout, not just tabular data. Docling faithfully converts that structure, producing repeated cell content and pipe clutter around headings (e.g. Amazon: `| Item 1A. | Item 1A. | Item 1A. | Risk Factors | Risk Factors | Risk Factors |`).
-- Added `normalize_table_noise()`: strips pipes, collapses whitespace, and collapses immediately-repeated phrases before any heading detection runs.
-- **Result:** fixed Amazon and General Electric outright (0 sections → 22 each), with no regression on companies already working.
+**However:** 6 of 8 filings showed a structural artifact where Docling splits merged/spanned HTML cells (likely `colspan` in source) into multiple identical DataFrame columns instead of one logical column. NOT predictable by company alone (Microsoft never showed it) NOR by form type alone (ExxonMobil's 10-K showed it, its 10-Q did not).
 
-### 4. Section extraction: sequential ordered walk
-Final working approach for standard filers:
-1. Normalize markdown (above)
-2. Walk items in canonical order (`1`, `1A`, `1B`, `1C`, `2` … `16`)
-3. For each item, find the first occurrence of its title keyword that is a real heading — rejecting TOC entries and cross-references
-4. Each section's **end** = the next *found* item's start (absent items are skipped, not treated as errors)
-
-**Status: 18 of 20 companies extract cleanly**, with sensible per-section lengths (e.g. Apple — Item 1A: 84,791 chars; Item 1B "None.": 226 chars; Item 7: 18,926 chars).
-
-## Two companies not resolved — root causes fully diagnosed
-
-### Morgan Stanley — bare headings with no structural markers
-- Body headings carry **no item number**: the real Item 1A heading is literally just `Risk Factors`, immediately followed by body text **on the same line** with no break. (Confirmed against the live SEC filing — MS's *2007* filing used `Item 1A. Risk Factors.`; the FY2025 filing does not. The convention changed.)
-- Consequence: both discriminating signals are unavailable —
-  - `has_exact_item_number` → never fires (no number)
-  - `looks_like_heading_line` → never fires (heading not isolated on its own line)
-- **Item 1A start detection is correct** (pos 80,670, manually verified against the real filing). The failure is that *intermediate* sections (1C, 2, 3, 4, 5, 6, 7, 7A) are never found, so Item 1A has nothing to cap it and absorbs ~900K chars up to the next item it can find (1B at 980,207).
-- **Scoring model was built and tested** (weighted signals: exact item +5, markdown heading +4, TOC anchor −4, bare heading shape +2, negative context −3, length support +1). It ranks correctly — real candidates score positive, cross-references score −2.0 — but every real candidate tops out at +1.0 because the only signal that fires is length support. It cannot distinguish the real heading from other +1.0 prose mentions.
-
-### Citigroup — Items are NOT contiguous spans
-This is the more fundamental finding.
-- Citi's TOC lists **multiple non-contiguous page groups per item**:
-  - `Cybersecurity 55-57, 113-115`
-  - `Business 4-36, 121-127, 129, 160-164, 299-300`
-- Citigroup does not organize its 10-K into linear, one-block-per-item sections. A single Item's content is **scattered across several disconnected parts of the document**.
-- **This breaks our data model, not just our detection.** The entire approach assumes `section = (start, end)` — one contiguous span. For Citigroup that is structurally false: Item 1C cannot be represented as one span because it exists in at least two separate places.
-- Secondary confirmed issues:
-  - Items with no content (e.g. 1B "Unresolved Staff Comments — Not Applicable") appear **only in the TOC**, with no body heading. This is legitimate; absent items are now skipped rather than erroring.
-  - Single-word keywords collide with prose: `cybersecurity` matched *inside* an Item 1A risk-factor title ("…Susceptible to an Increasing Risk of Evolving, Sophisticated **Cybersecurity** Incidents That Could Result in theft, Loss…"), cutting Item 1A mid-sentence and starting a fake Item 1C at 231,054.
-- **Fix applied and working:** extended TOC detection to catch page-number-style TOC entries (`Risk Factors 49-62`), which Citi uses instead of anchor links. This correctly stopped the walk from anchoring sections to TOC lines.
+### Conclusion
+- No separate XBRL path is required *for accuracy* — Docling's underlying extraction is correct. (The dual-path design was later kept for other reasons — exactness guarantee, provenance, cross-company comparability — see the XBRL Numeric Path entry.)
+- A column-deduplication step IS required, applied conditionally per-table (not per-company or per-form-type), since the artifact is inconsistent even within a single filer.
+- Detection validated: check whether adjacent columns are identical; if so, collapse to one. Correctly flagged all 6 affected filings, left Microsoft's clean tables untouched.
 
 ---
 
-## Design decisions (cumulative)
-- **XBRL owns numbers, Docling owns prose.** Confirmed again on live data — iXBRL renders tables as empty-cell markdown.
-- **Prose and facts stay in separate chunk types**, not merged into one linear document.
-- **10-K only this week.** Most-recent 10-Q per company deferred to Week 9, alongside query routing (which needs to distinguish annual vs. quarterly anyway).
-- **Do not pre-attach XBRL facts to prose chunks via semantic similarity.** Keep the two retrieval paths separate (structured lookup for numbers, vector search for prose) and let the query router combine them at answer time. Pre-attaching by embedding similarity would reintroduce fuzziness into the exact-numbers guarantee that is the project's core differentiator.
+## Programmatic CIK + filing lookup
+
+Replaced manual web-search verification with `lookup_filings.py`, using two SEC APIs directly:
+- `company_tickers.json` for ticker→CIK mapping
+- `submissions/CIK##########.json` for latest 10-K/10-Q per CIK
+
+**Bug found and fixed:** SEC's ticker map returned an incorrect CIK for XOM (2115436, not a real ExxonMobil CIK) — caught because we'd already manually verified XOM's real CIK (34088) earlier. Added a `KNOWN_GOOD_CIKS` override dict so manually-verified CIKs always beat the (occasionally unreliable) ticker map. General pattern: don't trust bulk reference data blindly when you have independently verified ground truth for specific entries.
+
+**Result:** all 40 filings (20 companies × 10-K + 10-Q) resolved. Saved to `data/filing_list.json` via `save_filing_list.py`.
 
 ---
 
-## Next session (6 hr block)
+## Extraction validation arc + the validator-bug lesson
 
-**Decide first — Citigroup's multi-span problem is a design fork, not a bug:**
-- **Option 1:** build multi-span
+### What we set out to do
+After extracting all 40 filings with Docling + dedup, validate that extraction didn't lose financial data before chunking.
+
+### Validation approaches tried
+1. **Structural checks (abandoned):** year-count per table, "largest table per category", empty-cell %. All fragile — false positives on legitimate sub-fragments, and couldn't distinguish "table of contents matched as cash flow" (JPM) from real data. Structural heuristics don't generalize across filer formats; every new filing broke the last rule.
+2. **XBRL cross-check (kept, but had to be fixed):** pull official anchor figures (revenue, net income, total assets, operating cash flow) from companyfacts API, confirm they appear in the ingested text. Industry-agnostic, tests data-loss directly, cheap, scalable.
+
+### The big lesson: our VALIDATORS were buggier than the extraction
+The XBRL cross-check reported `total_assets` present in only **2/20** companies — an alarming near-total failure suggesting broken extraction. It was FALSE. Root causes, all in the validator, not the pipeline:
+- Searched the `reports/*.txt` files, which only saved `df.head(8)` of each table. "Total assets" sits below row 8 in a balance sheet — truncated out of the artifact we searched.
+- Case-sensitivity: searched lowercase "total assets" vs. actual "Total assets".
+- Wrong-period anchoring: XBRL "newest" value is often a quarterly figure whose exact number isn't printed in the specific filings ingested.
+
+**Proof:** re-extracted Apple's 10-K to FULL markdown (no truncation) and grepped. `Total assets` FOUND, `364,980` FOUND, `359,241` FOUND. The data was present the entire time. Extraction was never broken.
+
+### Takeaway
+A validator that searches an incomplete copy of the data reports false data-loss. We nearly "fixed" extraction that was working fine. Validation code is real code with real bugs — a validator you haven't debugged lies in both directions (false alarms AND false confidence).
+
+---
+
+## Ingestion + extraction validation: COMPLETE
+
+Extraction (Docling + column-dedup) validated across all 20 companies / 40 filings on four independent dimensions. All pass.
+
+### 1. Numbers present (XBRL cross-check)
+Anchor figures confirmed in full extracted text: net_income 20/20, total_assets 20/20, op_cash_flow 19/20, revenue 16/20. The misses are validator-side (concept-alias gaps / scale-period edges for XOM, NVDA, BA, T revenue; JPM cash flow), not data loss — confirmed by prose + manual checks.
+
+### 2. Structure present
+Full char counts sensible (Apple 480K, JPM 4.7M, BAC 7.2M), thousands of table rows per filing, all key narrative sections detectable. Note: Docling emits NO markdown `#` headers — section titles are plain-text `Item N.` lines (matters for chunking).
+
+### 3. Prose present, not lost
+`prose_health.py` measured narrative word volume per filing. Every 10-K at or above the Apple baseline (24,345 words); range ~35K–133K. Critically, XOM and WMT — which LOST section headers in extraction — still have full prose volume (36K, 40K words): missing headers ≠ missing content.
+
+### 4. Prose not duplicated
+Sentence uniqueness ratio 0.83–0.99 across all filings (0.85+ = mostly distinct). Table column-triplication did NOT bleed into prose. Lowest were META (0.83) and KO (0.86) — normal boilerplate, well above the 0.60 concern threshold.
+
+### Key cross-cutting lesson
+Our validators were repeatedly buggier than the extraction they checked. The scariest scare (total_assets 2/20) was entirely a truncated-diagnostic artifact. Every "failure" this phase was a check bug (truncation, case-sensitivity, wrong-period anchoring, fragile section-finding, over-strict thresholds), not a pipeline bug. Fix: always point validation at the FULL real output, and sanity-check the validator against a known-good baseline (Apple, manually confirmed) before trusting its verdict.
+
+### Consequences for chunking
+- Chunk from the full markdown per filing (`data/processed/<T>/<T>_<form>_full.md`).
+- Do NOT chunk on section headers — inconsistent across filers (present-plain for most, merged for JPM/BAC, absent-from-body for XOM/AMZN/WMT). Header-dependent chunking would break on 3+ filers.
+- Use universal structure-agnostic chunking (size + paragraph/table-aware boundaries). Attach section labels as OPTIONAL metadata only where a header is cleanly detectable. Never lose content to a missing boundary.
+- Rely on semantic retrieval to surface the right chunk regardless of labeling; eval/RAGAS is the downstream correctness net.
+
+---
+
+## Chunking — COMPLETE
+
+### Design
+Structure-**agnostic** chunking (size + paragraph/table-aware boundaries) → tables kept atomic. Section labels attached as OPTIONAL metadata only where a header is cleanly detectable — never used as split boundaries, because headers are inconsistent across filers (~20% have none). This supersedes the earlier "section-aware split" plan, which the multi-filer validation ruled out.
+
+Config: 800 tokens, 100 overlap, 1200-token table ceiling, tiktoken `cl100k_base`, sized against text-embedding-3-small (8191 limit).
+
+### Library vs custom audit
+- LangChain `RecursiveCharacterTextSplitter` — prose within a chunk-size budget. No reason to rewrite it.
+- Custom — table atomicity. Splitters break tables mid-row; Week 6 proved this destroys retrieval on financial questions (net income table split across 3 chunks at size=800).
+
+### Validation (all 40 filings)
+- Content loss: 0 missing lines
+- Coherence: 0 issues (no mid-word prose starts, no headerless table fragments)
+- Over embedding limit: 0
+- Metadata keys present: all filings
+- **Total: 13,939 chunks** (prose + tables, all 40 filings; tables and 10-Q are dropped later at the embedding stage)
+
+### Accepted limitation
+~20% of filings (7–8 of 40) have no detectable Item headers → no `section_item` label. Per-filing, not per-company — depends on how Docling rendered that specific document. Impact limited to section-filtered retrieval; semantic search and small-to-big unaffected. Documented, not fixed.
+
+### Principle carried forward
+Validate at each stage against real data. Don't generalize from one company. Expect validators to be buggier than the thing they validate.
+
+---
+
+## XBRL Numeric Path — COMPLETE
+
+### Architecture confirmed
+XBRL owns numbers, Docling owns prose, tables discarded from embedding. Numbers come from the SEC companyfacts API, verified — never Docling tables. (Note: this is not because Docling's numbers were wrong — the triplication study proved them accurate. It's for the exactness guarantee, provenance, and cross-company comparability that a structured store gives and fuzzy retrieval cannot.)
+
+### Facts store: `data/facts.sqlite`
+20 companies × 3 concepts (revenue, net_income, total_assets) × 5 years = 300 rows. Schema: `ticker, concept, value, unit, period_end, fiscal_year, form, source_tag, entity_name`. PK `(ticker, concept, period_end)`.
+
+### Bugs found and fixed
+- **XOM:** SEC ticker map points to ExxonMobil Holdings (a fee shell); override to CIK 34088.
+- **BAC:** companyfacts `entityName` says "BofA Finance LLC" but CIK 70858 IS the parent (891 tags, $3.4T assets) — name quirk, data correct, no fix.
+- **Revenue:** preferred-tag-first returned stale retired tags (BA 2019, NVDA 2022). Fix: pool ALL preferred tags, `max(end)` picks the current one. `Revenues`-first for total.
+- **Quarterly leak:** companyfacts tags quarters with `form=10-K` and mislabels some 90-day periods as `fp=FY`. Fix: require BOTH `fp==FY` AND period span > 350 days.
+- **Provenance:** every fact stores `source_tag` — the tag IS the definition.
+
+### Validated
+All 20 revenues cross-checked against public figures (100% match). Ranking, trend, and YoY-comparison queries all correct.
+
+### Known limits (deliberate)
+- 3 concepts only. Out-of-scope queries decline honestly (correctness > coverage).
+- Cross-company revenue approximate (bank vs. retailer not truly comparable); `source_tag` makes the definition auditable.
+- Pre-2017 Apple revenue uses a different tag (`Revenues` vs. `RevenueFromContract`) — visible in provenance; irrelevant at the 5-year cap.
+
+---
+
+## Embedding Phase — COMPLETE
+
+### Corpus
+Prose-only: **6,779 chunks** embedded (down from the 13,939 total after dropping tables and 10-Q filings). Model text-embedding-3-small, dotproduct metric, namespace v1. Tables dropped (numbers live in XBRL/SQL). 90% section-labelled.
+
+### Small-to-big
+2,503 parents in `data/parents.sqlite`, 3 children each, avg ~1,052 tokens. Every child's metadata carries `parent_id`; integrity validated.
+
+### Validation gate (all pass)
+vector count 6779/6779, parent_id integrity, metadata complete, smoke query ok.
+
+### Observation for eval
+Smoke query "supply chain risks": 20 children → 17 unique parents (low clustering). Revisit parent size (`CHILDREN_PER_PARENT`) once an eval set exists; current 3 gives ~1,052-token parents, which may be small. **Do NOT tune blind** — build a corpus-appropriate eval set first (the Week 4 set is Apple-only and stale). Could be genuine query diffuseness (20 companies each discuss supply chain once) or parents running small; can't distinguish without an eval set.
+
+---
+
+## Session: repo hygiene + docs restructure
+
+### Repo cleanup
+Root had ~90 mixed files (pipeline + one-off diagnostics). Sorted into 16 pipeline files at root + `scratch/` for exploratory/debug scripts. Nothing deleted — `scratch/` is kept as an audit trail.
+
+Gitignore audit: confirmed `.env` never committed (`git ls-files` clean), `data/` and `.cache/` already ignored, added `reports/` (stale Jul-18 table dumps, regenerable). Committed the deletions of the old committed data corpus so it leaves the remote.
+
+Principle locked in: the repo holds the code that produces the corpus, not the corpus. Raw filings, caches, and the sqlite stores are all regenerable and gitignored. Clone + `.env` + run rebuilds everything.
+
+### Auth timing decision (not a gap — a sequencing call)
+JWT/RBAC (built Week 5, wired to a FastAPI skeleton Week 7) is NOT wired to the ingestion pipeline, and shouldn't be. Auth guards a user-facing endpoint; ingestion is a batch script with no door to lock. RBAC wires onto the `/ask` query endpoint when it's built (retrieval phase), as a one-line dependency using the existing `check_access()`.
+
+### Docs restructure
+Split the monolithic README into three docs:
+- `README.md` — front door (impact, architecture, setup, links out)
+- `DEVLOG.md` — Weeks 3–7 build journal (moved out of README)
+- `SESSION_LOG.md` — this file, Week 8+
+
+Corrected a stale rationale carried from Week 7: the dual-path design (XBRL owns numbers, Docling owns prose) is kept for exactness, provenance, and cross-company comparability — NOT because "Docling can't extract numbers." Multi-company validation this phase showed Docling's underlying numbers were accurate; the empty-cell rendering was a display artifact. Conclusion unchanged, reasoning corrected.
+
+---
+
+## Next (retrieval phase — not started)
+1. **Eval set** for the 20-company corpus — prerequisite for tuning anything (including the parent-size question above). The Week 4 set is Apple-only and stale.
+2. **Query router** — numbers (SQL) vs. prose (vector) vs. both, with a synonym map and honest declines.
+3. **Retrieval assembly** — small-to-big fetch, optional rerank, history-aware query rewriting for follow-ups.
+4. **Query endpoint** — where auth/RBAC finally wires in.
