@@ -1,0 +1,1542 @@
+[
+  {
+    "id": "num_point_UNH_net_income_2025",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was UnitedHealth's net income in fiscal year 2025?",
+    "expected_value": 12056000000.0,
+    "expected_answer": "$12.06B",
+    "source_rows": [
+      {
+        "ticker": "UNH",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 12056000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_point_XOM_total_assets_2024",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was ExxonMobil's total assets in fiscal year 2024?",
+    "expected_value": 453475000000.0,
+    "expected_answer": "$453.48B",
+    "source_rows": [
+      {
+        "ticker": "XOM",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 453475000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_point_MSFT_net_income_2024",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Microsoft's net income in fiscal year 2024?",
+    "expected_value": 88136000000.0,
+    "expected_answer": "$88.14B",
+    "source_rows": [
+      {
+        "ticker": "MSFT",
+        "concept": "net_income",
+        "fiscal_year": 2024,
+        "value": 88136000000.0,
+        "period_end": "2024-06-30",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_point_AMZN_revenue_2021",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Amazon's revenue in fiscal year 2021?",
+    "expected_value": 469822000000.0,
+    "expected_answer": "$469.82B",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 469822000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "num_point_GOOGL_total_assets_2025",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Alphabet's total assets in fiscal year 2025?",
+    "expected_value": 595281000000.0,
+    "expected_answer": "$595.28B",
+    "source_rows": [
+      {
+        "ticker": "GOOGL",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 595281000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_point_AMZN_net_income_2021",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Amazon's net income in fiscal year 2021?",
+    "expected_value": 33364000000.0,
+    "expected_answer": "$33.36B",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 33364000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_point_MSFT_total_assets_2024",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Microsoft's total assets in fiscal year 2024?",
+    "expected_value": 512163000000.0,
+    "expected_answer": "$512.16B",
+    "source_rows": [
+      {
+        "ticker": "MSFT",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 512163000000.0,
+        "period_end": "2024-06-30",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_point_META_revenue_2022",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Meta's revenue in fiscal year 2022?",
+    "expected_value": 116609000000.0,
+    "expected_answer": "$116.61B",
+    "source_rows": [
+      {
+        "ticker": "META",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 116609000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "num_point_NVDA_revenue_2025",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was NVIDIA's revenue in fiscal year 2025?",
+    "expected_value": 130497000000.0,
+    "expected_answer": "$130.50B",
+    "source_rows": [
+      {
+        "ticker": "NVDA",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 130497000000.0,
+        "period_end": "2025-01-26",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_point_XOM_net_income_2024",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was ExxonMobil's net income in fiscal year 2024?",
+    "expected_value": 33680000000.0,
+    "expected_answer": "$33.68B",
+    "source_rows": [
+      {
+        "ticker": "XOM",
+        "concept": "net_income",
+        "fiscal_year": 2024,
+        "value": 33680000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_point_UNH_net_income_2022",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was UnitedHealth's net income in fiscal year 2022?",
+    "expected_value": 20120000000.0,
+    "expected_answer": "$20.12B",
+    "source_rows": [
+      {
+        "ticker": "UNH",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": 20120000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_point_JNJ_revenue_2023",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Johnson & Johnson's revenue in fiscal year 2023?",
+    "expected_value": 79990000000.0,
+    "expected_answer": "$79.99B",
+    "source_rows": [
+      {
+        "ticker": "JNJ",
+        "concept": "revenue",
+        "fiscal_year": 2023,
+        "value": 79990000000.0,
+        "period_end": "2023-01-01",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "num_point_T_total_assets_2025",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was AT&T's total assets in fiscal year 2025?",
+    "expected_value": 420198000000.0,
+    "expected_answer": "$420.20B",
+    "source_rows": [
+      {
+        "ticker": "T",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 420198000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_point_UNH_revenue_2023",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was UnitedHealth's revenue in fiscal year 2023?",
+    "expected_value": 371622000000.0,
+    "expected_answer": "$371.62B",
+    "source_rows": [
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2023,
+        "value": 371622000000.0,
+        "period_end": "2023-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_point_UNH_revenue_2025",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was UnitedHealth's revenue in fiscal year 2025?",
+    "expected_value": 447567000000.0,
+    "expected_answer": "$447.57B",
+    "source_rows": [
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 447567000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_point_CVX_net_income_2023",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Chevron's net income in fiscal year 2023?",
+    "expected_value": 21369000000.0,
+    "expected_answer": "$21.37B",
+    "source_rows": [
+      {
+        "ticker": "CVX",
+        "concept": "net_income",
+        "fiscal_year": 2023,
+        "value": 21369000000.0,
+        "period_end": "2023-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_point_BRK-B_total_assets_2022",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Berkshire Hathaway's total assets in fiscal year 2022?",
+    "expected_value": 948465000000.0,
+    "expected_answer": "$948.47B",
+    "source_rows": [
+      {
+        "ticker": "BRK-B",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 948465000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_point_AAPL_revenue_2024",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Apple's revenue in fiscal year 2024?",
+    "expected_value": 391035000000.0,
+    "expected_answer": "$391.04B",
+    "source_rows": [
+      {
+        "ticker": "AAPL",
+        "concept": "revenue",
+        "fiscal_year": 2024,
+        "value": 391035000000.0,
+        "period_end": "2024-09-28",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "num_point_V_total_assets_2021",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Visa's total assets in fiscal year 2021?",
+    "expected_value": 82896000000.0,
+    "expected_answer": "$82.90B",
+    "source_rows": [
+      {
+        "ticker": "V",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 82896000000.0,
+        "period_end": "2021-09-30",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_point_NVDA_total_assets_2023",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was NVIDIA's total assets in fiscal year 2023?",
+    "expected_value": 41182000000.0,
+    "expected_answer": "$41.18B",
+    "source_rows": [
+      {
+        "ticker": "NVDA",
+        "concept": "total_assets",
+        "fiscal_year": 2023,
+        "value": 41182000000.0,
+        "period_end": "2023-01-29",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_point_TSLA_total_assets_2021",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was Tesla's total assets in fiscal year 2021?",
+    "expected_value": 62131000000.0,
+    "expected_answer": "$62.13B",
+    "source_rows": [
+      {
+        "ticker": "TSLA",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 62131000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_point_UNH_revenue_2024",
+    "category": "numeric",
+    "subtype": "point",
+    "expected_route": "NUMERIC",
+    "question": "What was UnitedHealth's revenue in fiscal year 2024?",
+    "expected_value": 400278000000.0,
+    "expected_answer": "$400.28B",
+    "source_rows": [
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2024,
+        "value": 400278000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_BA_revenue_2021_2022",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Boeing's revenue change from fiscal 2021 to 2022?",
+    "expected_value": 4322000000.0,
+    "expected_answer": "increased by $4.32B ($62.29B -> $66.61B)",
+    "source_rows": [
+      {
+        "ticker": "BA",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 62286000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "BA",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 66608000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_BAC_revenue_2022_2023",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Bank of America's revenue change from fiscal 2022 to 2023?",
+    "expected_value": 7819000000.0,
+    "expected_answer": "increased by $7.82B ($94.95B -> $102.77B)",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 94950000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "BAC",
+        "concept": "revenue",
+        "fiscal_year": 2023,
+        "value": 102769000000.0,
+        "period_end": "2023-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_CVX_net_income_2022_2023",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Chevron's net income change from fiscal 2022 to 2023?",
+    "expected_value": -14096000000.0,
+    "expected_answer": "decreased by $14.10B ($35.47B -> $21.37B)",
+    "source_rows": [
+      {
+        "ticker": "CVX",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": 35465000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "CVX",
+        "concept": "net_income",
+        "fiscal_year": 2023,
+        "value": 21369000000.0,
+        "period_end": "2023-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_JNJ_revenue_2022_2023",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Johnson & Johnson's revenue change from fiscal 2022 to 2023?",
+    "expected_value": 1250000000.0,
+    "expected_answer": "increased by $1.25B ($78.74B -> $79.99B)",
+    "source_rows": [
+      {
+        "ticker": "JNJ",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 78740000000.0,
+        "period_end": "2022-01-02",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "JNJ",
+        "concept": "revenue",
+        "fiscal_year": 2023,
+        "value": 79990000000.0,
+        "period_end": "2023-01-01",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_JNJ_total_assets_2024_2025",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Johnson & Johnson's total assets change from fiscal 2024 to 2025?",
+    "expected_value": 19106000000.0,
+    "expected_answer": "increased by $19.11B ($180.10B -> $199.21B)",
+    "source_rows": [
+      {
+        "ticker": "JNJ",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 180104000000.0,
+        "period_end": "2024-12-29",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "JNJ",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 199210000000.0,
+        "period_end": "2025-12-28",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_KO_total_assets_2023_2024",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Coca-Cola's total assets change from fiscal 2023 to 2024?",
+    "expected_value": 2846000000.0,
+    "expected_answer": "increased by $2.85B ($97.70B -> $100.55B)",
+    "source_rows": [
+      {
+        "ticker": "KO",
+        "concept": "total_assets",
+        "fiscal_year": 2023,
+        "value": 97703000000.0,
+        "period_end": "2023-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "KO",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 100549000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_V_net_income_2023_2024",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Visa's net income change from fiscal 2023 to 2024?",
+    "expected_value": 2470000000.0,
+    "expected_answer": "increased by $2.47B ($17.27B -> $19.74B)",
+    "source_rows": [
+      {
+        "ticker": "V",
+        "concept": "net_income",
+        "fiscal_year": 2023,
+        "value": 17273000000.0,
+        "period_end": "2023-09-30",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "V",
+        "concept": "net_income",
+        "fiscal_year": 2024,
+        "value": 19743000000.0,
+        "period_end": "2024-09-30",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_BAC_total_assets_2021_2022",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Bank of America's total assets change from fiscal 2021 to 2022?",
+    "expected_value": -118120000000.0,
+    "expected_answer": "decreased by $118.12B ($3.17T -> $3.05T)",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 3169495000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "BAC",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 3051375000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_XOM_net_income_2024_2025",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did ExxonMobil's net income change from fiscal 2024 to 2025?",
+    "expected_value": -4836000000.0,
+    "expected_answer": "decreased by $4.84B ($33.68B -> $28.84B)",
+    "source_rows": [
+      {
+        "ticker": "XOM",
+        "concept": "net_income",
+        "fiscal_year": 2024,
+        "value": 33680000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "XOM",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 28844000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_KO_revenue_2021_2022",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Coca-Cola's revenue change from fiscal 2021 to 2022?",
+    "expected_value": 4349000000.0,
+    "expected_answer": "increased by $4.35B ($38.66B -> $43.00B)",
+    "source_rows": [
+      {
+        "ticker": "KO",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 38655000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "KO",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 43004000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_MSFT_net_income_2022_2023",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Microsoft's net income change from fiscal 2022 to 2023?",
+    "expected_value": -377000000.0,
+    "expected_answer": "decreased by $377.00M ($72.74B -> $72.36B)",
+    "source_rows": [
+      {
+        "ticker": "MSFT",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": 72738000000.0,
+        "period_end": "2022-06-30",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "MSFT",
+        "concept": "net_income",
+        "fiscal_year": 2023,
+        "value": 72361000000.0,
+        "period_end": "2023-06-30",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_GOOGL_total_assets_2024_2025",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Alphabet's total assets change from fiscal 2024 to 2025?",
+    "expected_value": 145025000000.0,
+    "expected_answer": "increased by $145.03B ($450.26B -> $595.28B)",
+    "source_rows": [
+      {
+        "ticker": "GOOGL",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 450256000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "GOOGL",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 595281000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_JPM_revenue_2021_2022",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did JPMorgan Chase's revenue change from fiscal 2021 to 2022?",
+    "expected_value": 7046000000.0,
+    "expected_answer": "increased by $7.05B ($121.65B -> $128.69B)",
+    "source_rows": [
+      {
+        "ticker": "JPM",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 121649000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 128695000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_yoy_WMT_revenue_2023_2024",
+    "category": "numeric",
+    "subtype": "yoy",
+    "expected_route": "NUMERIC",
+    "question": "By how much did Walmart's revenue change from fiscal 2023 to 2024?",
+    "expected_value": 36756000000.0,
+    "expected_answer": "increased by $36.76B ($605.88B -> $642.64B)",
+    "source_rows": [
+      {
+        "ticker": "WMT",
+        "concept": "revenue",
+        "fiscal_year": 2023,
+        "value": 605881000000.0,
+        "period_end": "2023-01-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "revenue",
+        "fiscal_year": 2024,
+        "value": 642637000000.0,
+        "period_end": "2024-01-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_AAPL_net_income_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Apple's net income grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": 17330000000.0,
+    "expected_answer": "grew (+18.3%, $94.68B -> $112.01B)",
+    "source_rows": [
+      {
+        "ticker": "AAPL",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 94680000000.0,
+        "period_end": "2021-09-25",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "AAPL",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 112010000000.0,
+        "period_end": "2025-09-27",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_V_net_income_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Visa's net income grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": 7747000000.0,
+    "expected_answer": "grew (+62.9%, $12.31B -> $20.06B)",
+    "source_rows": [
+      {
+        "ticker": "V",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 12311000000.0,
+        "period_end": "2021-09-30",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "V",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 20058000000.0,
+        "period_end": "2025-09-30",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_UNH_revenue_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did UnitedHealth's revenue grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": 159970000000.0,
+    "expected_answer": "grew (+55.6%, $287.60B -> $447.57B)",
+    "source_rows": [
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 287597000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 447567000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_BA_revenue_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Boeing's revenue grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": 27177000000.0,
+    "expected_answer": "grew (+43.6%, $62.29B -> $89.46B)",
+    "source_rows": [
+      {
+        "ticker": "BA",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 62286000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "BA",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 89463000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_WMT_revenue_2022_2026",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Walmart's revenue grow or shrink from fiscal 2022 to 2026?",
+    "expected_value": 138651000000.0,
+    "expected_answer": "grew (+24.4%, $567.76B -> $706.41B)",
+    "source_rows": [
+      {
+        "ticker": "WMT",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 567762000000.0,
+        "period_end": "2022-01-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "revenue",
+        "fiscal_year": 2026,
+        "value": 706413000000.0,
+        "period_end": "2026-01-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_CVX_revenue_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Chevron's revenue grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": 28826000000.0,
+    "expected_answer": "grew (+18.5%, $155.61B -> $184.43B)",
+    "source_rows": [
+      {
+        "ticker": "CVX",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 155606000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "CVX",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 184432000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_AMZN_net_income_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Amazon's net income grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": 44306000000.0,
+    "expected_answer": "grew (+132.8%, $33.36B -> $77.67B)",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 33364000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "AMZN",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 77670000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_JNJ_net_income_2022_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Johnson & Johnson's net income grow or shrink from fiscal 2022 to 2025?",
+    "expected_value": 5926000000.0,
+    "expected_answer": "grew (+28.4%, $20.88B -> $26.80B)",
+    "source_rows": [
+      {
+        "ticker": "JNJ",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": 20878000000.0,
+        "period_end": "2022-01-02",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "JNJ",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 26804000000.0,
+        "period_end": "2025-12-28",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_META_total_assets_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Meta's total assets grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": 200034000000.0,
+    "expected_answer": "grew (+120.5%, $165.99B -> $366.02B)",
+    "source_rows": [
+      {
+        "ticker": "META",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 165987000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "META",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 366021000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_TSLA_net_income_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Tesla's net income grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": -1725000000.0,
+    "expected_answer": "shrank (-31.3%, $5.52B -> $3.79B)",
+    "source_rows": [
+      {
+        "ticker": "TSLA",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 5519000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "TSLA",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 3794000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_PG_total_assets_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Procter & Gamble's total assets grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": 5924000000.0,
+    "expected_answer": "grew (+5.0%, $119.31B -> $125.23B)",
+    "source_rows": [
+      {
+        "ticker": "PG",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 119307000000.0,
+        "period_end": "2021-06-30",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "PG",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 125231000000.0,
+        "period_end": "2025-06-30",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_trend_CVX_total_assets_2021_2025",
+    "category": "numeric",
+    "subtype": "trend",
+    "expected_route": "NUMERIC",
+    "question": "Did Chevron's total assets grow or shrink from fiscal 2021 to 2025?",
+    "expected_value": 84477000000.0,
+    "expected_answer": "grew (+35.3%, $239.53B -> $324.01B)",
+    "source_rows": [
+      {
+        "ticker": "CVX",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 239535000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "CVX",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 324012000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_total_assets_NVDA_TSLA_XOM_2023",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest total assets in fiscal year 2023: NVIDIA, Tesla, ExxonMobil?",
+    "expected_value": "XOM",
+    "expected_answer": "ExxonMobil ($376.32B)",
+    "source_rows": [
+      {
+        "ticker": "NVDA",
+        "concept": "total_assets",
+        "fiscal_year": 2023,
+        "value": 41182000000.0,
+        "period_end": "2023-01-29",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "TSLA",
+        "concept": "total_assets",
+        "fiscal_year": 2023,
+        "value": 106618000000.0,
+        "period_end": "2023-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "XOM",
+        "concept": "total_assets",
+        "fiscal_year": 2023,
+        "value": 376317000000.0,
+        "period_end": "2023-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_revenue_AAPL_BAC_PG_2022",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest revenue in fiscal year 2022: Apple, Bank of America, Procter & Gamble?",
+    "expected_value": "AAPL",
+    "expected_answer": "Apple ($394.33B)",
+    "source_rows": [
+      {
+        "ticker": "AAPL",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 394328000000.0,
+        "period_end": "2022-09-24",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "BAC",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 94950000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "PG",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 80187000000.0,
+        "period_end": "2022-06-30",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_revenue_AMZN_T_UNH_2025",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest revenue in fiscal year 2025: Amazon, AT&T, UnitedHealth?",
+    "expected_value": "AMZN",
+    "expected_answer": "Amazon ($716.92B)",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 716924000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "T",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 125648000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 447567000000.0,
+        "period_end": "2025-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_revenue_BAC_BRK-B_T_2024",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest revenue in fiscal year 2024: Bank of America, Berkshire Hathaway, AT&T?",
+    "expected_value": "BRK-B",
+    "expected_answer": "Berkshire Hathaway ($249.71B)",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "revenue",
+        "fiscal_year": 2024,
+        "value": 105856000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "BRK-B",
+        "concept": "revenue",
+        "fiscal_year": 2024,
+        "value": 249714000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "T",
+        "concept": "revenue",
+        "fiscal_year": 2024,
+        "value": 122336000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_total_assets_META_UNH_V_2024",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest total assets in fiscal year 2024: Meta, UnitedHealth, Visa?",
+    "expected_value": "UNH",
+    "expected_answer": "UnitedHealth ($298.28B)",
+    "source_rows": [
+      {
+        "ticker": "META",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 276054000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "UNH",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 298278000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "V",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 94511000000.0,
+        "period_end": "2024-09-30",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_total_assets_PG_UNH_V_2024",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest total assets in fiscal year 2024: Procter & Gamble, UnitedHealth, Visa?",
+    "expected_value": "UNH",
+    "expected_answer": "UnitedHealth ($298.28B)",
+    "source_rows": [
+      {
+        "ticker": "PG",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 122370000000.0,
+        "period_end": "2024-06-30",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "UNH",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 298278000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "V",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 94511000000.0,
+        "period_end": "2024-09-30",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_revenue_JPM_T_TSLA_2022",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest revenue in fiscal year 2022: JPMorgan Chase, AT&T, Tesla?",
+    "expected_value": "JPM",
+    "expected_answer": "JPMorgan Chase ($128.69B)",
+    "source_rows": [
+      {
+        "ticker": "JPM",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 128695000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "T",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 120741000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "TSLA",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 81462000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_total_assets_JPM_TSLA_UNH_2022",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest total assets in fiscal year 2022: JPMorgan Chase, Tesla, UnitedHealth?",
+    "expected_value": "JPM",
+    "expected_answer": "JPMorgan Chase ($3.67T)",
+    "source_rows": [
+      {
+        "ticker": "JPM",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 3665743000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "TSLA",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 82338000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "UNH",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 245705000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_net_income_BA_KO_T_2022",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest net income in fiscal year 2022: Boeing, Coca-Cola, AT&T?",
+    "expected_value": "KO",
+    "expected_answer": "Coca-Cola ($9.54B)",
+    "source_rows": [
+      {
+        "ticker": "BA",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": -4935000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "KO",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": 9542000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "T",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": -8524000000.0,
+        "period_end": "2022-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_net_income_META_V_XOM_2021",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest net income in fiscal year 2021: Meta, Visa, ExxonMobil?",
+    "expected_value": "META",
+    "expected_answer": "Meta ($39.37B)",
+    "source_rows": [
+      {
+        "ticker": "META",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 39370000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "V",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 12311000000.0,
+        "period_end": "2021-09-30",
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "XOM",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 23040000000.0,
+        "period_end": "2021-12-31",
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_revenue_BRK-B_JNJ_NVDA_2023",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest revenue in fiscal year 2023: Berkshire Hathaway, Johnson & Johnson, NVIDIA?",
+    "expected_value": "BRK-B",
+    "expected_answer": "Berkshire Hathaway ($254.91B)",
+    "source_rows": [
+      {
+        "ticker": "BRK-B",
+        "concept": "revenue",
+        "fiscal_year": 2023,
+        "value": 254906000000.0,
+        "period_end": "2023-12-31",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "JNJ",
+        "concept": "revenue",
+        "fiscal_year": 2023,
+        "value": 79990000000.0,
+        "period_end": "2023-01-01",
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "NVDA",
+        "concept": "revenue",
+        "fiscal_year": 2023,
+        "value": 26974000000.0,
+        "period_end": "2023-01-29",
+        "source_tag": "Revenues"
+      }
+    ]
+  },
+  {
+    "id": "num_rank_total_assets_BA_GOOGL_PG_2024",
+    "category": "numeric",
+    "subtype": "ranking",
+    "expected_route": "NUMERIC",
+    "question": "Which of these had the highest total assets in fiscal year 2024: Boeing, Alphabet, Procter & Gamble?",
+    "expected_value": "GOOGL",
+    "expected_answer": "Alphabet ($450.26B)",
+    "source_rows": [
+      {
+        "ticker": "BA",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 156363000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "GOOGL",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 450256000000.0,
+        "period_end": "2024-12-31",
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "PG",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 122370000000.0,
+        "period_end": "2024-06-30",
+        "source_tag": "Assets"
+      }
+    ]
+  }
+]

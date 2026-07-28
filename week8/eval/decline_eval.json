@@ -1,0 +1,236 @@
+[
+  {
+    "id": "decl_corpus_INTC_total_assets_2023",
+    "category": "decline",
+    "subtype": "out_of_corpus",
+    "expected_route": "REJECT",
+    "question": "What was Intel's total assets in fiscal year 2023?",
+    "expected_behavior": "Decline: Intel is not one of the covered companies. Do not produce a number.",
+    "trap": "Intel is not in the 20-company corpus."
+  },
+  {
+    "id": "decl_corpus_NFLX_total_assets_2025",
+    "category": "decline",
+    "subtype": "out_of_corpus",
+    "expected_route": "REJECT",
+    "question": "What was Netflix's total assets in fiscal year 2025?",
+    "expected_behavior": "Decline: Netflix is not one of the covered companies. Do not produce a number.",
+    "trap": "Netflix is not in the 20-company corpus."
+  },
+  {
+    "id": "decl_corpus_ORCL_total_assets_2023",
+    "category": "decline",
+    "subtype": "out_of_corpus",
+    "expected_route": "REJECT",
+    "question": "What was Oracle's total assets in fiscal year 2023?",
+    "expected_behavior": "Decline: Oracle is not one of the covered companies. Do not produce a number.",
+    "trap": "Oracle is not in the 20-company corpus."
+  },
+  {
+    "id": "decl_corpus_ADBE_total_assets_2024",
+    "category": "decline",
+    "subtype": "out_of_corpus",
+    "expected_route": "REJECT",
+    "question": "What was Adobe's total assets in fiscal year 2024?",
+    "expected_behavior": "Decline: Adobe is not one of the covered companies. Do not produce a number.",
+    "trap": "Adobe is not in the 20-company corpus."
+  },
+  {
+    "id": "decl_corpus_NKE_revenue_2023",
+    "category": "decline",
+    "subtype": "out_of_corpus",
+    "expected_route": "REJECT",
+    "question": "What was Nike's revenue in fiscal year 2023?",
+    "expected_behavior": "Decline: Nike is not one of the covered companies. Do not produce a number.",
+    "trap": "Nike is not in the 20-company corpus."
+  },
+  {
+    "id": "decl_corpus_PFE_revenue_2023",
+    "category": "decline",
+    "subtype": "out_of_corpus",
+    "expected_route": "REJECT",
+    "question": "What was Pfizer's revenue in fiscal year 2023?",
+    "expected_behavior": "Decline: Pfizer is not one of the covered companies. Do not produce a number.",
+    "trap": "Pfizer is not in the 20-company corpus."
+  },
+  {
+    "id": "decl_concept_TSLA_free_cash_flow_2025",
+    "category": "decline",
+    "subtype": "out_of_concept",
+    "expected_route": "REJECT",
+    "question": "What was Tesla's free cash flow in fiscal year 2025?",
+    "expected_behavior": "Decline + redirect: the system does not track free cash flow; it covers revenue, net income, or total assets. Do not invent a figure.",
+    "trap": "Tesla is covered, but 'free cash flow' is not a stored concept."
+  },
+  {
+    "id": "decl_concept_META_free_cash_flow_2023",
+    "category": "decline",
+    "subtype": "out_of_concept",
+    "expected_route": "REJECT",
+    "question": "What was Meta's free cash flow in fiscal year 2023?",
+    "expected_behavior": "Decline + redirect: the system does not track free cash flow; it covers revenue, net income, or total assets. Do not invent a figure.",
+    "trap": "Meta is covered, but 'free cash flow' is not a stored concept."
+  },
+  {
+    "id": "decl_concept_GOOGL_R&D_spending_2023",
+    "category": "decline",
+    "subtype": "out_of_concept",
+    "expected_route": "REJECT",
+    "question": "What was Alphabet's R&D spending in fiscal year 2023?",
+    "expected_behavior": "Decline + redirect: the system does not track R&D spending; it covers revenue, net income, or total assets. Do not invent a figure.",
+    "trap": "Alphabet is covered, but 'R&D spending' is not a stored concept."
+  },
+  {
+    "id": "decl_concept_WMT_market_capitalization_2024",
+    "category": "decline",
+    "subtype": "out_of_concept",
+    "expected_route": "REJECT",
+    "question": "What was Walmart's market capitalization in fiscal year 2024?",
+    "expected_behavior": "Decline + redirect: the system does not track market capitalization; it covers revenue, net income, or total assets. Do not invent a figure.",
+    "trap": "Walmart is covered, but 'market capitalization' is not a stored concept."
+  },
+  {
+    "id": "decl_concept_META_operating_margin_2025",
+    "category": "decline",
+    "subtype": "out_of_concept",
+    "expected_route": "REJECT",
+    "question": "What was Meta's operating margin in fiscal year 2025?",
+    "expected_behavior": "Decline + redirect: the system does not track operating margin; it covers revenue, net income, or total assets. Do not invent a figure.",
+    "trap": "Meta is covered, but 'operating margin' is not a stored concept."
+  },
+  {
+    "id": "decl_concept_BAC_number_of_employees_2024",
+    "category": "decline",
+    "subtype": "out_of_concept",
+    "expected_route": "REJECT",
+    "question": "What was Bank of America's number of employees in fiscal year 2024?",
+    "expected_behavior": "Decline + redirect: the system does not track number of employees; it covers revenue, net income, or total assets. Do not invent a figure.",
+    "trap": "Bank of America is covered, but 'number of employees' is not a stored concept."
+  },
+  {
+    "id": "decl_range_XOM_revenue_2028",
+    "category": "decline",
+    "subtype": "out_of_range",
+    "expected_route": "REJECT",
+    "question": "What was ExxonMobil's revenue in fiscal year 2028?",
+    "expected_behavior": "Decline: no data for fiscal 2028 (is in the future / not yet filed); coverage is 2021-2026. Do not extrapolate a number.",
+    "trap": "ExxonMobil/revenue is covered, but year 2028 is outside 2021-2026."
+  },
+  {
+    "id": "decl_range_BA_revenue_2031",
+    "category": "decline",
+    "subtype": "out_of_range",
+    "expected_route": "REJECT",
+    "question": "What was Boeing's revenue in fiscal year 2031?",
+    "expected_behavior": "Decline: no data for fiscal 2031 (is in the future / not yet filed); coverage is 2021-2026. Do not extrapolate a number.",
+    "trap": "Boeing/revenue is covered, but year 2031 is outside 2021-2026."
+  },
+  {
+    "id": "decl_range_BA_net_income_2028",
+    "category": "decline",
+    "subtype": "out_of_range",
+    "expected_route": "REJECT",
+    "question": "What was Boeing's net income in fiscal year 2028?",
+    "expected_behavior": "Decline: no data for fiscal 2028 (is in the future / not yet filed); coverage is 2021-2026. Do not extrapolate a number.",
+    "trap": "Boeing/net_income is covered, but year 2028 is outside 2021-2026."
+  },
+  {
+    "id": "decl_range_AMZN_net_income_2015",
+    "category": "decline",
+    "subtype": "out_of_range",
+    "expected_route": "REJECT",
+    "question": "What was Amazon's net income in fiscal year 2015?",
+    "expected_behavior": "Decline: no data for fiscal 2015 (predates the data); coverage is 2021-2026. Do not extrapolate a number.",
+    "trap": "Amazon/net_income is covered, but year 2015 is outside 2021-2026."
+  },
+  {
+    "id": "decl_typonear_Nvdia_net_income_2023",
+    "category": "decline",
+    "subtype": "misspelling",
+    "severity": "near",
+    "expected_route": "REJECT",
+    "question": "What was Nvdia's net income in fiscal year 2023?",
+    "expected_behavior": "Recognizable typo of NVIDIA (edit distance ~1-2). Acceptable: resolve to NVIDIA, or confirm 'did you mean NVIDIA?'. Only clear failure is answering as a DIFFERENT entity or inventing a figure without acknowledging the ambiguity.",
+    "trap": "'Nvdia' -> NVIDIA; must not silently wrong-match."
+  },
+  {
+    "id": "decl_typonear_Teslla_total_assets_2024",
+    "category": "decline",
+    "subtype": "misspelling",
+    "severity": "near",
+    "expected_route": "REJECT",
+    "question": "What was Teslla's total assets in fiscal year 2024?",
+    "expected_behavior": "Recognizable typo of Tesla (edit distance ~1-2). Acceptable: resolve to Tesla, or confirm 'did you mean Tesla?'. Only clear failure is answering as a DIFFERENT entity or inventing a figure without acknowledging the ambiguity.",
+    "trap": "'Teslla' -> Tesla; must not silently wrong-match."
+  },
+  {
+    "id": "decl_typonear_Wallmart_total_assets_2025",
+    "category": "decline",
+    "subtype": "misspelling",
+    "severity": "near",
+    "expected_route": "REJECT",
+    "question": "What was Wallmart's total assets in fiscal year 2025?",
+    "expected_behavior": "Recognizable typo of Walmart (edit distance ~1-2). Acceptable: resolve to Walmart, or confirm 'did you mean Walmart?'. Only clear failure is answering as a DIFFERENT entity or inventing a figure without acknowledging the ambiguity.",
+    "trap": "'Wallmart' -> Walmart; must not silently wrong-match."
+  },
+  {
+    "id": "decl_typonear_aple_net_income_2025",
+    "category": "decline",
+    "subtype": "misspelling",
+    "severity": "near",
+    "expected_route": "REJECT",
+    "question": "What was aple's net income in fiscal year 2025?",
+    "expected_behavior": "Recognizable typo of Apple (edit distance ~1-2). Acceptable: resolve to Apple, or confirm 'did you mean Apple?'. Only clear failure is answering as a DIFFERENT entity or inventing a figure without acknowledging the ambiguity.",
+    "trap": "'aple' -> Apple; must not silently wrong-match."
+  },
+  {
+    "id": "decl_typofar_Mmmicrsoftt_total_assets_2023",
+    "category": "decline",
+    "subtype": "misspelling",
+    "severity": "far",
+    "expected_route": "REJECT",
+    "question": "What was Mmmicrsoftt's total assets in fiscal year 2023?",
+    "expected_behavior": "Mangled beyond confident recognition. Should DECLINE / ask the user to clarify. Confidently resolving to Microsoft (or any company) is OVER-EAGER and counts as a failure \u2014 this is the wrong-entity risk the system must guard against.",
+    "trap": "'Mmmicrsoftt' is too garbled to safely resolve; over-eager match = fail."
+  },
+  {
+    "id": "decl_typofar_apppppl_net_income_2023",
+    "category": "decline",
+    "subtype": "misspelling",
+    "severity": "far",
+    "expected_route": "REJECT",
+    "question": "What was apppppl's net income in fiscal year 2023?",
+    "expected_behavior": "Mangled beyond confident recognition. Should DECLINE / ask the user to clarify. Confidently resolving to Apple (or any company) is OVER-EAGER and counts as a failure \u2014 this is the wrong-entity risk the system must guard against.",
+    "trap": "'apppppl' is too garbled to safely resolve; over-eager match = fail."
+  },
+  {
+    "id": "decl_typofar_Wlllmrt_revenue_2023",
+    "category": "decline",
+    "subtype": "misspelling",
+    "severity": "far",
+    "expected_route": "REJECT",
+    "question": "What was Wlllmrt's revenue in fiscal year 2023?",
+    "expected_behavior": "Mangled beyond confident recognition. Should DECLINE / ask the user to clarify. Confidently resolving to Walmart (or any company) is OVER-EAGER and counts as a failure \u2014 this is the wrong-entity risk the system must guard against.",
+    "trap": "'Wlllmrt' is too garbled to safely resolve; over-eager match = fail."
+  },
+  {
+    "id": "decl_notco_quarterly_vibes_net_income_2025",
+    "category": "decline",
+    "subtype": "misspelling",
+    "severity": "not_a_company",
+    "expected_route": "REJECT",
+    "question": "What was quarterly vibes's net income in fiscal year 2025?",
+    "expected_behavior": "'quarterly vibes' is not a company. Should DECLINE. Any attempt to map it to a real company or produce a figure is a failure.",
+    "trap": "'quarterly vibes' is not a company name at all."
+  },
+  {
+    "id": "decl_notco_the_weather_net_income_2023",
+    "category": "decline",
+    "subtype": "misspelling",
+    "severity": "not_a_company",
+    "expected_route": "REJECT",
+    "question": "What was the weather's net income in fiscal year 2023?",
+    "expected_behavior": "'the weather' is not a company. Should DECLINE. Any attempt to map it to a real company or produce a figure is a failure.",
+    "trap": "'the weather' is not a company name at all."
+  }
+]
