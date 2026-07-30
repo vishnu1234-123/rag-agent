@@ -11,3 +11,5 @@ week8/.cache/
 week8/data/
 week8/data/
 reports/
+*.bak
+*.bak.bak
