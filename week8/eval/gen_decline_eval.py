@@ -40,14 +40,23 @@ OUT_OF_CORPUS = [
     ("Netflix", "NFLX"), ("Intel", "INTC"), ("Disney", "DIS"),
     ("PepsiCo", "PEP"), ("Oracle", "ORCL"), ("Pfizer", "PFE"),
     ("Nike", "NKE"), ("McDonald's", "MCD"), ("Salesforce", "CRM"),
-    ("Adobe", "ADBE"),
+    ("Adobe", "ADBE"), ("IBM", "IBM"), ("Cisco", "CSCO"),
+    ("Verizon", "VZ"), ("Comcast", "CMCSA"), ("Wells Fargo", "WFC"),
+    ("Goldman Sachs", "GS"), ("Costco", "COST"), ("Starbucks", "SBUX"),
 ]
 
-OUT_OF_CONCEPT = [
-    "profit margin", "gross margin", "operating margin",
-    "earnings per share", "EPS", "number of employees",
-    "R&D spending", "dividend yield", "free cash flow",
-    "market capitalization", "operating cash flow", "debt-to-equity ratio",
+OUT_OF_CONCEPT_CALC = [
+    "profit margin", "gross margin", "operating margin", "net margin",
+    "earnings per share", "EPS", "return on equity", "return on assets",
+    "dividend yield", "debt-to-equity ratio", "price-to-earnings ratio",
+    "market capitalization", "current ratio", "book value per share",
+]
+
+OUT_OF_CONCEPT_INPROSE = [
+    "number of employees", "total headcount", "number of registered shareholders",
+    "number of retail stores", "R&D spending", "advertising spend",
+    "operating cash flow", "free cash flow", "capital expenditures",
+    "long-term debt",
 ]
 
 IN_CORPUS_NAMES = {
@@ -83,13 +92,13 @@ def load_db_facts(db_path):
     present=set()
     tickers=set()
     concepts=set()
-    years=set()
+    years=[]
 
     for t,c,y in con.execute("SELECT ticker,concept,fiscal_year FROM facts"):
         present.add((t,c,y))
         tickers.add(t)
         concepts.add(c)
-        years.add(y)
+        years.append(y)
     con.close()
     return present,tickers,concepts,(min(years),max(years))
 
@@ -115,25 +124,51 @@ def gen_out_of_corpus(rng,n):
         })
     return out
 
-def gen_out_of_concept(rng,tickers,n):
+def gen_out_of_concept(rng,tickers,n_calc,n_inprose):
     out=[]
     tks=list(tickers)
-    for _ in range(n):
+    for _ in range(n_calc):
         tk=rng.choice(tks)
-        metric=rng.choice(OUT_OF_CONCEPT)
+        metric=rng.choice(OUT_OF_CONCEPT_CALC)
         y=rng.choice([2023,2024,2025])
         name=IN_CORPUS_NAMES[tk]
         out.append({
             "id":f"decl_concept_{tk}_{metric.replace(' ','_')}_{y}",
             "category":"decline",
             "subtype":"out_of_concept",
+            "severity":"calc",
             "expected_route":"REJECT",
             "question": f"What was {name}'s {metric} in fiscal year {y}?",
             "expected_behavior": (
-                f"Decline + redirect: the system does not track {metric}; "
-                f"it covers {STORED_CONCEPTS_BLURB}. Do not invent a figure."
+                f"Decline + redirect: {metric} is a derived metric the system "
+                f"does not compute; it covers {STORED_CONCEPTS_BLURB}. "
+                f"Do not invent or calculate a figure."
             ),
-            "trap": f"{name} is covered, but '{metric}' is not a stored concept.",
+            "trap": f"{name} is covered, but '{metric}' is a derived/uncovered metric.",
+        })
+    
+    for _ in range(n_inprose):
+        tk=rng.choice(tks)
+        metric=rng.choice(OUT_OF_CONCEPT_INPROSE)
+        y=rng.choice([2023,2024,2025])
+        name=IN_CORPUS_NAMES[tk]
+
+        out.append({
+            "id": f"decl_concept_inprose_{tk}_{metric.replace(' ', '_')}_{y}",
+            "category": "decline",
+            "subtype": "out_of_concept",
+            "severity": "in_prose",
+            "expected_route": "REJECT",
+            "question": f"What was {name}'s {metric} in fiscal year {y}?",
+            "expected_behavior": (
+                f"Decline: {metric} is not a stored concept (system covers "
+                f"{STORED_CONCEPTS_BLURB}). NOTE: this figure likely appears in "
+                f"{name}'s filing prose, so a system that routes to retrieval "
+                f"instead of rejecting will wrongly answer it. Must REJECT before "
+                f"retrieval, not answer from a prose chunk."
+            ),
+            "trap": f"'{metric}' sits verbatim in {name}'s prose — router must "
+                    f"reject-first, not retrieve-and-answer.",
         })
     return out
 def gen_out_of_range(rng,tickers,year_bounds,n):
@@ -225,12 +260,13 @@ def main():
     ap.add_argument("--db",default="data/facts.sqlite")
     ap.add_argument("--out",default="decline_eval.json")
     ap.add_argument("--seed",type=int,default=42)
-    ap.add_argument("--n-corpus",type=int,default=6)
-    ap.add_argument("--n-concept",type=int,default=6)
-    ap.add_argument("--n-range",type=int,default=4)
-    ap.add_argument("--n-typo-near",type=int,default=4)
-    ap.add_argument("--n-typo-far",type=int,default=3)
-    ap.add_argument("--n-notco",type=int,default=2)
+    ap.add_argument("--n-corpus",type=int,default=10)
+    ap.add_argument("--n-concept-calc",type=int,default=8)
+    ap.add_argument("--n-concept-inprose",type=int,default=8)
+    ap.add_argument("--n-range",type=int,default=6)
+    ap.add_argument("--n-typo-near",type=int,default=5)
+    ap.add_argument("--n-typo-far",type=int,default=4)
+    ap.add_argument("--n-notco",type=int,default=3)
     args=ap.parse_args()
 
     rng=random.Random(args.seed)
@@ -238,7 +274,7 @@ def main():
 
     items=[]
     items+=gen_out_of_corpus(rng,args.n_corpus)
-    items+=gen_out_of_concept(rng,tickers,args.n_concept)
+    items+=gen_out_of_concept(rng,tickers,args.n_concept_calc,args.n_concept_inprose)
     items+=gen_out_of_range(rng,tickers,year_bounds,args.n_range)
     items+=gen_misspelling(rng,args.n_typo_near,args.n_typo_far,args.n_notco)
 

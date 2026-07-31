@@ -1,0 +1,186 @@
+[
+  {
+    "id": "cc_rank_total_assets_AMZN_WMT_2024",
+    "category": "cross_company",
+    "subtype": "compare_rank",
+    "expected_route": "NUMERIC",
+    "sector": "retail/ecommerce",
+    "question": "Among Amazon, Walmart, which had the highest total assets in fiscal year 2024",
+    "expected_answer": "Amazon($624.89B)",
+    "expected_value": "AMZN",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 624894000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "total_assets",
+        "fiscal_year": 2024,
+        "value": 252399000000.0,
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "cc_rank_total_assets_BAC_JPM_2021",
+    "category": "cross_company",
+    "subtype": "compare_rank",
+    "expected_route": "NUMERIC",
+    "sector": "banks",
+    "question": "Among Bank of America, JPMorgan Chase, which had the highest total assets in fiscal year 2021",
+    "expected_answer": "JPMorgan Chase($3.74T)",
+    "expected_value": "JPM",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 3169495000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 3743567000000.0,
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "cc_rank_revenue_AMZN_WMT_2022",
+    "category": "cross_company",
+    "subtype": "compare_rank",
+    "expected_route": "NUMERIC",
+    "sector": "retail/ecommerce",
+    "question": "Among Amazon, Walmart, which had the highest revenue in fiscal year 2022",
+    "expected_answer": "Walmart($567.76B)",
+    "expected_value": "WMT",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 513983000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 567762000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ]
+  },
+  {
+    "id": "cc_growth_total_assets_MSFT_NVDA_2022_2025",
+    "category": "cross_company",
+    "subtype": "compare_growth",
+    "expected_route": "NUMERIC",
+    "sector": "big tech",
+    "question": "Between Microsoft and NVIDIA, which grew total assetsfaster from fiscal 2022 to 2025?",
+    "expected_answer": "NVIDIA (+152.6% vs Microsoft +69.7%)",
+    "expected_value": "NVDA",
+    "source_rows": [
+      {
+        "ticker": "MSFT",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 364840000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "MSFT",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 619003000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "NVDA",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 44187000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "NVDA",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 111601000000.0,
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "cc_growth_total_assets_KO_WMT_2022_2025",
+    "category": "cross_company",
+    "subtype": "compare_growth",
+    "expected_route": "NUMERIC",
+    "sector": "consumer staples",
+    "question": "Between Coca-Cola and Walmart, which grew total assetsfaster from fiscal 2022 to 2025?",
+    "expected_answer": "Coca-Cola (+13.0% vs Walmart +6.5%)",
+    "expected_value": "KO",
+    "source_rows": [
+      {
+        "ticker": "KO",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 92763000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "KO",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 104816000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 244860000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 260823000000.0,
+        "source_tag": "Assets"
+      }
+    ]
+  },
+  {
+    "id": "cc_gap_net_income_AMZN_WMT_2024",
+    "category": "cross_company",
+    "subtype": "compare_gap",
+    "expected_route": "NUMERIC",
+    "sector": "retail/ecommerce",
+    "question": "In fiscal year 2024, how much larger was Amazon's net income than Walmart's?",
+    "expected_answer": "$43.74B larger ($59.25B vs $15.51B)",
+    "expected_value": 43737000000.0,
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "net_income",
+        "fiscal_year": 2024,
+        "value": 59248000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "net_income",
+        "fiscal_year": 2024,
+        "value": 15511000000.0,
+        "source_tag": "NetIncomeLoss"
+      }
+    ]
+  }
+]
