@@ -84,7 +84,10 @@ MISSPELLINGS_FAR = [
 NOT_A_COMPANY = [
     "aardvark", "banana", "the weather", "quarterly vibes", "my landlord",
 ]
- 
+
+MALFORMED_YEARS_ABSURD = ["2055", "2155", "1850", "3000"]
+MALFORMED_YEARS_UNPARSE = ["122t68", "12334", "20X6", "20255", "year zero"]
+
 STORED_CONCEPTS_BLURB = "revenue, net income, or total assets"
 
 def load_db_facts(db_path):
@@ -196,6 +199,49 @@ def gen_out_of_range(rng,tickers,year_bounds,n):
         })
     return out
 
+def gen_malformed_input(rng,tickers,years_bounds,n_absurd,n_unparse):
+    lo,hi=years_bounds
+    out=[]
+    tks=list(tickers)
+
+    for yr in rng.sample(MALFORMED_YEARS_ABSURD,min(n_absurd,len(MALFORMED_YEARS_ABSURD))):
+        tk=rng.choice(tks)
+        c=rng.choice(["revenue","net_income","total_assets"])
+        name=IN_CORPUS_NAMES[tk]
+        out.append({
+            "id": f"decl_malformed_absurd_{tk}_{yr}",
+            "category": "decline",
+            "subtype": "malformed_input",
+            "severity": "absurd_year",
+            "expected_route": "REJECT",
+            "question": f"What was {name}'s {CONCEPT_PHRASE[c]} in fiscal year {yr}?",
+            "expected_behavior": (
+                f"Decline: {yr} is a real year but far outside coverage "
+                f"({lo}-{hi}); no data exists. Do not fabricate or extrapolate."
+            ),
+            "trap": f"'{yr}' is a valid year but absurdly out of range.",
+        })
+
+    for tok in rng.sample(MALFORMED_YEARS_UNPARSE,min(n_unparse,len(MALFORMED_YEARS_UNPARSE))):
+        tk=rng.choice(tks)
+        c=rng.choice(["revenue","net_income","total_assets"])
+        name=IN_CORPUS_NAMES[tk]
+        out.append({
+            "id": f"decl_malformed_unparse_{tk}_{tok.replace(' ', '_')}",
+            "category": "decline",
+            "subtype": "malformed_input",
+            "severity": "unparseable",
+            "expected_route": "REJECT",
+            "question": f"What was {name}'s {CONCEPT_PHRASE[c]} in fiscal year {tok}?",
+            "expected_behavior": (
+                f"Reject: '{tok}' is not a valid year; the time period cannot be "
+                f"parsed. Ask the user to clarify or decline. Do NOT guess a year "
+                f"or produce a figure."
+            ),
+            "trap": f"'{tok}' is unparseable as a year — tests input validation.",
+        })
+    return out
+
 def gen_misspelling(rng,n_near,n_far,n_notco):
     out=[]
 
@@ -267,16 +313,19 @@ def main():
     ap.add_argument("--n-typo-near",type=int,default=5)
     ap.add_argument("--n-typo-far",type=int,default=4)
     ap.add_argument("--n-notco",type=int,default=3)
+    ap.add_argument("--n-malformed-absurd",type=int,default=3)
+    ap.add_argument("--n-malformed-unparse",type=int,default=3)
     args=ap.parse_args()
 
     rng=random.Random(args.seed)
-    present,tickers,cocnepts,year_bounds=load_db_facts(args.db)
+    present,tickers,concepts,year_bounds=load_db_facts(args.db)
 
     items=[]
     items+=gen_out_of_corpus(rng,args.n_corpus)
     items+=gen_out_of_concept(rng,tickers,args.n_concept_calc,args.n_concept_inprose)
     items+=gen_out_of_range(rng,tickers,year_bounds,args.n_range)
     items+=gen_misspelling(rng,args.n_typo_near,args.n_typo_far,args.n_notco)
+    items+=gen_malformed_input(rng,tickers,year_bounds,args.n_malformed_absurd,args.n_malformed_unparse)
 
     with open(args.out,"w") as f:
         json.dump(items,f,indent=2)
