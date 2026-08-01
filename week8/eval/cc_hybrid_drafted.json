@@ -1,0 +1,919 @@
+[
+  {
+    "id": "cc_hybrid_total_assets_AMZN_WMT_2022_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "retail/ecommerce",
+    "question": "Between Amazon and Walmart, which grew totall assets faster from fiscal 2022 to 2025, and what reasons does each give for its totall assets change over that period?",
+    "expected_numeric": {
+      "faster_grower": "AMZN",
+      "growth_pct": {
+        "AMZN": 76.8,
+        "WMT": 6.5
+      }
+    },
+    "expected_answer_numeric": "Amazon grew faster (+76.8% vs Walmart +6.5%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its totall assets change 2022-2025. Human-verify these reasons actually appear in Amazon's and Walmart's filings.",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 462675000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "AMZN",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 818042000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 244860000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 260823000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false,
+    "drafted_prose": {
+      "AMZN": {
+        "company": "Amazon",
+        "answer": "The change in Amazon's operating income results is primarily attributed to increased unit sales and advertising sales across North America and International segments, which were partially offset by rising fulfillment, shipping, and technology costs. Additionally, foreign exchange rate fluctuations positively impacted operating income in the International segment, while negatively affecting it in other areas.",
+        "source_chunk_ids": [
+          "AMZN_10-K_00079",
+          "AMZN_10-Q_00111",
+          "AMZN_10-Q_00104",
+          "AMZN_10-K_00073"
+        ]
+      },
+      "WMT": {
+        "company": "Walmart",
+        "answer": "Walmart's results change was primarily driven by increases in net sales, which rose due to strong comparable sales across both U.S. segments and international markets, reflecting growth in average ticket, transactions, and unit volumes. Fiscal 2026 saw additional benefits from improved sales in general merchandise and continued strength in eCommerce, while both fiscal years experienced a negative impact from fluctuations in currency exchange rates.",
+        "source_chunk_ids": [
+          "WMT_10-K_00102",
+          "WMT_10-K_00106",
+          "WMT_10-K_00112",
+          "WMT_10-Q_00117"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_hybrid_revenue_CVX_XOM_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "energy",
+    "question": "Between Chevron and ExxonMobil, which grew revenue faster from fiscal 2021 to 2025, and what reasons does each give for its revenue change over that period?",
+    "expected_numeric": {
+      "faster_grower": "XOM",
+      "growth_pct": {
+        "CVX": 18.5,
+        "XOM": 20.1
+      }
+    },
+    "expected_answer_numeric": "ExxonMobil grew faster (+20.1% vs Chevron +18.5%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its revenue change 2021-2025. Human-verify these reasons actually appear in Chevron's and ExxonMobil's filings.",
+    "source_rows": [
+      {
+        "ticker": "CVX",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 155606000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "CVX",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 184432000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "XOM",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 276692000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "XOM",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 332238000000.0,
+        "source_tag": "Revenues"
+      }
+    ],
+    "verified": false,
+    "drafted_prose": {
+      "CVX": {
+        "company": "Chevron",
+        "answer": "NOT_FOUND",
+        "source_chunk_ids": [
+          "CVX_10-K_00241",
+          "CVX_10-Q_00145",
+          "CVX_10-K_00657",
+          "CVX_10-K_00654"
+        ]
+      },
+      "XOM": {
+        "company": "ExxonMobil",
+        "answer": "ExxonMobil's revenue change was influenced by several factors: lower gas realizations decreased earnings by $1.3 billion, while lower crude prices contributed to a $6.1 billion decrease in earnings. However, increased earnings from advantaged volume growth, primarily due to record production in the Permian and Guyana, partially offset these declines, resulting in a net increase of $3.8 billion from higher volumes.",
+        "source_chunk_ids": [
+          "XOM_10-K_00289",
+          "XOM_10-K_00285",
+          "XOM_10-K_00357",
+          "XOM_10-K_00305"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_hybrid_revenue_JNJ_UNH_2022_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "healthcare",
+    "question": "Between Johnson & Johnson and UnitedHealth, which grew revenue faster from fiscal 2022 to 2025, and what reasons does each give for its revenue change over that period?",
+    "expected_numeric": {
+      "faster_grower": "UNH",
+      "growth_pct": {
+        "JNJ": 19.6,
+        "UNH": 38.1
+      }
+    },
+    "expected_answer_numeric": "UnitedHealth grew faster (+38.1% vs Johnson & Johnson +19.6%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its revenue change 2022-2025. Human-verify these reasons actually appear in Johnson & Johnson's and UnitedHealth's filings.",
+    "source_rows": [
+      {
+        "ticker": "JNJ",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 78740000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "JNJ",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 94193000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 324162000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 447567000000.0,
+        "source_tag": "Revenues"
+      }
+    ],
+    "verified": false,
+    "drafted_prose": {
+      "JNJ": {
+        "company": "Johnson & Johnson",
+        "answer": "Johnson & Johnson's revenue change for the fiscal first quarter of 2026 was primarily driven by a total increase of 9.9%, attributed to operational growth of 6.4% and a positive currency impact of 3.5%. However, this growth was partially offset by a significant decline in STELARA sales due to biosimilar competition, which negatively impacted operational sales by approximately 5.4%.",
+        "source_chunk_ids": [
+          "JNJ_10-Q_00206",
+          "JNJ_10-K_00106",
+          "JNJ_10-Q_00198",
+          "JNJ_10-Q_00187"
+        ]
+      },
+      "UNH": {
+        "company": "UnitedHealth",
+        "answer": "UnitedHealthcare's revenue change was primarily driven by growth in the number of people served through Medicare Advantage and higher acuity needs within Medicaid, as well as growth at Optum Rx and favorable pricing trends. However, this growth was partially offset by a decrease in individuals served through risk-based commercial offerings and Medicaid offerings, as well as a contraction in Medicare Advantage enrollment.",
+        "source_chunk_ids": [
+          "UNH_10-K_00077",
+          "UNH_10-Q_00092",
+          "UNH_10-K_00068",
+          "UNH_10-Q_00084"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_hybrid_total_assets_BAC_JPM_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "banks",
+    "question": "Between Bank of America and JPMorgan Chase, which grew totall assets faster from fiscal 2021 to 2025, and what reasons does each give for its totall assets change over that period?",
+    "expected_numeric": {
+      "faster_grower": "JPM",
+      "growth_pct": {
+        "BAC": 7.6,
+        "JPM": 18.2
+      }
+    },
+    "expected_answer_numeric": "JPMorgan Chase grew faster (+18.2% vs Bank of America +7.6%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its totall assets change 2021-2025. Human-verify these reasons actually appear in Bank of America's and JPMorgan Chase's filings.",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 3169495000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "BAC",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 3411738000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 3743567000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 4424900000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false,
+    "drafted_prose": {
+      "BAC": {
+        "company": "Bank of America",
+        "answer": "Net income for Bank of America increased due to higher net interest income and noninterest income, alongside a lower provision for credit losses, which was partially offset by higher noninterest expenses. Specifically, the growth in net interest income was driven by loan growth, while noninterest income saw significant increases from asset management fees and brokerage fees.",
+        "source_chunk_ids": [
+          "BAC_10-Q_00096",
+          "BAC_10-K_00242",
+          "BAC_10-Q_00044",
+          "BAC_10-K_00169"
+        ]
+      },
+      "JPM": {
+        "company": "JPMorgan Chase",
+        "answer": "JPMorgan Chase's results changed due to a combination of factors, including a 4% increase in net income and a 6% rise in net revenue, driven by higher net interest income in Card Services and Banking & Wealth Management, as well as increased investment banking fees and noninterest revenue. The growth in investment banking was particularly notable in debt underwriting and advisory fees, while Markets revenue saw a significant boost from client-driven activities.",
+        "source_chunk_ids": [
+          "JPM_10-K_00235",
+          "JPM_10-K_00219",
+          "JPM_10-K_00283",
+          "JPM_10-K_00311"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_hybrid_net_income_BAC_JPM_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "banks",
+    "question": "Between Bank of America and JPMorgan Chase, which grew net income faster from fiscal 2021 to 2025, and what reasons does each give for its net income change over that period?",
+    "expected_numeric": {
+      "faster_grower": "JPM",
+      "growth_pct": {
+        "BAC": -4.6,
+        "JPM": 18.0
+      }
+    },
+    "expected_answer_numeric": "JPMorgan Chase grew faster (+18.0% vs Bank of America -4.6%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its net income change 2021-2025. Human-verify these reasons actually appear in Bank of America's and JPMorgan Chase's filings.",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 31978000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "BAC",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 30509000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 48334000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 57048000000.0,
+        "source_tag": "NetIncomeLoss"
+      }
+    ],
+    "verified": false,
+    "drafted_prose": {
+      "BAC": {
+        "company": "Bank of America",
+        "answer": "Net income for Bank of America increased to $8.6 billion for the three months ended March 31, 2026, primarily due to higher net interest income and noninterest income, along with a lower provision for credit losses. This increase was partially offset by higher noninterest expenses.",
+        "source_chunk_ids": [
+          "BAC_10-K_00242",
+          "BAC_10-Q_00096",
+          "BAC_10-Q_00044",
+          "BAC_10-K_00231"
+        ]
+      },
+      "JPM": {
+        "company": "JPMorgan Chase",
+        "answer": "JPMorgan Chase's net income increased by 4% to $18.2 billion in 2025, primarily due to higher net interest income driven by increased revolving balances in Card Services and improved deposit margins in Banking & Wealth Management. Additionally, noninterest revenue rose by 7%, supported by higher auto operating lease income and increased asset management fees, despite a decline in card income from lower net interchange.",
+        "source_chunk_ids": [
+          "JPM_10-K_00221",
+          "JPM_10-K_00283",
+          "JPM_10-K_00219",
+          "JPM_10-K_00311"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_hybrid_revenue_KO_PG_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "consumer staples",
+    "question": "Between Coca-Cola and Procter & Gamble, which grew revenue faster from fiscal 2021 to 2025, and what reasons does each give for its revenue change over that period?",
+    "expected_numeric": {
+      "faster_grower": "KO",
+      "growth_pct": {
+        "KO": 24.0,
+        "PG": 10.7
+      }
+    },
+    "expected_answer_numeric": "Coca-Cola grew faster (+24.0% vs Procter & Gamble +10.7%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its revenue change 2021-2025. Human-verify these reasons actually appear in Coca-Cola's and Procter & Gamble's filings.",
+    "source_rows": [
+      {
+        "ticker": "KO",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 38655000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "KO",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 47941000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "PG",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 76118000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "PG",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 84284000000.0,
+        "source_tag": "Revenues"
+      }
+    ],
+    "verified": false,
+    "drafted_prose": {
+      "KO": {
+        "company": "Coca-Cola",
+        "answer": "The revenue change for Coca-Cola was primarily driven by an 8% increase in concentrate sales volume, favorable pricing initiatives, and lower operating expenses. This was partially offset by increased marketing spending and higher commodity costs, as well as fluctuations in foreign currency exchange rates.",
+        "source_chunk_ids": [
+          "KO_10-Q_00129",
+          "KO_10-K_00135",
+          "KO_10-K_00124",
+          "KO_10-Q_00120"
+        ]
+      },
+      "PG": {
+        "company": "Procter & Gamble",
+        "answer": "Procter & Gamble's revenue change was primarily driven by favorable foreign exchange impacts, higher pricing, and unit volume increases across various segments, particularly in North America and Asia Pacific. However, these gains were partially offset by unit volume decreases in certain regions, such as North America and Europe, due to factors like lower incidence of cough and cold and competitive activity. Overall, organic sales saw moderate increases, reflecting a mixed performance across different markets.",
+        "source_chunk_ids": [
+          "PG_10-Q_00115",
+          "PG_10-Q_00116",
+          "PG_10-Q_00113",
+          "PG_10-Q_00112"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_hybrid_net_income_AMZN_WMT_2022_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "retail/ecommerce",
+    "question": "Between Amazon and Walmart, which grew net income faster from fiscal 2022 to 2025, and what reasons does each give for its net income change over that period?",
+    "expected_numeric": {
+      "faster_grower": "WMT",
+      "growth_pct": {
+        "AMZN": -2953.4,
+        "WMT": 42.1
+      }
+    },
+    "expected_answer_numeric": "Walmart grew faster (+42.1% vs Amazon -2953.4%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its net income change 2022-2025. Human-verify these reasons actually appear in Amazon's and Walmart's filings.",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": -2722000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "AMZN",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 77670000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": 13673000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 19436000000.0,
+        "source_tag": "NetIncomeLoss"
+      }
+    ],
+    "verified": false,
+    "drafted_prose": {
+      "AMZN": {
+        "company": "Amazon",
+        "answer": "The change in net income is attributed to increased operating income driven by higher unit sales and advertising sales in both North America and International segments, despite being partially offset by rising fulfillment, shipping, and technology costs. Additionally, foreign exchange rate fluctuations positively impacted operating income in certain areas, contributing to the overall increase.",
+        "source_chunk_ids": [
+          "AMZN_10-K_00079",
+          "AMZN_10-Q_00111",
+          "AMZN_10-K_00076",
+          "AMZN_10-Q_00104"
+        ]
+      },
+      "WMT": {
+        "company": "Walmart",
+        "answer": "Walmart's net income change was primarily influenced by an increase in total revenues, which rose by $32.2 billion or 4.7% for fiscal 2026, driven by strong comparable sales across U.S. segments and international markets. This growth was supported by increases in average ticket and transactions, alongside strength in eCommerce and grocery sales, although it was partially offset by negative impacts from currency exchange fluctuations. Additionally, membership and other income saw a slight increase, contributing to the overall revenue growth.",
+        "source_chunk_ids": [
+          "WMT_10-K_00102",
+          "WMT_10-K_00106",
+          "WMT_10-K_00112",
+          "WMT_10-Q_00107"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_hybrid_revenue_BAC_JPM_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "banks",
+    "question": "Between Bank of America and JPMorgan Chase, which grew revenue faster from fiscal 2021 to 2025, and what reasons does each give for its revenue change over that period?",
+    "expected_numeric": {
+      "faster_grower": "JPM",
+      "growth_pct": {
+        "BAC": 26.9,
+        "JPM": 50.0
+      }
+    },
+    "expected_answer_numeric": "JPMorgan Chase grew faster (+50.0% vs Bank of America +26.9%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its revenue change 2021-2025. Human-verify these reasons actually appear in Bank of America's and JPMorgan Chase's filings.",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 89113000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "BAC",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 113097000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 121649000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 182447000000.0,
+        "source_tag": "Revenues"
+      }
+    ],
+    "verified": false,
+    "drafted_prose": {
+      "BAC": {
+        "company": "Bank of America",
+        "answer": "Bank of America's revenue change was primarily driven by an increase in net interest income and noninterest income. Net interest income rose due to loan growth, while noninterest income increased significantly due to higher asset management fees and brokerage fees, despite some offset from lower AUM pricing.",
+        "source_chunk_ids": [
+          "BAC_10-Q_00096",
+          "BAC_10-K_00242",
+          "BAC_10-Q_00044",
+          "BAC_10-K_00169"
+        ]
+      },
+      "JPM": {
+        "company": "JPMorgan Chase",
+        "answer": "JPMorgan Chase's revenue change in 2025 was primarily driven by increases in various segments, including a 12% rise in net revenue to $78.5 billion, with notable contributions from Investment Banking and Payments. Investment Banking revenue rose by 6%, supported by higher fees across products, particularly in debt underwriting and advisory services, while Payments revenue increased by 7% due to higher average deposits and fee growth. Additionally, Markets & Securities Services revenue surged by 19%, largely attributed to significant gains in Equity Markets.",
+        "source_chunk_ids": [
+          "JPM_10-K_00311",
+          "JPM_10-K_00219",
+          "JPM_10-K_00235",
+          "JPM_10-K_00204"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_hybrid_net_income_AAPL_META_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "big tech",
+    "question": "Between Apple and Meta, which grew net income faster from fiscal 2021 to 2025, and what reasons does each give for its net income change over that period?",
+    "expected_numeric": {
+      "faster_grower": "META",
+      "growth_pct": {
+        "AAPL": 18.3,
+        "META": 53.6
+      }
+    },
+    "expected_answer_numeric": "Meta grew faster (+53.6% vs Apple +18.3%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its net income change 2021-2025. Human-verify these reasons actually appear in Apple's and Meta's filings.",
+    "source_rows": [
+      {
+        "ticker": "AAPL",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 94680000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "AAPL",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 112010000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "META",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 39370000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "META",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 60458000000.0,
+        "source_tag": "NetIncomeLoss"
+      }
+    ],
+    "verified": false,
+    "drafted_prose": {
+      "AAPL": {
+        "company": "Apple",
+        "answer": "The change in Apple's net income is attributed to increased net sales of iPhone and Services across various regions, including the Americas, Europe, and Greater China, during the second quarter and first six months of 2026 compared to the same periods in 2025. Additionally, the strength of foreign currencies relative to the U.S. dollar positively impacted net sales year-over-year.",
+        "source_chunk_ids": [
+          "AAPL_10-Q_00086",
+          "AAPL_10-K_00078",
+          "AAPL_10-K_00080",
+          "AAPL_10-Q_00088"
+        ]
+      },
+      "META": {
+        "company": "Meta",
+        "answer": "The change in net income for Meta is primarily attributed to a significant increase in advertising revenue, which rose by $35.54 billion, or 22%, in 2025 compared to 2024. This growth was driven by higher ad impressions and an increase in the average price per ad, reflecting improved ad performance and demand. Additionally, cash flows from operating activities increased due to higher revenue and lower cash paid for income taxes, despite higher operational spending.",
+        "source_chunk_ids": [
+          "META_10-K_00146",
+          "META_10-Q_00119",
+          "META_10-K_00163",
+          "META_10-Q_00136"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_prose_CVX_XOM_impact",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "energy",
+    "question": "How do Chevron and ExxonMobil each describe their impact of macroeconomic conditions in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare impact of macroeconomic conditions from BOTH Chevron's and ExxonMobil's filings. Human-verify both companies actually discuss 'impact of macroeconomic conditions'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "CVX",
+      "XOM"
+    ],
+    "theme": "impact of macroeconomic conditions",
+    "verified": false,
+    "drafted_prose": {
+      "CVX": {
+        "company": "Chevron",
+        "answer": "The excerpts indicate that macroeconomic conditions, particularly related to environmental, social, and governance (ESG) matters, have led to increased costs, reduced demand for Chevron's products, and potential impacts on profits and stock prices. Additionally, geopolitical tensions, especially in the Middle East, have created uncertainties in crude supply and operational disruptions, highlighting the vulnerability of Chevron's business to external market conditions.",
+        "source_chunk_ids": [
+          "CVX_10-K_00108",
+          "CVX_10-Q_00111",
+          "CVX_10-K_00111",
+          "CVX_10-K_00164"
+        ]
+      },
+      "XOM": {
+        "company": "ExxonMobil",
+        "answer": "ExxonMobil's financial and operating results are significantly influenced by macroeconomic conditions, particularly through fluctuations in oil, gas, and petrochemical prices, which are affected by global supply and demand dynamics. Changes in economic conditions, government policies, and geopolitical events can lead to material declines or increases in commodity prices, impacting the company's operations and financial health. Additionally, factors such as regulatory changes and market imbalances further complicate the company's ability to navigate these macroeconomic challenges.",
+        "source_chunk_ids": [
+          "XOM_10-Q_00072",
+          "XOM_10-K_00045",
+          "XOM_10-K_00048",
+          "XOM_10-K_00249"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_prose_KO_PG_competitive",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "consumer staples",
+    "question": "How do Coca-Cola and Procter & Gamble each describe their competitive strategy in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare competitive strategy from BOTH Coca-Cola's and Procter & Gamble's filings. Human-verify both companies actually discuss 'competitive strategy'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "KO",
+      "PG"
+    ],
+    "theme": "competitive strategy",
+    "verified": false,
+    "drafted_prose": {
+      "KO": {
+        "company": "Coca-Cola",
+        "answer": "Coca-Cola's competitive strategy focuses on maintaining and expanding its market share in the highly competitive beverage industry through continuous innovation, effective marketing, and leveraging data analytics. The company aims to adapt to market pressures, including pricing challenges and the rise of e-commerce, by enhancing its capabilities and exploring profitable categories, including alcohol beverages in select markets. Additionally, Coca-Cola emphasizes the importance of brand loyalty and consumer interest to navigate competitive dynamics effectively.",
+        "source_chunk_ids": [
+          "KO_10-K_00046",
+          "KO_10-K_00052",
+          "KO_10-K_00276",
+          "KO_10-K_00055"
+        ]
+      },
+      "PG": {
+        "company": "Procter & Gamble",
+        "answer": "Procter & Gamble's competitive strategy emphasizes leveraging its human capital as a key advantage, focusing on attracting, developing, and retaining a diverse and talented workforce. The company aims to manage cost fluctuations and competitive pressures through effective pricing actions, cost-saving initiatives, and strategic sourcing decisions, while also protecting its trademarks and patents to enhance its market position. Additionally, the company recognizes the importance of adapting to emerging technologies and maintaining operational integrity to sustain its competitive edge in a highly competitive consumer products industry.",
+        "source_chunk_ids": [
+          "PG_10-K_00015",
+          "PG_10-K_00014",
+          "PG_10-K_00020",
+          "PG_10-K_00023"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_prose_PG_WMT_sources",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "consumer staples",
+    "question": "How do Procter & Gamble and Walmart each describe their sources of revenue growth in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare sources of revenue growth from BOTH Procter & Gamble's and Walmart's filings. Human-verify both companies actually discuss 'sources of revenue growth'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "PG",
+      "WMT"
+    ],
+    "theme": "sources of revenue growth",
+    "verified": false,
+    "drafted_prose": {
+      "PG": {
+        "company": "Procter & Gamble",
+        "answer": "Procter & Gamble's revenue growth is attributed to several factors, including increases in unit volume across various segments, favorable foreign exchange impacts, and innovation-based pricing strategies, particularly in the Beauty, Hair Care, and Personal Care categories. Additionally, organic sales growth was driven by strong performance in regions such as Latin America, Europe, and Asia Pacific, despite some declines in North America due to competitive activity.",
+        "source_chunk_ids": [
+          "PG_10-Q_00113",
+          "PG_10-K_00081",
+          "PG_10-Q_00063",
+          "PG_10-Q_00112"
+        ]
+      },
+      "WMT": {
+        "company": "Walmart",
+        "answer": "Walmart's revenue growth is primarily driven by increases in net sales, which rose due to strong comparable sales across U.S. segments and international markets, with notable contributions from eCommerce, grocery, and health and wellness categories. Additionally, membership and other income saw growth, largely attributed to rising membership fee revenue from Walmart+, despite some offsets from decreases in other income items.",
+        "source_chunk_ids": [
+          "WMT_10-K_00177",
+          "WMT_10-K_00102",
+          "WMT_10-K_00088",
+          "WMT_10-K_00106"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_prose_AMZN_WMT_sources",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "retail/ecommerce",
+    "question": "How do Amazon and Walmart each describe their sources of revenue growth in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare sources of revenue growth from BOTH Amazon's and Walmart's filings. Human-verify both companies actually discuss 'sources of revenue growth'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "AMZN",
+      "WMT"
+    ],
+    "theme": "sources of revenue growth",
+    "verified": false,
+    "drafted_prose": {
+      "AMZN": {
+        "company": "Amazon",
+        "answer": "Amazon's revenue growth is driven by several key sources: retail sales through both online and physical stores, services for third-party sellers that include commissions and fulfillment fees, and advertising services offered to sellers. The company continues to expand its global operations and product offerings while leveraging technology, including artificial intelligence and machine learning, to support its growth.",
+        "source_chunk_ids": [
+          "AMZN_10-K_00033",
+          "AMZN_10-Q_00131",
+          "AMZN_10-K_00116",
+          "AMZN_10-K_00129"
+        ]
+      },
+      "WMT": {
+        "company": "Walmart",
+        "answer": "Walmart's revenue growth is primarily driven by increases in net sales, which rose due to strong comparable sales across U.S. segments and international markets, with notable contributions from eCommerce, grocery, and health and wellness categories. Additionally, membership and other income saw growth, particularly from membership fees associated with Walmart+, despite some offset from declines in other income sources.",
+        "source_chunk_ids": [
+          "WMT_10-K_00177",
+          "WMT_10-K_00102",
+          "WMT_10-K_00088",
+          "WMT_10-K_00106"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_prose_CVX_XOM_competitive",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "energy",
+    "question": "How do Chevron and ExxonMobil each describe their competitive strategy in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare competitive strategy from BOTH Chevron's and ExxonMobil's filings. Human-verify both companies actually discuss 'competitive strategy'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "CVX",
+      "XOM"
+    ],
+    "theme": "competitive strategy",
+    "verified": false,
+    "drafted_prose": {
+      "CVX": {
+        "company": "Chevron",
+        "answer": "Chevron's competitive strategy focuses on adapting to a lower carbon future while maintaining its core fossil fuel operations. The company emphasizes the importance of technological advancements, regulatory frameworks, and market conditions in shaping its approach, aiming to integrate climate change considerations into its business model. Additionally, Chevron prioritizes operational excellence and employee engagement to foster a skilled and diverse workforce that can support its strategic objectives.",
+        "source_chunk_ids": [
+          "CVX_10-K_00161",
+          "CVX_10-Q_00108",
+          "CVX_10-K_00023",
+          "CVX_10-K_00056"
+        ]
+      },
+      "XOM": {
+        "company": "ExxonMobil",
+        "answer": "NOT_FOUND",
+        "source_chunk_ids": [
+          "XOM_10-K_00051",
+          "XOM_10-K_00053",
+          "XOM_10-K_00249",
+          "XOM_10-Q_00073"
+        ]
+      }
+    }
+  },
+  {
+    "id": "cc_misleading_total_assets_JPM_AAPL_2025",
+    "category": "cross_company",
+    "subtype": "misleading_comparison",
+    "expected_route": "NUMERIC",
+    "sector": "cross-sector (deliberate)",
+    "question": "Which is larger by totall assets in fiscal 2025: JPMorgan Chase or Apple?",
+    "expected_numeric": {
+      "larger": "JPM",
+      "values": {
+        "JPM": 4424900000000.0,
+        "AAPL": 359241000000.0
+      }
+    },
+    "expected_answer_numeric": "JPMorgan Chase is larger by totall assets ($4.42T vs $359.24B)",
+    "expected_behavior": "Give the exact figures, BUT flag that this comparison is misleading: a bank holds massive assets as part of its business model, so total assets vastly overstate its 'size' relative to a hardware company. A good answer states the numbers and the caveat; a bad answer presents the raw comparison as if it were a fair 'size' ranking.",
+    "source_rows": [
+      {
+        "ticker": "JPM",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 4424900000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "AAPL",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 359241000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_misleading_total_assets_BRK-B_NVDA_2025",
+    "category": "cross_company",
+    "subtype": "misleading_comparison",
+    "expected_route": "NUMERIC",
+    "sector": "cross-sector (deliberate)",
+    "question": "Which is larger by totall assets in fiscal 2025: Berkshire Hathaway or NVIDIA?",
+    "expected_numeric": {
+      "larger": "BRK-B",
+      "values": {
+        "BRK-B": 1222176000000.0,
+        "NVDA": 111601000000.0
+      }
+    },
+    "expected_answer_numeric": "Berkshire Hathaway is larger by totall assets ($1.22T vs $111.60B)",
+    "expected_behavior": "Give the exact figures, BUT flag that this comparison is misleading: a diversified holding/insurance conglomerate's assets aren't comparable to a fabless chip designer's. A good answer states the numbers and the caveat; a bad answer presents the raw comparison as if it were a fair 'size' ranking.",
+    "source_rows": [
+      {
+        "ticker": "BRK-B",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 1222176000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "NVDA",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 111601000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_misleading_total_assets_BAC_MSFT_2025",
+    "category": "cross_company",
+    "subtype": "misleading_comparison",
+    "expected_route": "NUMERIC",
+    "sector": "cross-sector (deliberate)",
+    "question": "Which is larger by totall assets in fiscal 2025: Bank of America or Microsoft?",
+    "expected_numeric": {
+      "larger": "BAC",
+      "values": {
+        "BAC": 3411738000000.0,
+        "MSFT": 619003000000.0
+      }
+    },
+    "expected_answer_numeric": "Bank of America is larger by totall assets ($3.41T vs $619.00B)",
+    "expected_behavior": "Give the exact figures, BUT flag that this comparison is misleading: bank balance sheets are structurally huge (loans/securities), making total-assets comparisons with a software firm misleading. A good answer states the numbers and the caveat; a bad answer presents the raw comparison as if it were a fair 'size' ranking.",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 3411738000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "MSFT",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 619003000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false
+  }
+]
