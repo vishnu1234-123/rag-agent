@@ -1,0 +1,611 @@
+[
+  {
+    "id": "cc_hybrid_total_assets_AMZN_WMT_2022_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "retail/ecommerce",
+    "question": "Between Amazon and Walmart, which grew totall assets faster from fiscal 2022 to 2025, and what reasons does each give for its totall assets change over that period?",
+    "expected_numeric": {
+      "faster_grower": "AMZN",
+      "growth_pct": {
+        "AMZN": 76.8,
+        "WMT": 6.5
+      }
+    },
+    "expected_answer_numeric": "Amazon grew faster (+76.8% vs Walmart +6.5%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its totall assets change 2022-2025. Human-verify these reasons actually appear in Amazon's and Walmart's filings.",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 462675000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "AMZN",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 818042000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "total_assets",
+        "fiscal_year": 2022,
+        "value": 244860000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 260823000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_hybrid_revenue_CVX_XOM_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "energy",
+    "question": "Between Chevron and ExxonMobil, which grew revenue faster from fiscal 2021 to 2025, and what reasons does each give for its revenue change over that period?",
+    "expected_numeric": {
+      "faster_grower": "XOM",
+      "growth_pct": {
+        "CVX": 18.5,
+        "XOM": 20.1
+      }
+    },
+    "expected_answer_numeric": "ExxonMobil grew faster (+20.1% vs Chevron +18.5%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its revenue change 2021-2025. Human-verify these reasons actually appear in Chevron's and ExxonMobil's filings.",
+    "source_rows": [
+      {
+        "ticker": "CVX",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 155606000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "CVX",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 184432000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "XOM",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 276692000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "XOM",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 332238000000.0,
+        "source_tag": "Revenues"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_hybrid_revenue_JNJ_UNH_2022_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "healthcare",
+    "question": "Between Johnson & Johnson and UnitedHealth, which grew revenue faster from fiscal 2022 to 2025, and what reasons does each give for its revenue change over that period?",
+    "expected_numeric": {
+      "faster_grower": "UNH",
+      "growth_pct": {
+        "JNJ": 19.6,
+        "UNH": 38.1
+      }
+    },
+    "expected_answer_numeric": "UnitedHealth grew faster (+38.1% vs Johnson & Johnson +19.6%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its revenue change 2022-2025. Human-verify these reasons actually appear in Johnson & Johnson's and UnitedHealth's filings.",
+    "source_rows": [
+      {
+        "ticker": "JNJ",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 78740000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "JNJ",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 94193000000.0,
+        "source_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2022,
+        "value": 324162000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "UNH",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 447567000000.0,
+        "source_tag": "Revenues"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_hybrid_total_assets_BAC_JPM_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "banks",
+    "question": "Between Bank of America and JPMorgan Chase, which grew totall assets faster from fiscal 2021 to 2025, and what reasons does each give for its totall assets change over that period?",
+    "expected_numeric": {
+      "faster_grower": "JPM",
+      "growth_pct": {
+        "BAC": 7.6,
+        "JPM": 18.2
+      }
+    },
+    "expected_answer_numeric": "JPMorgan Chase grew faster (+18.2% vs Bank of America +7.6%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its totall assets change 2021-2025. Human-verify these reasons actually appear in Bank of America's and JPMorgan Chase's filings.",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 3169495000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "BAC",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 3411738000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "total_assets",
+        "fiscal_year": 2021,
+        "value": 3743567000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 4424900000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_hybrid_net_income_BAC_JPM_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "banks",
+    "question": "Between Bank of America and JPMorgan Chase, which grew net income faster from fiscal 2021 to 2025, and what reasons does each give for its net income change over that period?",
+    "expected_numeric": {
+      "faster_grower": "JPM",
+      "growth_pct": {
+        "BAC": -4.6,
+        "JPM": 18.0
+      }
+    },
+    "expected_answer_numeric": "JPMorgan Chase grew faster (+18.0% vs Bank of America -4.6%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its net income change 2021-2025. Human-verify these reasons actually appear in Bank of America's and JPMorgan Chase's filings.",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 31978000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "BAC",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 30509000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 48334000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 57048000000.0,
+        "source_tag": "NetIncomeLoss"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_hybrid_revenue_KO_PG_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "consumer staples",
+    "question": "Between Coca-Cola and Procter & Gamble, which grew revenue faster from fiscal 2021 to 2025, and what reasons does each give for its revenue change over that period?",
+    "expected_numeric": {
+      "faster_grower": "KO",
+      "growth_pct": {
+        "KO": 24.0,
+        "PG": 10.7
+      }
+    },
+    "expected_answer_numeric": "Coca-Cola grew faster (+24.0% vs Procter & Gamble +10.7%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its revenue change 2021-2025. Human-verify these reasons actually appear in Coca-Cola's and Procter & Gamble's filings.",
+    "source_rows": [
+      {
+        "ticker": "KO",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 38655000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "KO",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 47941000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "PG",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 76118000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "PG",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 84284000000.0,
+        "source_tag": "Revenues"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_hybrid_net_income_AMZN_WMT_2022_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "retail/ecommerce",
+    "question": "Between Amazon and Walmart, which grew net income faster from fiscal 2022 to 2025, and what reasons does each give for its net income change over that period?",
+    "expected_numeric": {
+      "faster_grower": "WMT",
+      "growth_pct": {
+        "AMZN": -2953.4,
+        "WMT": 42.1
+      }
+    },
+    "expected_answer_numeric": "Walmart grew faster (+42.1% vs Amazon -2953.4%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its net income change 2022-2025. Human-verify these reasons actually appear in Amazon's and Walmart's filings.",
+    "source_rows": [
+      {
+        "ticker": "AMZN",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": -2722000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "AMZN",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 77670000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "net_income",
+        "fiscal_year": 2022,
+        "value": 13673000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "WMT",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 19436000000.0,
+        "source_tag": "NetIncomeLoss"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_hybrid_revenue_BAC_JPM_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "banks",
+    "question": "Between Bank of America and JPMorgan Chase, which grew revenue faster from fiscal 2021 to 2025, and what reasons does each give for its revenue change over that period?",
+    "expected_numeric": {
+      "faster_grower": "JPM",
+      "growth_pct": {
+        "BAC": 26.9,
+        "JPM": 50.0
+      }
+    },
+    "expected_answer_numeric": "JPMorgan Chase grew faster (+50.0% vs Bank of America +26.9%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its revenue change 2021-2025. Human-verify these reasons actually appear in Bank of America's and JPMorgan Chase's filings.",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 89113000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "BAC",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 113097000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "revenue",
+        "fiscal_year": 2021,
+        "value": 121649000000.0,
+        "source_tag": "Revenues"
+      },
+      {
+        "ticker": "JPM",
+        "concept": "revenue",
+        "fiscal_year": 2025,
+        "value": 182447000000.0,
+        "source_tag": "Revenues"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_hybrid_net_income_AAPL_META_2021_2025",
+    "category": "cross_company",
+    "subtype": "hybrid",
+    "expected_route": "HYBRID",
+    "sector": "big tech",
+    "question": "Between Apple and Meta, which grew net income faster from fiscal 2021 to 2025, and what reasons does each give for its net income change over that period?",
+    "expected_numeric": {
+      "faster_grower": "META",
+      "growth_pct": {
+        "AAPL": 18.3,
+        "META": 53.6
+      }
+    },
+    "expected_answer_numeric": "Meta grew faster (+53.6% vs Apple +18.3%)",
+    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its net income change 2021-2025. Human-verify these reasons actually appear in Apple's and Meta's filings.",
+    "source_rows": [
+      {
+        "ticker": "AAPL",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 94680000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "AAPL",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 112010000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "META",
+        "concept": "net_income",
+        "fiscal_year": 2021,
+        "value": 39370000000.0,
+        "source_tag": "NetIncomeLoss"
+      },
+      {
+        "ticker": "META",
+        "concept": "net_income",
+        "fiscal_year": 2025,
+        "value": 60458000000.0,
+        "source_tag": "NetIncomeLoss"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_prose_CVX_XOM_impact",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "energy",
+    "question": "How do Chevron and ExxonMobil each describe their impact of macroeconomic conditions in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare impact of macroeconomic conditions from BOTH Chevron's and ExxonMobil's filings. Human-verify both companies actually discuss 'impact of macroeconomic conditions'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "CVX",
+      "XOM"
+    ],
+    "theme": "impact of macroeconomic conditions",
+    "verified": false
+  },
+  {
+    "id": "cc_prose_KO_PG_competitive",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "consumer staples",
+    "question": "How do Coca-Cola and Procter & Gamble each describe their competitive strategy in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare competitive strategy from BOTH Coca-Cola's and Procter & Gamble's filings. Human-verify both companies actually discuss 'competitive strategy'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "KO",
+      "PG"
+    ],
+    "theme": "competitive strategy",
+    "verified": false
+  },
+  {
+    "id": "cc_prose_PG_WMT_sources",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "consumer staples",
+    "question": "How do Procter & Gamble and Walmart each describe their sources of revenue growth in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare sources of revenue growth from BOTH Procter & Gamble's and Walmart's filings. Human-verify both companies actually discuss 'sources of revenue growth'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "PG",
+      "WMT"
+    ],
+    "theme": "sources of revenue growth",
+    "verified": false
+  },
+  {
+    "id": "cc_prose_AMZN_WMT_sources",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "retail/ecommerce",
+    "question": "How do Amazon and Walmart each describe their sources of revenue growth in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare sources of revenue growth from BOTH Amazon's and Walmart's filings. Human-verify both companies actually discuss 'sources of revenue growth'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "AMZN",
+      "WMT"
+    ],
+    "theme": "sources of revenue growth",
+    "verified": false
+  },
+  {
+    "id": "cc_prose_CVX_XOM_competitive",
+    "category": "cross_company",
+    "subtype": "cross_prose",
+    "expected_route": "HYBRID",
+    "sector": "energy",
+    "question": "How do Chevron and ExxonMobil each describe their competitive strategy in their filings, and how do they differ?",
+    "prose_requirement": "Retrieve and compare competitive strategy from BOTH Chevron's and ExxonMobil's filings. Human-verify both companies actually discuss 'competitive strategy'. Answer must not attribute one company's statements to the other.",
+    "companies": [
+      "CVX",
+      "XOM"
+    ],
+    "theme": "competitive strategy",
+    "verified": false
+  },
+  {
+    "id": "cc_misleading_total_assets_JPM_AAPL_2025",
+    "category": "cross_company",
+    "subtype": "misleading_comparison",
+    "expected_route": "NUMERIC",
+    "sector": "cross-sector (deliberate)",
+    "question": "Which is larger by totall assets in fiscal 2025: JPMorgan Chase or Apple?",
+    "expected_numeric": {
+      "larger": "JPM",
+      "values": {
+        "JPM": 4424900000000.0,
+        "AAPL": 359241000000.0
+      }
+    },
+    "expected_answer_numeric": "JPMorgan Chase is larger by totall assets ($4.42T vs $359.24B)",
+    "expected_behavior": "Give the exact figures, BUT flag that this comparison is misleading: a bank holds massive assets as part of its business model, so total assets vastly overstate its 'size' relative to a hardware company. A good answer states the numbers and the caveat; a bad answer presents the raw comparison as if it were a fair 'size' ranking.",
+    "source_rows": [
+      {
+        "ticker": "JPM",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 4424900000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "AAPL",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 359241000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_misleading_total_assets_BRK-B_NVDA_2025",
+    "category": "cross_company",
+    "subtype": "misleading_comparison",
+    "expected_route": "NUMERIC",
+    "sector": "cross-sector (deliberate)",
+    "question": "Which is larger by totall assets in fiscal 2025: Berkshire Hathaway or NVIDIA?",
+    "expected_numeric": {
+      "larger": "BRK-B",
+      "values": {
+        "BRK-B": 1222176000000.0,
+        "NVDA": 111601000000.0
+      }
+    },
+    "expected_answer_numeric": "Berkshire Hathaway is larger by totall assets ($1.22T vs $111.60B)",
+    "expected_behavior": "Give the exact figures, BUT flag that this comparison is misleading: a diversified holding/insurance conglomerate's assets aren't comparable to a fabless chip designer's. A good answer states the numbers and the caveat; a bad answer presents the raw comparison as if it were a fair 'size' ranking.",
+    "source_rows": [
+      {
+        "ticker": "BRK-B",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 1222176000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "NVDA",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 111601000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "cc_misleading_total_assets_BAC_MSFT_2025",
+    "category": "cross_company",
+    "subtype": "misleading_comparison",
+    "expected_route": "NUMERIC",
+    "sector": "cross-sector (deliberate)",
+    "question": "Which is larger by totall assets in fiscal 2025: Bank of America or Microsoft?",
+    "expected_numeric": {
+      "larger": "BAC",
+      "values": {
+        "BAC": 3411738000000.0,
+        "MSFT": 619003000000.0
+      }
+    },
+    "expected_answer_numeric": "Bank of America is larger by totall assets ($3.41T vs $619.00B)",
+    "expected_behavior": "Give the exact figures, BUT flag that this comparison is misleading: bank balance sheets are structurally huge (loans/securities), making total-assets comparisons with a software firm misleading. A good answer states the numbers and the caveat; a bad answer presents the raw comparison as if it were a fair 'size' ranking.",
+    "source_rows": [
+      {
+        "ticker": "BAC",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 3411738000000.0,
+        "source_tag": "Assets"
+      },
+      {
+        "ticker": "MSFT",
+        "concept": "total_assets",
+        "fiscal_year": 2025,
+        "value": 619003000000.0,
+        "source_tag": "Assets"
+      }
+    ],
+    "verified": false
+  }
+]
