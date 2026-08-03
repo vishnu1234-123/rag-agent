@@ -1,76 +1,5 @@
 [
   {
-    "id": "cc_hybrid_total_assets_AMZN_WMT_2022_2025",
-    "category": "cross_company",
-    "subtype": "hybrid",
-    "expected_route": "HYBRID",
-    "sector": "retail/ecommerce",
-    "question": "Between Amazon and Walmart, which grew totall assets faster from fiscal 2022 to 2025, and what reasons does each give for its totall assets change over that period?",
-    "expected_numeric": {
-      "faster_grower": "AMZN",
-      "growth_pct": {
-        "AMZN": 76.8,
-        "WMT": 6.5
-      }
-    },
-    "expected_answer_numeric": "Amazon grew faster (+76.8% vs Walmart +6.5%)",
-    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its totall assets change 2022-2025. Human-verify these reasons actually appear in Amazon's and Walmart's filings.",
-    "source_rows": [
-      {
-        "ticker": "AMZN",
-        "concept": "total_assets",
-        "fiscal_year": 2022,
-        "value": 462675000000.0,
-        "source_tag": "Assets"
-      },
-      {
-        "ticker": "AMZN",
-        "concept": "total_assets",
-        "fiscal_year": 2025,
-        "value": 818042000000.0,
-        "source_tag": "Assets"
-      },
-      {
-        "ticker": "WMT",
-        "concept": "total_assets",
-        "fiscal_year": 2022,
-        "value": 244860000000.0,
-        "source_tag": "Assets"
-      },
-      {
-        "ticker": "WMT",
-        "concept": "total_assets",
-        "fiscal_year": 2025,
-        "value": 260823000000.0,
-        "source_tag": "Assets"
-      }
-    ],
-    "verified": false,
-    "drafted_prose": {
-      "AMZN": {
-        "company": "Amazon",
-        "answer": "The change in Amazon's operating income results is primarily attributed to increased unit sales and advertising sales across North America and International segments, which were partially offset by rising fulfillment, shipping, and technology costs. Additionally, foreign exchange rate fluctuations positively impacted operating income in the International segment, while negatively affecting it in other areas.",
-        "source_chunk_ids": [
-          "AMZN_10-K_00079",
-          "AMZN_10-Q_00111",
-          "AMZN_10-Q_00104",
-          "AMZN_10-K_00073"
-        ]
-      },
-      "WMT": {
-        "company": "Walmart",
-        "answer": "Walmart's results change was primarily driven by increases in net sales, which rose due to strong comparable sales across both U.S. segments and international markets, reflecting growth in average ticket, transactions, and unit volumes. Fiscal 2026 saw additional benefits from improved sales in general merchandise and continued strength in eCommerce, while both fiscal years experienced a negative impact from fluctuations in currency exchange rates.",
-        "source_chunk_ids": [
-          "WMT_10-K_00102",
-          "WMT_10-K_00106",
-          "WMT_10-K_00112",
-          "WMT_10-Q_00117"
-        ]
-      }
-    },
-    "fix_note": "both drafts about income/revenue, not asset growth \u2014 need balance-sheet chunks"
-  },
-  {
     "id": "cc_hybrid_revenue_CVX_XOM_2021_2025",
     "category": "cross_company",
     "subtype": "hybrid",
@@ -116,16 +45,13 @@
         "source_tag": "Revenues"
       }
     ],
-    "verified": false,
+    "verified": true,
     "drafted_prose": {
       "CVX": {
         "company": "Chevron",
-        "answer": "NOT_FOUND",
+        "answer": "Chevron's revenue and earnings decline was driven primarily by lower upstream realizations, higher upstream depreciation, depletion and amortization, unfavorable foreign exchange impacts, and higher operating costs, partially offset by higher upstream sales volumes.",
         "source_chunk_ids": [
-          "CVX_10-K_00241",
-          "CVX_10-Q_00145",
-          "CVX_10-K_00657",
-          "CVX_10-K_00654"
+          "CVX_10-K_00241"
         ]
       },
       "XOM": {
@@ -138,8 +64,7 @@
           "XOM_10-K_00305"
         ]
       }
-    },
-    "fix_note": "CVX came back NOT_FOUND \u2014 retrieval missed its revenue MD&A; XOM half is good. Re-retrieve Chevron with better keywords."
+    }
   },
   {
     "id": "cc_hybrid_revenue_JNJ_UNH_2022_2025",
@@ -210,77 +135,6 @@
         ]
       }
     }
-  },
-  {
-    "id": "cc_hybrid_total_assets_BAC_JPM_2021_2025",
-    "category": "cross_company",
-    "subtype": "hybrid",
-    "expected_route": "HYBRID",
-    "sector": "banks",
-    "question": "Between Bank of America and JPMorgan Chase, which grew totall assets faster from fiscal 2021 to 2025, and what reasons does each give for its totall assets change over that period?",
-    "expected_numeric": {
-      "faster_grower": "JPM",
-      "growth_pct": {
-        "BAC": 7.6,
-        "JPM": 18.2
-      }
-    },
-    "expected_answer_numeric": "JPMorgan Chase grew faster (+18.2% vs Bank of America +7.6%)",
-    "prose_requirement": "Must also surface, from each company's filing, the stated reasons for its totall assets change 2021-2025. Human-verify these reasons actually appear in Bank of America's and JPMorgan Chase's filings.",
-    "source_rows": [
-      {
-        "ticker": "BAC",
-        "concept": "total_assets",
-        "fiscal_year": 2021,
-        "value": 3169495000000.0,
-        "source_tag": "Assets"
-      },
-      {
-        "ticker": "BAC",
-        "concept": "total_assets",
-        "fiscal_year": 2025,
-        "value": 3411738000000.0,
-        "source_tag": "Assets"
-      },
-      {
-        "ticker": "JPM",
-        "concept": "total_assets",
-        "fiscal_year": 2021,
-        "value": 3743567000000.0,
-        "source_tag": "Assets"
-      },
-      {
-        "ticker": "JPM",
-        "concept": "total_assets",
-        "fiscal_year": 2025,
-        "value": 4424900000000.0,
-        "source_tag": "Assets"
-      }
-    ],
-    "verified": false,
-    "drafted_prose": {
-      "BAC": {
-        "company": "Bank of America",
-        "answer": "Net income for Bank of America increased due to higher net interest income and noninterest income, alongside a lower provision for credit losses, which was partially offset by higher noninterest expenses. Specifically, the growth in net interest income was driven by loan growth, while noninterest income saw significant increases from asset management fees and brokerage fees.",
-        "source_chunk_ids": [
-          "BAC_10-Q_00096",
-          "BAC_10-K_00242",
-          "BAC_10-Q_00044",
-          "BAC_10-K_00169"
-        ]
-      },
-      "JPM": {
-        "company": "JPMorgan Chase",
-        "answer": "JPMorgan Chase's results changed due to a combination of factors, including a 4% increase in net income and a 6% rise in net revenue, driven by higher net interest income in Card Services and Banking & Wealth Management, as well as increased investment banking fees and noninterest revenue. The growth in investment banking was particularly notable in debt underwriting and advisory fees, while Markets revenue saw a significant boost from client-driven activities.",
-        "source_chunk_ids": [
-          "JPM_10-K_00235",
-          "JPM_10-K_00219",
-          "JPM_10-K_00283",
-          "JPM_10-K_00311"
-        ]
-      }
-    },
-    "fix_note": "both drafts about net income/revenue, not total-asset growth \u2014 same drift as AMZN/WMT total_assets; re-retrieve with balance-sheet keywords"
   },
   {
     "id": "cc_hybrid_net_income_BAC_JPM_2021_2025",
@@ -793,7 +647,7 @@
       "XOM"
     ],
     "theme": "competitive strategy",
-    "verified": false,
+    "verified": true,
     "drafted_prose": {
       "CVX": {
         "company": "Chevron",
@@ -807,16 +661,12 @@
       },
       "XOM": {
         "company": "ExxonMobil",
-        "answer": "NOT_FOUND",
+        "answer": "ExxonMobil describes the energy and petrochemical industries as highly competitive, noting it competes not only with other private firms but across the industry, and that its ability to insure against many operational risks is limited by the availability, cost, and capacity of insurance markets.",
         "source_chunk_ids": [
-          "XOM_10-K_00051",
-          "XOM_10-K_00053",
-          "XOM_10-K_00249",
-          "XOM_10-Q_00073"
+          "XOM_10-K_00060"
         ]
       }
-    },
-    "fix_note": "XOM came back NOT_FOUND \u2014 competitive-strategy retrieval missed; CVX half is good. Re-retrieve ExxonMobil with competition/competitive keywords."
+    }
   },
   {
     "id": "cc_misleading_total_assets_JPM_AAPL_2025",

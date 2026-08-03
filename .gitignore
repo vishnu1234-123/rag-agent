@@ -13,3 +13,6 @@ week8/data/
 reports/
 *.bak
 *.bak.bak
+week8/eval/cc_hybrid_refix.json
+*.bak
+*.bak.bak

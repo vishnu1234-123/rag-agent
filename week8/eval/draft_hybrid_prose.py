@@ -49,7 +49,17 @@ NAMES = {
 }
 CONCEPT_PHRASE = {"revenue": "revenue", "net_income": "net income",
                   "total_assets": "total assets"}
- 
+
+BALANCE_SHEET_CONCEPTS={"total_assets"}
+
+BALANCE_SHEET_KEYWORDS=["assets","balance","sheet","capital","expennditures",
+                        "property","equipment","investments","acquisitions",
+                        "loans","securities","deposits","goodwill",
+                        ]
+
+THEME_KEYWORDS={"competitive":["competetive","competition","competitors",
+                "compete","market position","stratergy"],}
+
 STOPWORDS = set("the a an and or of to in for its their as is are was were be "
                 "this that which what how does do did will would over from each "
                 "give gives change period fiscal year".split())
@@ -70,7 +80,7 @@ def load_chunks(chunks_dir):
 def chunk_id(c):
     return f"{c["ticker"]}_{c["form"]}_{c["chunk_index"]:05d}"
 
-def score_chunks(chunks,keywords,top_k=4):
+def score_chunks(chunks,keywords,top_k=8):
     kw=[k for k in keywords if k not in STOPWORDS and len(k)>2]
     scored=[]
     for c in chunks:
@@ -90,12 +100,17 @@ def topic_for(item):
                 concept=ck
                 break
         cp=CONCEPT_PHRASE.get(concept,"results")
-        kws=cp.split()+["increase","decrease","growth","driven",
+
+        if concept in BALANCE_SHEET_CONCEPTS:
+            kws=cp.split()+BALANCE_SHEET_KEYWORDS
+        else:
+            kws=cp.split()+["increase","decrease","growth","driven",
                         "due","primarily","compared","higher","lower"]
         return kws,f"the reason for its {cp} change"
     else:
         theme=item.get("theme","")
-        return theme.split(),f"its {theme}"
+        kws=THEME_KEYWORDS.get(theme,theme.split())
+        return kws,f"its {theme}"
 
 def companies_for(item):
     if item["subtype"]=="hybrid":
@@ -131,9 +146,14 @@ def main():
     ap.add_argument("--out", default="cc_hybrid_drafted.json")
     ap.add_argument("--model", default="gpt-4o-mini")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--only",default=None,help="comma-seperated question IDs to draft (others skipped)")
     args = ap.parse_args()
  
     items = json.load(open(args.inp))
+    if args.only:
+        want=set(args.only.split(","))
+        items=[it for it in items if it["id"] in want]
+        print(f"[only] filtered to {len(items)} questions")
     chunk_idx = load_chunks(args.chunks_dir)
     if not chunk_idx:
         print(f"ERROR: no chunks in {args.chunks_dir}",file=sys.stderr)
@@ -158,7 +178,7 @@ def main():
             continue
         kws,topic=topic_for(it)
         comps=companies_for(it)
-        drafted={}
+        drafted={} 
         for tk in comps:
             name=NAMES.get(tk,tk)
             picks=score_chunks(chunk_idx.get(tk,[]),kws,top_k=4)
