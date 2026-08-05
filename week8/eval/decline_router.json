@@ -1,0 +1,62 @@
+[
+  {
+    "id": "decl_malformed_absurd_WMT_2055",
+    "category": "decline",
+    "subtype": "malformed_input",
+    "severity": "absurd_year",
+    "expected_route": "REJECT",
+    "question": "What was Walmart's total assets in fiscal year 2055?",
+    "expected_behavior": "Decline: 2055 is a real year but far outside coverage (2021-2026); no data exists. Do not fabricate or extrapolate.",
+    "trap": "'2055' is a valid year but absurdly out of range."
+  },
+  {
+    "id": "decl_malformed_absurd_KO_3000",
+    "category": "decline",
+    "subtype": "malformed_input",
+    "severity": "absurd_year",
+    "expected_route": "REJECT",
+    "question": "What was Coca-Cola's net income in fiscal year 3000?",
+    "expected_behavior": "Decline: 3000 is a real year but far outside coverage (2021-2026); no data exists. Do not fabricate or extrapolate.",
+    "trap": "'3000' is a valid year but absurdly out of range."
+  },
+  {
+    "id": "decl_malformed_absurd_BRK-B_1850",
+    "category": "decline",
+    "subtype": "malformed_input",
+    "severity": "absurd_year",
+    "expected_route": "REJECT",
+    "question": "What was Berkshire Hathaway's total assets in fiscal year 1850?",
+    "expected_behavior": "Decline: 1850 is a real year but far outside coverage (2021-2026); no data exists. Do not fabricate or extrapolate.",
+    "trap": "'1850' is a valid year but absurdly out of range."
+  },
+  {
+    "id": "decl_malformed_unparse_JNJ_20255",
+    "category": "decline",
+    "subtype": "malformed_input",
+    "severity": "unparseable",
+    "expected_route": "REJECT",
+    "question": "What was Johnson & Johnson's total assets in fiscal year 20255?",
+    "expected_behavior": "Reject: '20255' is not a valid year; the time period cannot be parsed. Ask the user to clarify or decline. Do NOT guess a year or produce a figure.",
+    "trap": "'20255' is unparseable as a year \u2014 tests input validation."
+  },
+  {
+    "id": "decl_malformed_unparse_BAC_20X6",
+    "category": "decline",
+    "subtype": "malformed_input",
+    "severity": "unparseable",
+    "expected_route": "REJECT",
+    "question": "What was Bank of America's total assets in fiscal year 20X6?",
+    "expected_behavior": "Reject: '20X6' is not a valid year; the time period cannot be parsed. Ask the user to clarify or decline. Do NOT guess a year or produce a figure.",
+    "trap": "'20X6' is unparseable as a year \u2014 tests input validation."
+  },
+  {
+    "id": "decl_malformed_unparse_META_year_zero",
+    "category": "decline",
+    "subtype": "malformed_input",
+    "severity": "unparseable",
+    "expected_route": "REJECT",
+    "question": "What was Meta's net income in fiscal year year zero?",
+    "expected_behavior": "Reject: 'year zero' is not a valid year; the time period cannot be parsed. Ask the user to clarify or decline. Do NOT guess a year or produce a figure.",
+    "trap": "'year zero' is unparseable as a year \u2014 tests input validation."
+  }
+]

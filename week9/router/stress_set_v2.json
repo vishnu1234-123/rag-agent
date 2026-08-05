@@ -1,0 +1,322 @@
+[
+  {
+    "question": "Tesla total assets 2022",
+    "expected_route": "NUMERIC",
+    "style": "terse"
+  },
+  {
+    "question": "Coca-Cola revenue 2023",
+    "expected_route": "NUMERIC",
+    "style": "terse"
+  },
+  {
+    "question": "Bank of America net income FY2021",
+    "expected_route": "NUMERIC",
+    "style": "terse"
+  },
+  {
+    "question": "Meta total assets 2024",
+    "expected_route": "NUMERIC",
+    "style": "terse"
+  },
+  {
+    "question": "Amazon net income 2025",
+    "expected_route": "NUMERIC",
+    "style": "terse"
+  },
+  {
+    "question": "Boeing revenue 2021",
+    "expected_route": "NUMERIC",
+    "style": "terse"
+  },
+  {
+    "question": "Chevron total assets 2023",
+    "expected_route": "NUMERIC",
+    "style": "terse"
+  },
+  {
+    "question": "Microsoft net income 2024",
+    "expected_route": "NUMERIC",
+    "style": "terse"
+  },
+  {
+    "question": "In the latest filing, what specific factors did the company identify as potential risks that could affect its revenue projections for the next fiscal year?",
+    "expected_route": "CONCEPTUAL",
+    "style": "implicit_co"
+  },
+  {
+    "question": "How does the company plan to mitigate the impact of supply chain disruptions outlined in its strategy section, and what effect might this have on its net income?",
+    "expected_route": "CONCEPTUAL",
+    "style": "implicit_co"
+  },
+  {
+    "question": "What reasons did the company provide for its significant investment in total assets this year, and how might this affect its long-term financial health?",
+    "expected_route": "CONCEPTUAL",
+    "style": "implicit_co"
+  },
+  {
+    "question": "According to the filing, what strategic shifts does the company anticipate implementing to enhance its competitive edge, and how are these expected to influence revenue growth?",
+    "expected_route": "CONCEPTUAL",
+    "style": "implicit_co"
+  },
+  {
+    "question": "What narrative does the company present regarding the integration of new technology in its operations, and how could this impact its net income moving forward?",
+    "expected_route": "CONCEPTUAL",
+    "style": "implicit_co"
+  },
+  {
+    "question": "In discussing its risk management approach, what specific factors does the company cite that could hinder its total asset performance in the coming years?",
+    "expected_route": "CONCEPTUAL",
+    "style": "implicit_co"
+  },
+  {
+    "question": "How does the company justify the recent fluctuations in its revenue attributed to market conditions as described in the filing, and what strategies are in place to address these?",
+    "expected_route": "CONCEPTUAL",
+    "style": "implicit_co"
+  },
+  {
+    "question": "What insights into the company's potential for future profitability can be drawn from its discussion of cost-saving measures, particularly in relation to net income?",
+    "expected_route": "CONCEPTUAL",
+    "style": "implicit_co"
+  },
+  {
+    "question": "What factors contributed to the surge in revenue for Apple in 2022 despite global supply chain challenges?",
+    "expected_route": "CONCEPTUAL",
+    "style": "boundary"
+  },
+  {
+    "question": "Can you explain the underlying reasons behind the significant drop in net income for Amazon in 2023, particularly in light of rising inflation?",
+    "expected_route": "CONCEPTUAL",
+    "style": "boundary"
+  },
+  {
+    "question": "What drove the notable increase in total assets reported by Boeing in 2024 amid ongoing financial restructuring?",
+    "expected_route": "CONCEPTUAL",
+    "style": "boundary"
+  },
+  {
+    "question": "Why did Bank of America experience a decline in revenue despite improved consumer spending in 2021?",
+    "expected_route": "CONCEPTUAL",
+    "style": "boundary"
+  },
+  {
+    "question": "What narrative explains the sharp rise in net income for Berkshire Hathaway in 2025 after a period of economic turbulence?",
+    "expected_route": "CONCEPTUAL",
+    "style": "boundary"
+  },
+  {
+    "question": "What were the main contributors to the decrease in revenue for Chevron in 2023 during a time of high oil prices?",
+    "expected_route": "CONCEPTUAL",
+    "style": "boundary"
+  },
+  {
+    "question": "Can you elaborate on the factors leading to a substantial increase in total assets for Alphabet in 2024 amid changing market dynamics?",
+    "expected_route": "CONCEPTUAL",
+    "style": "boundary"
+  },
+  {
+    "question": "What insights can be drawn from Johnson & Johnson's net income fluctuations in 2021 related to product recalls and legal issues?",
+    "expected_route": "CONCEPTUAL",
+    "style": "boundary"
+  },
+  {
+    "question": "Considering the overall financial performance highlighted in the annual reports and the year-on-year growth trends observed, can you identify the revenue figure for Boeing in 2023 specifically?",
+    "expected_route": "NUMERIC",
+    "style": "verbose"
+  },
+  {
+    "question": "Amidst the increasing competition and fluctuating market conditions, what was Coca-Cola's net income for the year when they launched new product lines in 2022?",
+    "expected_route": "NUMERIC",
+    "style": "verbose"
+  },
+  {
+    "question": "Reflecting on the comprehensive financial analyses provided, what was the total assets value for JPMorgan Chase in the year when they experienced significant acquisition activities, particularly in 2024?",
+    "expected_route": "NUMERIC",
+    "style": "verbose"
+  },
+  {
+    "question": "Taking into account the various economic challenges and the resulting adjustments in business strategies, could you determine the revenue for Alphabet during the pandemic recovery year of 2021?",
+    "expected_route": "NUMERIC",
+    "style": "verbose"
+  },
+  {
+    "question": "With the diverse range of services and products offered, could you ascertain what the specific net income for UnitedHealth was in 2025 when they expanded their digital health initiatives?",
+    "expected_route": "NUMERIC",
+    "style": "verbose"
+  },
+  {
+    "question": "Given the economic landscape and the significant investments made in the tech sector, what net income number should be recognized for Meta in 2023, considering their efforts in virtual reality?",
+    "expected_route": "NUMERIC",
+    "style": "verbose"
+  },
+  {
+    "question": "When evaluating the strategic decisions made and their effects on market share, what was the total assets amount for Procter & Gamble in 2022 during their global expansion phase?",
+    "expected_route": "NUMERIC",
+    "style": "verbose"
+  },
+  {
+    "question": "Reflecting on the shifts in consumer behavior and how that impacted corporate performances, what was the revenue for Walmart in 2024 when they heavily invested in e-commerce?",
+    "expected_route": "NUMERIC",
+    "style": "verbose"
+  },
+  {
+    "question": "What was the net income of Chevorn in 2022?",
+    "expected_route": "REJECT",
+    "style": "typo"
+  },
+  {
+    "question": "Can you provide the total assets of Micrsoft for the year 2021?",
+    "expected_route": "REJECT",
+    "style": "typo"
+  },
+  {
+    "question": "How much revenue did JP Morgan Chse generate in 2023?",
+    "expected_route": "REJECT",
+    "style": "typo"
+  },
+  {
+    "question": "What were the total assets of Berkshiure Hathaway in 2024?",
+    "expected_route": "REJECT",
+    "style": "typo"
+  },
+  {
+    "question": "What is the revenue for Walmrt in 2025?",
+    "expected_route": "REJECT",
+    "style": "typo"
+  },
+  {
+    "question": "What was Coca-Colas' net income in 2021?",
+    "expected_route": "REJECT",
+    "style": "typo"
+  },
+  {
+    "question": "Can you tell me the revenue and net income for Amazn in 2022?",
+    "expected_route": "REJECT",
+    "style": "typo"
+  },
+  {
+    "question": "What was the total assets of ExonMobil for fiscal year 2023?",
+    "expected_route": "REJECT",
+    "style": "typo"
+  },
+  {
+    "question": "What was the revenue of Netflix in 2023?",
+    "expected_route": "REJECT",
+    "style": "reject_subtle"
+  },
+  {
+    "question": "Can you provide the net income for Oracle in 2022?",
+    "expected_route": "REJECT",
+    "style": "reject_subtle"
+  },
+  {
+    "question": "What were the total assets of Ford in 1990?",
+    "expected_route": "REJECT",
+    "style": "reject_subtle"
+  },
+  {
+    "question": "How did Starbucks perform in terms of EPS for the year 2024?",
+    "expected_route": "REJECT",
+    "style": "reject_subtle"
+  },
+  {
+    "question": "What was the gross margin for Amazon in 2021?",
+    "expected_route": "REJECT",
+    "style": "reject_subtle"
+  },
+  {
+    "question": "What was the free cash flow reported by Disney in 2025?",
+    "expected_route": "REJECT",
+    "style": "reject_subtle"
+  },
+  {
+    "question": "What was the net income of Nike for the year 2035?",
+    "expected_route": "REJECT",
+    "style": "reject_subtle"
+  },
+  {
+    "question": "Can you tell me the total assets of Intel at the end of 2022?",
+    "expected_route": "REJECT",
+    "style": "reject_subtle"
+  },
+  {
+    "question": "What is the net income for Rivian for the fiscal year 2023?",
+    "expected_route": "REJECT",
+    "style": "reject_novel_co"
+  },
+  {
+    "question": "Can you provide the total assets reported by Spotify at the end of 2022?",
+    "expected_route": "REJECT",
+    "style": "reject_novel_co"
+  },
+  {
+    "question": "What revenue did Snowflake generate in the fourth quarter of 2021?",
+    "expected_route": "REJECT",
+    "style": "reject_novel_co"
+  },
+  {
+    "question": "How much net income did Palantir report for the first quarter of 2024?",
+    "expected_route": "REJECT",
+    "style": "reject_novel_co"
+  },
+  {
+    "question": "What were Roku's total assets for the year ending 2023?",
+    "expected_route": "REJECT",
+    "style": "reject_novel_co"
+  },
+  {
+    "question": "What is the revenue for DoorDash in 2025?",
+    "expected_route": "REJECT",
+    "style": "reject_novel_co"
+  },
+  {
+    "question": "How much net income did Coinbase report for the last quarter of 2021?",
+    "expected_route": "REJECT",
+    "style": "reject_novel_co"
+  },
+  {
+    "question": "Can you tell me the total assets for Airbnb at the beginning of 2024?",
+    "expected_route": "REJECT",
+    "style": "reject_novel_co"
+  },
+  {
+    "question": "Between Apple and Microsoft, which company experienced a higher percentage increase in net income from 2021 to 2025, and what factors did each company attribute to this growth?",
+    "expected_route": "HYBRID",
+    "style": "hybrid_hard"
+  },
+  {
+    "question": "Compare the revenue growth of Amazon and Walmart over the same period. Which company had a greater increase, and what explanations did they provide for their respective performance?",
+    "expected_route": "HYBRID",
+    "style": "hybrid_hard"
+  },
+  {
+    "question": "When looking at Boeing and AT&T, which had a superior total assets growth rate from 2021 to 2025, and how did each company justify their financial strategies during this time?",
+    "expected_route": "HYBRID",
+    "style": "hybrid_hard"
+  },
+  {
+    "question": "Assess the revenue trajectories of Alphabet versus Meta for 2021-2025. Which company claimed a more significant growth, and what underlying reasons did each provide for their performance?",
+    "expected_route": "HYBRID",
+    "style": "hybrid_hard"
+  },
+  {
+    "question": "In terms of net income advancement, how did UnitedHealth compare to Johnson & Johnson between 2021 and 2025? Which entity had a stronger performance and what insights did they share regarding their market positioning?",
+    "expected_route": "HYBRID",
+    "style": "hybrid_hard"
+  },
+  {
+    "question": "Evaluate the change in total assets for Visa and JPMorgan Chase from 2021 to 2025. Which company had a larger increase, and what rationale did both offer for their asset management approaches?",
+    "expected_route": "HYBRID",
+    "style": "hybrid_hard"
+  },
+  {
+    "question": "Look at the revenue figures for Chevron and ExxonMobil across 2021 to 2025. Which company reported a more substantial growth and what comments did they make concerning their operational enhancements?",
+    "expected_route": "HYBRID",
+    "style": "hybrid_hard"
+  },
+  {
+    "question": "Analyze the net income figures for Berkshire Hathaway and Coca-Cola during the 2021-2025 timeframe. Which company showed greater improvement, and how did each explain the drivers behind their profitability?",
+    "expected_route": "HYBRID",
+    "style": "hybrid_hard"
+  }
+]

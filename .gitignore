@@ -16,3 +16,4 @@ reports/
 week8/eval/cc_hybrid_refix.json
 *.bak
 *.bak.bak
+week9/router/stress_set.json
