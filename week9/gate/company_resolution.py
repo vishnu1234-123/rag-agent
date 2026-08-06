@@ -121,6 +121,20 @@ def suggest_company(q, threshold=0.6):
                 best_score, best = score, (tk, name)
     return best
 
+def _company_phrases(q):
+    STOP = {"what", "which", "how", "can", "could", "was", "were", "the company",
+            "company", "fiscal", "in", "for"}
+    spans = re.findall(r"\b[A-Z][A-Za-z&.\-]+(?:\s+[A-Z][A-Za-z&.\-]+)*", q)
+    return [s for s in spans if s.lower() not in STOP]
+
+def _is_exact_variant(phrase):
+    p=phrase.lower()
+    if p in {n for n,_ in _NAME_TO_TICKER}:
+        return True
+
+    if phrase.upper() in VALID_TICKERS:
+        return True
+    return False
 
 def resolve(q, context_ticker=None):
     """
@@ -131,15 +145,30 @@ def resolve(q, context_ticker=None):
       {"status": "typo", "suggestion": (tk, name)}     # 4: did you mean?
       {"status": "use_context", "ticker": context}     # 5a: no company, context supplies it
       {"status": "need_company"}                       # 5b: no company, no context -> ask
+
+      Ordering matters: a TYPO must be caught before a partial substring match is
+    accepted as a clean resolve. "JP Morgan Chse" substring-matches "jp morgan"
+    -> extract_tickers returns JPM, but the phrase is NOT an exact corpus variant
+    and is a near-miss for "jpmorgan chase", so it's a typo, not a resolution.
     """
-    tickers = extract_tickers(q)
+    phrases=_company_phrases(q)
+    tickers=extract_tickers(q)
+
     if tickers:
-        return {"status": "resolved", "tickers": tickers}
+        unmatched=[p for p in phrases if not _is_exact_variant(p)]
+        if not unmatched:
+            return {"status":"resolved","tickers":tickers}
+        
+        sugg=suggest_company(q)
+        if sugg:
+            return {"status":"typo","suggestion":sugg}
+        return {"status":"resolved","tickers":tickers}
     if is_out_of_corpus(q):
-        return {"status": "out_of_corpus", "names": extract_out_of_corpus_names(q)}
-    sugg = suggest_company(q)
+        return {"status":"out_of_corpus","names":extract_out_of_corpus_names(q)}
+    sugg=suggest_company(q)
     if sugg:
-        return {"status": "typo", "suggestion": sugg}
+        return {"status":"typo","suggestion":sugg}
     if context_ticker:
-        return {"status": "use_context", "ticker": context_ticker}
-    return {"status": "need_company"}
+        return {"status":"use_context","ticker":context_ticker}
+    return {"status":"need_company"}
+    
