@@ -23,10 +23,24 @@ import re
 # resolution — validating that a concept+company+year actually maps to a stored
 # fact is the gate's job.
 CONCEPT_PATTERNS = {
-    "revenue":       r"\brevenues?\b|\bnet sales\b|\btotal sales\b",
-    "net_income":    r"\bnet income\b|\bnet earnings\b|\bprofit\b",
-    "total_assets":  r"\btotal[al]* assets\b|\bbalance sheet size\b",
+    "revenue":       r"\brevenues?\b|\bnet sales\b|\btotal sales\b|\btop[\s-]?line\b|"
+                     r"\bturnover\b|\bsales revenue\b|\btotal revenue\b",
+    "net_income":    r"\bnet income\b|\bnet earnings\b|\bprofit\b|\bbottom[\s-]?line\b|"
+                     r"\bnet profit\b|\bprofit after tax\b",
+    "total_assets":  r"\btotal[al]* assets\b|\bbalance sheet size\b|\basset base\b|"
+                     r"\btotal asset base\b",
 }
+
+UNSUPPORTED_CONCEPTS = re.compile(
+    r"\bearnings per share\b|\beps\b|\bgross margin\b|\bgross profit\b|"
+    r"\boperating margin\b|\bcurrent ratio\b|\bquick ratio\b|\bdividend yield\b|"
+    r"\bmarket cap(?:italization)?\b|\bfree cash flow\b|\bfcf\b|\bebitda\b|"
+    r"\blong[\s-]?term debt\b|\bheadcount\b|\bnumber of employees\b|"
+    r"\bnumber of (?:retail )?stores\b|\bnumber of .{0,20}shareholders\b|"
+    r"\bp/e ratio\b|\bprice[\s-]?to[\s-]?earnings\b|\breturn on (?:equity|assets)\b|"
+    r"\broe\b|\broa\b|\bworking capital\b|\bcash reserves\b",
+    re.IGNORECASE,
+)
 
 # Phrasings that ask for a number / numeric comparison / ranking.
 NUMERIC_ASK = re.compile(
@@ -86,6 +100,8 @@ def extract_years(q):
 
 
 def extract_concept(q):
+    if UNSUPPORTED_CONCEPTS.search(q):
+        return None
     for concept, pat in CONCEPT_PATTERNS.items():
         if re.search(pat, q, re.IGNORECASE):
             return concept
@@ -141,4 +157,7 @@ def numeric_ask_unsupported_concept(q):
         return False
     if has_prose_signal(q):
         return False
-    return extract_concept(q) is None
+    if extract_concept(q) is not None:
+        return False
+    
+    return bool(UNSUPPORTED_CONCEPTS.search(q))
