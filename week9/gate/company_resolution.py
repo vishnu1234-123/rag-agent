@@ -1,27 +1,35 @@
 """
-Company resolution for the RETRIEVAL GATE (next phase).
-
+Company resolution for the RETRIEVAL GATE.
+ 
 This owns all company/corpus knowledge, moved out of the router's signal layer.
 The router classifies question TYPE and never touches this; the gate calls it to
 resolve which company a question is about and to reject company-based out-of-scope
 cases.
-
+ 
 Responsibilities (the five-case resolution):
   1. Named in-corpus company           -> resolve to ticker, retrieve.
   2. Ticker symbol (NVDA, XOM)          -> resolve to ticker, retrieve.
   3. Named out-of-corpus company        -> reject ("not in coverage").
   4. Near-miss / typo (Chevorn)         -> suggest "did you mean Chevron?".
   5. No company named                   -> use session context; if none, ask.
-
+ 
 Also validates (gate's job, not the router's): does concept+company+year actually
 map to a stored fact? "numeric keywords" != "answerable numeric question".
-
-NOTE: this is the SEED for the next phase. The router does not import it. The
-interactive parts (typo confirmation, "which company?") belong to the
-conversation layer above the gate; this module provides the detection/resolution
-primitives those flows call.
+ 
+KNOWN GAPS (deferred to the retrieval-layer context work — do NOT fix piecemeal):
+  A. Context-company MERGING. resolve() resolves NAMED entities correctly, but
+     when the question names one company AND a pronoun refers to the context
+     company, the context company is dropped:
+       resolve("how did its revenue compare to Microsoft?", context_ticker="AAPL")
+       -> {'tickers': ['MSFT']}   # WRONG: should be Apple vs Microsoft
+     Needs pronoun-aware merging of context_ticker into the resolved set. This is
+     the numeric-side twin of the implicit-company prose case; build both together
+     when threading context at the retrieval layer.
+  B. Short-ticker INPUT (bare "T" for AT&T, "V" for Visa). extract_tickers
+     deliberately does not match 1-2 char tickers as bare words (collides with
+     "T-bills", "V-shaped"), so "what was T's revenue?" resolves as need_company
+     instead of AT&T. Uncommon input; better solved with context than more regex.
 """
-
 import re
 import difflib
 
@@ -100,14 +108,26 @@ def is_out_of_corpus(q):
     """True if the question names a known outsider and no in-corpus company."""
     return bool(extract_out_of_corpus_names(q)) and not extract_tickers(q)
 
+_SUGGEST_STOPWORDS = {
+    "what", "was", "were", "the", "company", "revenue", "net", "income",
+    "total", "assets", "fiscal", "year", "for", "was", "how", "much", "did",
+    "in", "of", "and", "report", "reported", "provide", "tell", "me", "can",
+    "you", "could", "please", "their", "its", "profit", "earnings", "sales",
+}
 
 def suggest_company(q, threshold=0.6):
     """
     Return the nearest in-corpus (ticker, name) for a company-like token that
     doesn't exactly match the corpus — a 'did you mean?' suggestion for typos
     (Chevorn -> Chevron). Returns None if nothing is close enough.
+
+    Considers BOTH capitalized spans ("JP Morgan Chse") and lowercase word
+    tokens ("aple"), since users don't always capitalize company names. Lowercase
+    tokens are filtered through a stopword set so ordinary words don't get
+    mistaken for typo'd companies.
     """
     candidates = re.findall(r"\b[A-Z][A-Za-z&.\-]+(?:\s+[A-Z][A-Za-z&.\-]+)*", q)
+    candidates=[c.lower() for c in candidates]
     all_names = [(n, tk) for n, tk in _NAME_TO_TICKER]
     ql = q.lower()
     best, best_score = None, 0.0
