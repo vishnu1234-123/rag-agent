@@ -37,8 +37,7 @@ def close(a,b,rel=1e-6):
         return False
     if a==b:
         return True
-    denom=max(abs(a),abs(b),1.0)
-    return abs(a-b)/denom<=rel
+    return abs(a - b) / max(abs(a), abs(b), 1.0) <= rel
 
 def run_pipeline(q):
     nq=build_query(route(q,use_llm=False),cr.resolve(q),q)
@@ -57,6 +56,10 @@ def check(item,comp):
         return close(comp["value"],exp)
     if comp["kind"] in ("delta", "trend"):
         return close(comp["delta"], exp)
+    if comp["kind"]=="gap":
+        return close(comp["gap"],exp)
+    if comp["kind"]=="growth_compare":
+        return comp["winner"]==exp
     if comp["kind"] == "ranking":
         return comp["winner_ticker"] == exp
     return False

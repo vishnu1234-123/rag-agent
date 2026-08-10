@@ -83,7 +83,7 @@
     "subtype": "compare_growth",
     "expected_route": "NUMERIC",
     "sector": "big tech",
-    "question": "Between Microsoft and NVIDIA, which grew total assetsfaster from fiscal 2022 to 2025?",
+    "question": "Between Microsoft and NVIDIA, which grew total assets faster from fiscal 2022 to 2025?",
     "expected_answer": "NVIDIA (+152.6% vs Microsoft +69.7%)",
     "expected_value": "NVDA",
     "source_rows": [
@@ -123,7 +123,7 @@
     "subtype": "compare_growth",
     "expected_route": "NUMERIC",
     "sector": "consumer staples",
-    "question": "Between Coca-Cola and Walmart, which grew total assetsfaster from fiscal 2022 to 2025?",
+    "question": "Between Coca-Cola and Walmart, which grew total assets faster from fiscal 2022 to 2025?",
     "expected_answer": "Coca-Cola (+13.0% vs Walmart +6.5%)",
     "expected_value": "KO",
     "source_rows": [

@@ -1,24 +1,40 @@
 """
 Numeric compute layer — runtime, deterministic, no LLM.
  
-Sits between numeric retrieval and answer generation. Retrieval fetches raw
-rows from facts.sqlite; THIS layer turns those rows into the actual computed
-answer (a value, a delta, a trend, or a ranking).
+Turns retrieved rows into computed answers. Operation is chosen by:
+  1. detect_operation(raw_query): wording hint (gap / growth_compare / rank / None)
+  2. reconciled against the ACTUAL company count (a hint only applies if the shape
+     supports it — "grow" in a single-company question is a trend, not a comparison)
+  3. anything not explicitly tagged falls back to SHAPE inference:
+        1co/1yr -> point ; 1co/Nyr -> delta|trend ; Nco/1yr -> ranking
  
-Key principle: this runs at RUNTIME, where there is no `subtype` label. It
-infers WHICH computation to run from the SHAPE of the retrieved rows, not from
-any eval metadata:
- 
-    1 company, 1 year            -> point     (the value itself)
-    1 company, 2 years           -> delta     (y2 - y1)
-    1 company, 3+ years          -> trend     (delta + direction over the span)
-    N companies, 1 year          -> ranking   (argmax over companies)
- 
-Arithmetic mirrors week8/eval/gen_numeric_eval.py (gen_point/yoy/trend/ranking)
-so the runtime reproduces exactly what the generator computed as ground truth.
- 
-Returns a structured result; answer-gen owns phrasing later.
+This explicit-operation-tag pattern (rules now, LLM-fallback seam later) is the
+robust successor to pure shape-inference — reused for word-framed questions when
+the eval grows to include them.
 """
+
+_GAP_MARKERS    = ("how much larger", "how much bigger", "how much more",
+                   "how much smaller", "how much less", "difference between",
+                   "gap between", "larger than", "bigger than")
+_GROWTH_MARKERS = ("grew faster", "grow faster", "which grew", "growth",
+                   "faster", "fastest")
+_RANK_MARKERS   = ("highest", "largest", "biggest", "most", "lowest",
+                   "smallest", "least", "rank", "which had the")
+
+def detect_operation(raw_query):
+    q=(raw_query or "").lower()
+    if any(m in q for m in _GAP_MARKERS):
+        return "gap"
+    if any(m in q for m in _GROWTH_MARKERS):
+        return "growth_compare"
+    if any(m in q for m in _RANK_MARKERS):
+        return "rank"
+    return None
+
+def _reconcile(op,n_companies):
+    if op in ("gap","growth_compare","rank") and n_companies<2:
+        return None
+    return op
 
 def _by_company(results):
     out={}
@@ -36,7 +52,31 @@ def compute(retrieval_out):
     by_co=_by_company(results)
     n_companies=len(by_co)
     max_years_per_co=max(len(yv) for yv in by_co.values())
+    concept=results[0]["concept"]
+
+    op=_reconcile(detect_operation(retrieval_out.get("query",{}).get("raw_query","") if isinstance(retrieval_out.get("query"),dict) else ""),n_companies)
+
+    if op=="gap" and n_companies==2:
+        items=[(t,sorted(yv)[-1],yv[sorted(yv)[-1]]) for t,yv in by_co.items()]
+        items.sort(key=lambda x:x[2] , reverse=True)
+        (t1,y1,v1),(t2,y2,v2)=items[0],items[1]
+        return {"kind":"gap","status":status,"larger":t1,"smaller":t2,
+                "gap":v1-v2,"values":{t1:v1,t2:v2},
+                "concept":concept,"retrieval":retrieval_out}
     
+    if op=="growth_compare" and n_companies>=2:
+        res=[]
+        for t,yv in by_co.items():
+            ys=sorted(yv)
+            v0,v1=yv[ys[0]],yv[ys[-1]]
+            pct=(v1-v0)/abs(v0)*100 if v0 else float("inf")
+            res.append((t,pct,v0,v1))
+        res.sort(key=lambda x:x[1], reverse=True)
+        return {"kind":"growth_compare","status":status,"winner":res[0][0],
+                "growth":{t:round(p,1) for t,p,_,_ in res},
+                "concept":concept,"retrieval":retrieval_out}
+
+
     if n_companies>=2 and max_years_per_co>=2:
         return {
             "kind": "unsupported",
