@@ -83,3 +83,58 @@ To build:
 5. Grade company resolution against decline_gate.json (target ~100%).
 6. Typo "did you mean?" + "which company?" confirmation live in the conversation
    layer ABOVE the gate (interactive; the gate provides detection primitives).
+
+## Week 9 — Retrieval Layer: Numeric Path (single-company) ✅ COMMITTED
+
+### State: single-company numeric path DONE and validated
+- `numeric_eval.json`: **PASS 50/60, FAIL 0**, BLOCKED 10 (multi-company, deferred)
+- `cc_numeric.json`: PASS 2/6, FAIL 3 (new ops, see below), BLOCKED 1
+- Meaningful score = PASS vs FAIL excluding BLOCKED → single-company path is clean.
+
+### Files (week9/retrieval/)
+- `numeric_retriever.py` — resolve()+route() → normalized query object → parameterized
+  SQL against week8/data/facts.sqlite. Returns structured facts or honest `no_data`.
+  Guards: route!=NUMERIC → not_numeric; unresolved company → blocked.
+  NOTE: no explicit REJECT branch yet — REJECT currently collapses into `not_numeric`
+  (mislabel, cosmetic; REJECT questions live in decline_eval, not numeric_eval, so no
+  score impact). Add a REJECT branch that threads router `reason` when convenient.
+- `numeric_compute.py` — runtime compute layer. Infers operation from ROW SHAPE:
+  1co/1yr→point, 1co/Nyr→delta|trend, Nco/1yr→ranking. Refusal guard: Nco×Nyr
+  (compound) → unsupported/ambiguous (refuse, don't guess).
+- `grade_numeric.py` — runs retrieval+compute vs eval ground truth. Uses `subtype`
+  ONLY to pick the comparison field; delta/argmax come from compute() (test stays honest).
+  Partitions PASS / FAIL / BLOCKED.
+
+### The handoff contract (verified against real route()/resolve())
+- route()['numeric_part'] = {concept (canonical snake_case), years:[...], tickers:[]}
+- resolve() supplies tickers. route owns TYPE+concept+years; gate owns COMPANY.
+- build_query() composes both into the normalized object.
+
+### Remaining numeric work (3 named piles)
+1. **Multi-company resolution** (11 BLOCKED) — resolve() handles ONE company; ranking &
+   cross-company name several. Also "ExxonMobil" (no space) misflagged as typo of
+   "exxon mobil". Biggest remaining numeric piece. Overlaps Bucket 2.
+2. **New compute ops** — `gap` (cross-company difference, e.g. AMZN−WMT net income) and
+   `growth-compare`. Deterministic; build once multi-company resolution feeds them.
+   cc_gap currently mis-handled as ranking.
+3. **Routing edge** — cc_growth_* questions route `not_numeric` (never reach compute).
+   Decide: signal tweak vs acceptable decline.
+
+### Documented LIMITATIONS (deliberate scope, not bugs)
+- Compute infers operation from shape. Valid for current eval by construction
+  (yoy=2yr, trend=3+yr, rank=multi-co). Can't express compound ops or disambiguate
+  trend-with-2-years. → move intent from shape-inference to explicit operation tag
+  from route()/signals WHEN eval grows to include those.
+- Compute refuses bad SHAPES but CANNOT detect misparsed intent: a word-framed question
+  ("rank by yoy", "which grew fastest") that route() mis-extracts arrives as a
+  clean-looking shape and computes silently-wrong. Defense belongs at PARSE time, not
+  compute. Untestable until eval has word-framed questions.
+
+### NEXT SESSION — pick up here
+Immediate options, in order:
+  A. Multi-company resolution (unblocks 11 numeric + enables gap/growth ops) — pile #1.
+  B. Then prose retrieval (small-to-big + hybrid search + conditional rerank) — the big one.
+  C. Then answer generation (grounded) + end-to-end eval (RAGAS faithfulness).
+Eval expansion (hard / should-decline / word-framed / adversarial-prose) folds in
+alongside B–C. Remember: a correctly-DECLINED eval question is a PASS, not a fail.
+Prose is where hallucination risk concentrates — that's where faithfulness measurement matters most.
