@@ -138,3 +138,42 @@ Immediate options, in order:
 Eval expansion (hard / should-decline / word-framed / adversarial-prose) folds in
 alongside B–C. Remember: a correctly-DECLINED eval question is a PASS, not a fail.
 Prose is where hallucination risk concentrates — that's where faithfulness measurement matters most.
+
+## Week 9 — Multi-company Resolution + Numeric Path COMPLETE (numeric_eval 60/60) ✅
+
+### Milestone
+- **numeric_eval.json: 60/60, 0 FAIL, 0 BLOCKED** — single + multi-company numeric
+  path fully working (point / yoy / trend / ranking).
+- cc_numeric.json: 3/6 (3 remain — see below), 0 BLOCKED.
+- Gate harness: 22/22 on decline_gate.json, no regression through all fixes.
+
+### Gate fixes this session (company_resolution.py) — all one root area
+Root cause across all: `_company_phrases` captured non-company / polluted spans,
+and the exact-vs-fuzzy skip was mis-tuned. Fixed in layers, each validated 22/22:
+1. Stray capitalized word ("Among NVIDIA...") no longer false-typos → multi-company
+   resolves. Typo candidate must be a genuine near-miss, scored per-phrase.
+2. word-subset skip: recognizes name FRAGMENTS ("Bank" ⊂ "bank of america",
+   "Procter"/"Gamble" ⊂ "procter & gamble") while still catching typos.
+3. exact-vs-fuzzy ordering: "JP Morgan Chse" → typo (not silent resolve). This was
+   the previously-deferred 1/22 gap — now FIXED.
+4. strip leading question-words: "Did UnitedHealth" / "Did Johnson" spans polluted
+   resolution → _strip_leading_stop peels Did/Among/Which/etc before matching.
+
+resolve() now correctly handles: single co, multiple named co, multi-word & "&"
+names, near-typo (suggest), outsider (reject). Deferred still: in-context pronoun
+merging + bare short-ticker input (Bucket 2, documented).
+
+### Remaining numeric work — 3 cc cases (next session)
+1. **cc_gap_net_income_AMZN_WMT_2024** — wants a GAP (AMZN−WMT difference), compute
+   does ranking (argmax). Same row shape as ranking (multi-co, 1yr) → distinguishable
+   ONLY by intent. **This is the shape-inference limitation coming due**: building
+   `gap` forces the explicit-intent-vs-shape decision we documented. Likely need an
+   operation tag from route()/signals, not more shape guessing.
+2. **cc_growth ×2** (MSFT/NVDA, KO/WMT) — route `not_numeric`, never reach compute.
+   Router-layer edge: "growth comparison across companies over years" not classified
+   NUMERIC. Decide: signal tweak vs acceptable decline.
+
+### After the 3 cc cases → numeric path fully done. Then:
+  - Prose retrieval (small-to-big + hybrid search + conditional rerank) — the big one.
+  - Answer generation (grounded) + end-to-end eval (RAGAS faithfulness).
+  - Eval expansion (hard / should-decline / word-framed / adversarial-prose).
