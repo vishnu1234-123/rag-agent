@@ -141,11 +141,23 @@ def suggest_company(q, threshold=0.6):
                 best_score, best = score, (tk, name)
     return best
 
+_LEADING_STOP = {'did','was','were','is','are','how','what','which','who','among',
+                 'does','do','has','have','had','the','in','for','of','and','or',
+                 'compare','between','from','could','can','tell','me','report'}
+
+def _strip_leading_stop(phrase):
+    words=phrase.split()
+    while words and words[0].lower() in _LEADING_STOP:
+        words=words[1:]
+    return ' '.join(words)
+
 def _company_phrases(q):
     STOP = {"what", "which", "how", "can", "could", "was", "were", "the company",
             "company", "fiscal", "in", "for"}
+    
     spans = re.findall(r"\b[A-Z][A-Za-z&.\-]+(?:\s+[A-Z][A-Za-z&.\-]+)*", q)
-    return [s for s in spans if s.lower() not in STOP]
+    cleaned = [_strip_leading_stop(s) for s in spans]
+    return [s for s in cleaned if s.lower() not in STOP]
 
 def _is_exact_variant(phrase):
     p=phrase.lower()
@@ -154,6 +166,14 @@ def _is_exact_variant(phrase):
 
     if phrase.upper() in VALID_TICKERS:
         return True
+    return False
+
+def _words_covered(phrase,resolved_names):
+    pw=phrase.lower().split()
+    for n in resolved_names:
+        nw=set(n.split())
+        if pw and all(w in nw for w in pw):
+            return True
     return False
 
 def resolve(q, context_ticker=None):
@@ -175,20 +195,28 @@ def resolve(q, context_ticker=None):
     tickers=extract_tickers(q)
 
     if tickers:
-        unmatched=[p for p in phrases if not _is_exact_variant(p)]
-        if not unmatched:
-            return {"status":"resolved","tickers":tickers}
-        
-        sugg=suggest_company(q)
-        if sugg:
-            return {"status":"typo","suggestion":sugg}
-        return {"status":"resolved","tickers":tickers}
+        resolved_names={n for tk in tickers for n in CORPUS[tk]}
+        typo_candidates=[]
+
+        for p in phrases:
+            pl=p.lower()
+            if _is_exact_variant(p):
+                continue
+            if pl in resolved_names:
+                continue
+            if _words_covered(p, resolved_names):
+                continue
+            near=suggest_company(p)
+            if near:
+                typo_candidates.append(near)
+        if typo_candidates:
+            return {"status":"typo","suggestion":typo_candidates[0]}
+        return {"status":"resolved","tickers":tickers}   
     if is_out_of_corpus(q):
-        return {"status":"out_of_corpus","names":extract_out_of_corpus_names(q)}
-    sugg=suggest_company(q)
+        return {"status": "out_of_corpus", "names": extract_out_of_corpus_names(q)}
+    sugg = suggest_company(q)
     if sugg:
-        return {"status":"typo","suggestion":sugg}
+        return {"status": "typo", "suggestion": sugg}
     if context_ticker:
-        return {"status":"use_context","ticker":context_ticker}
-    return {"status":"need_company"}
-    
+        return {"status": "use_context", "ticker": context_ticker}
+    return {"status": "need_company"}

@@ -20,7 +20,7 @@ COMPANY_SUBTYPES=("corpus","misspelling","typo","notco","not_co","outof")
 
 def _is_company_subtype(sub):
     s=(sub or "").lower()
-    return any(m for m in COMPANY_SUBTYPES)
+    return any(m in s for m in COMPANY_SUBTYPES)
 
 def main():
     path = sys.argv[1] if len(sys.argv) > 1 else "../../../week8/eval/decline_gate.json"
