@@ -177,3 +177,36 @@ merging + bare short-ticker input (Bucket 2, documented).
   - Prose retrieval (small-to-big + hybrid search + conditional rerank) — the big one.
   - Answer generation (grounded) + end-to-end eval (RAGAS faithfulness).
   - Eval expansion (hard / should-decline / word-framed / adversarial-prose).
+
+  ## CORRECTION — much of the "productionization" scope ALREADY EXISTS (Weeks 3-7)
+
+Per earlier sessions, these were BUILT in Weeks 3-7 (old architecture):
+- FastAPI + uvicorn API layer
+- JWT auth (PyJWT) + RBAC + AES-256-GCM key encryption
+- Guardrails: week7/guardrails.py check_input()/check_output(),
+  14/14 vs OWASP LLM Top 10 injection (test_injection.py, test_guardrails.py)
+- Query routing + agentic query decomposition
+- Cohere rerank-english-v3.0 + BM25 hybrid retrieval
+- Redis + GPTCache caching, tenacity retries
+- RAGAS 0.3.3 + LangSmith eval tooling
+
+### The REAL remaining question (not "build from scratch"):
+Weeks 3-7 were the OLD system — Apple-only, LangChain/LangGraph, WEB/KEYWORD/REJECT
+routing, Tavily. Weeks 8-9 are a REBUILD — 20 companies, new router
+(NUMERIC/CONCEPTUAL/HYBRID/REJECT 96.2%), gate, facts.sqlite, new numeric + prose
+paths. So the task is RE-WIRING / porting the existing components onto the new
+architecture, NOT building them fresh:
+- Does week7 guardrails work with the new gate+router pipeline, or need adapting?
+- Does the old query-decomposition fit the new numeric/prose split?
+- Does FastAPI/auth wrap the new pipeline, or the old one?
+- Does the old hybrid/rerank apply to the new prose retriever?
+
+NEXT SESSION: inventory week3-7 components against the week8-9 rebuild. Decide per
+component: reuse as-is / adapt / rebuild. This likely SHRINKS remaining work vs the
+"remaining scope" list above — much is port, not build.
+
+### This shifts the timeline FAVORABLY
+If auth/FastAPI/guardrails/decomposition mostly port over, the gap to a complete,
+deployable pipeline is smaller than the raw scope list implies. Resume-start trigger
+(pipeline works end-to-end) may be closer than the 2-week estimate. Confirm by doing
+the inventory first.
