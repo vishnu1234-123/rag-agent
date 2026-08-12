@@ -66,6 +66,15 @@ _NAME_TO_TICKER.sort(key=lambda x: -len(x[0]))
 
 VALID_TICKERS = set(CORPUS.keys())
 
+_CORP_SUFFIX = {'group','inc','inc.','incorporated','corporation','corp','corp.',
+                'co','co.','company','platforms','holdings','ltd','plc'}
+
+def _strip_corp_suffix(phrase):
+    words = phrase.split()
+    while words and words[-1].lower().strip('.,') in _CORP_SUFFIX:
+        words = words[:-1]
+    return ' '.join(words)
+
 # Common out-of-corpus names that appear in reject traps. NOT exhaustive — the
 # real backstop for unknown companies is "resolves to no in-corpus ticker", not
 # this list. It just gives common outsiders a clean early reject reason.
@@ -169,6 +178,7 @@ def _is_exact_variant(phrase):
     return False
 
 def _words_covered(phrase,resolved_names):
+    phrase=_strip_corp_suffix(phrase)
     pw=phrase.lower().split()
     for n in resolved_names:
         nw=set(n.split())

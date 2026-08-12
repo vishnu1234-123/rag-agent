@@ -210,3 +210,93 @@ If auth/FastAPI/guardrails/decomposition mostly port over, the gap to a complete
 deployable pipeline is smaller than the raw scope list implies. Resume-start trigger
 (pipeline works end-to-end) may be closer than the 2-week estimate. Confirm by doing
 the inventory first.
+
+## Prose Generation + Faithfulness VALIDATED (LLM-judge 4.27/4.27)
+
+### Milestone: grounded generation works and is measured
+- Full prose pipeline: gate -> retrieve -> generate -> judge.
+- **LLM-judge (n=51, scored=48): faithfulness mean 4.27/5, correctness mean 4.27/5,
+  0 errors, 3 declines.** faith>=4: 33/48, corr>=4: 32/48.
+- Answers are grounded (high faithfulness = not hallucinating) — core thesis proven.
+
+### Files (week9/retrieval/)
+- prose_pipeline.py — gate front door (resolve -> decline or retrieve).
+- prose_generate.py — grounded generation, STRICT prompt (answer only from
+  passages, cite, decline if absent). Context = TOKEN-BUDGET packing of whole
+  parent passages (CONTEXT_TOKEN_BUDGET=7000), NOT fixed passage count — adapts
+  to chunk size, never truncates mid-passage (fixes "answer at end of big chunk").
+- prose_retriever.py — now REORDERS parents by child-match-count (parents that
+  matched on MORE children rank above one-off high-score boilerplate). Cheap
+  alternative to reranking; fixed most declines.
+- judge_prose.py — LLM-as-judge, ANCHORED rubric (5/3/1 defs for consistency),
+  forced JSON response_format. Uses eval ticker (bypasses gate + 6 context Qs).
+- validate_prose_generation.py — content-overlap harness (DEPRECATED for
+  generation: undercounts correct paraphrases; kept for reference. Judge is the
+  real metric.)
+
+### Key findings / decisions
+- Content-overlap is WRONG for generation (punishes correct rewording, gave
+  misleading 35%). LLM-judge judges meaning -> real number 4.27.
+- Window-tuning was a dead end: widening just added boilerplate. Root cause was
+  ORDERING (boilerplate ranked #1). Child-match reordering fixed most.
+- Token-budget context (whole passages, no mid-truncation) replaced fixed window
+  — answers to "can't tune window every time" + "info at end of big chunk".
+- Low scores are mostly faith=5/corr=3 (grounded but INCOMPLETE) — good failure
+  mode for a groundedness-first system, not hallucination.
+
+### Residual (next session)
+- 3 GEN-DECLINES (GOOGL, MSFT, +1): answer passage still buried despite reorder.
+  -> precise, evidence-backed justification for RERANKING if desired (targets
+  exactly these), OR accept 3/51 honest declines. Port Cohere rerank (wk7) if so.
+- prose_WMT_10-Q_00147: faith=1 corr=1 — real failure, eyeball it.
+- Spot-check the judge (read a faith=5 and the faith=1) — validate the validator.
+- 6 "the Company" context questions still need Bucket 2 (bypassed here via eval ticker).
+
+### Whole-project status
+- Router 96.2% | Gate 22/22 | Numeric 66/66 | Prose retrieval 51/51 |
+  Prose generation faith/corr 4.27/4.27. 
+- Left: hybrid (route splits it, stitch+generate, test cc_hybrid.json) ->
+  end-to-end eval -> port guardrails/auth/fastapi (exist wk3-7) -> deploy/frontend.
+- Resume trigger (pipeline end-to-end) is CLOSE — hybrid is the last core capability.
+
+## Reranking: TESTED, MEASURED, REJECTED (kept dormant)
+
+### Decision: cross-encoder reranking does NOT earn its place — off by default.
+A/B on all 51 prose questions, LLM-judge (claim-decomposition version):
+
+| metric        | no rerank | with rerank |
+|---------------|-----------|-------------|
+| faithfulness  | 4.24      | 4.18 (worse)|
+| correctness   | 4.24      | 4.20 (worse)|
+| faith >=4     | 43/49     | 40/49       |
+| declines      | 2         | 2 (unchanged)|
+
+Cross-encoder (ms-marco-MiniLM-L-6-v2, local, no API) slightly HURT and did NOT
+recover the 2 declines (GOOGL, AMZN).
+
+### Why it didn't help (the real lesson)
+- Reranking only REORDERS retrieved passages; it can't add passages retrieval
+  missed, and can't fix reference-answer bias.
+- The GOOGL/AMZN declines are retrieval-recall / strict-decline edge cases, not
+  mis-ranking — the answer passage wasn't in the set to promote.
+- The faith=1 mismatches (NVDA, WMT, AMZN) are REFERENCE-ANSWER BIAS: retrieval
+  surfaced a different-but-valid passage than the one the single reference was
+  written from. Both correct; they just don't match. Reranking can't fix a
+  single-reference eval limitation.
+- A hand-picked self-test (business-section advertiser Q) looked great (answer
+  passage jumped to rr=3.4 vs boilerplate -4), but that was a question where the
+  answer WAS retrieved and mis-ranked — not representative of the residual cases.
+
+### Status of prose_rerank.py
+KEPT but DORMANT (use_rerank=False default; RERANK=1 env toggle for judge). File
+documents the experiment. Not in the live path.
+
+### Interview framing (strong)
+"I tested cross-encoder reranking, A/B'd it against my 51-question eval, and it
+didn't improve faithfulness or recover declines — the residual issues were
+reference-answer bias and retrieval recall, not ranking — so I didn't add the
+latency/complexity." Measured a popular technique and correctly said no.
+
+### Prose path: DONE. faithfulness/correctness ~4.24, no hallucinations (manually
+verified), residual low scores diagnosed as reference-answer bias (eval artifact),
+2/51 honest declines accepted. Move to HYBRID.

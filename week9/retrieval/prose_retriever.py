@@ -78,7 +78,10 @@ def retrieve(question,tickers=None,top_k=20,section_item=None):
         row=dict(row)
         row["best_score"]=best_score[pid]
         row["child_ids"]=child_by_parent[pid]
+        row["n_matched"]=len(child_by_parent[pid])
         parents.append(row)
+    parents.sort(key=lambda r:(r["n_matched"],r["best_score"]),reverse=True)
+    
     return {"parents":parents,"children":children,"query":question}
 
 if __name__=="__main__":
