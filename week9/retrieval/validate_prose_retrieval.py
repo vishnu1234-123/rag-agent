@@ -1,11 +1,10 @@
 import sys,os,json,sqlite3
 from pathlib import Path
 import regex as re
+from filingsiq.config import PARENT_DB
 
 HERE=Path(__file__).resolve()
-sys.path.insert(0,str(HERE.parent))
-from prose_retriever import retrieve,PARENT_DB
-
+from filingsiq.retrieve.prose import retrieve
 ROOT=HERE.parent.parent.parent
 EVAL=ROOT/"week8"/"eval"/"prose_eval.json"
 
