@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 DATA=ROOT/"data"
 
-CHUNKS_DIR=DATA/"chunks"      #input : your 13,939 chunks
+CHUNKS_DIR=DATA/"chunks"      #input : your 6,779 chunks
 PARENT_DB=DATA/"parents.sqlite"   # stage 1 output
 MANIFEST=DATA/"manifest.json"    #stage 2 checkpoint {id:content_hash}
 DEAD_LETTER=DATA/"dead_letter.json"  #stage 2 failures
@@ -21,7 +21,7 @@ CHUNK_OVERLAP_TOKENS=100
 #---- parents
 
 CHILDREN_PER_PARENT=3   # ~3200 tokens per parent
-PARENT_PER_QUERY=5    # retrieval - time cap (~16k context)
+PARENT_PER_QUERY=20   # retrieval - time cap (~16k context)
 
 #---- embedding
 EMBED_MODEL="text-embedding-3-small"

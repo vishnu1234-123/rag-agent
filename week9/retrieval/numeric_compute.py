@@ -57,6 +57,11 @@ def compute(retrieval_out):
     op=_reconcile(detect_operation(retrieval_out.get("query",{}).get("raw_query","") if isinstance(retrieval_out.get("query"),dict) else ""),n_companies)
 
     if op=="gap" and n_companies==2:
+        latest={t:sorted(yv)[-1] for t,yv in by_co.items()}
+        if len(set(latest.values()))!=1:
+            return {"kind":"unsupported","status":"incomplete",
+                "reason":f"year mismatch, cannot compare: {latest}",
+                "concept":concept,"retrieval":retrieval_out}
         items=[(t,sorted(yv)[-1],yv[sorted(yv)[-1]]) for t,yv in by_co.items()]
         items.sort(key=lambda x:x[2] , reverse=True)
         (t1,y1,v1),(t2,y2,v2)=items[0],items[1]
@@ -68,6 +73,10 @@ def compute(retrieval_out):
         res=[]
         for t,yv in by_co.items():
             ys=sorted(yv)
+            if len(ys)<2:
+                return {"kind":"unsupported","status":"incomplete",
+                    "reason":f"{t} resolved only year(s) {ys}; growth needs two",
+                    "concept":concept,"retrieval":retrieval_out}
             v0,v1=yv[ys[0]],yv[ys[-1]]
             pct=(v1-v0)/abs(v0)*100 if v0 else float("inf")
             res.append((t,pct,v0,v1))

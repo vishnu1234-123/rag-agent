@@ -38,9 +38,12 @@ UNSUPPORTED_CONCEPTS = re.compile(
     r"\blong[\s-]?term debt\b|\bheadcount\b|\bnumber of employees\b|"
     r"\bnumber of (?:retail )?stores\b|\bnumber of .{0,20}shareholders\b|"
     r"\bp/e ratio\b|\bprice[\s-]?to[\s-]?earnings\b|\breturn on (?:equity|assets)\b|"
-    r"\broe\b|\broa\b|\bworking capital\b|\bcash reserves\b",
+    r"\broe\b|\broa\b|\bworking capital\b|\bcash reserves\b|"
+    r"\bper[\s-]?share\b|\bfor (?:every|each) share\b|\bprofit margin\b|"
+    r"\bnet margin\b|\bearnings for (?:every|each) share\b",
     re.IGNORECASE,
 )
+
 
 # Phrasings that ask for a number / numeric comparison / ranking.
 NUMERIC_ASK = re.compile(
@@ -157,7 +160,9 @@ def numeric_ask_unsupported_concept(q):
         return False
     if has_prose_signal(q):
         return False
+    if UNSUPPORTED_CONCEPTS.search(q):
+        return True
     if extract_concept(q) is not None:
         return False
     
-    return bool(UNSUPPORTED_CONCEPTS.search(q))
+    return False

@@ -39,6 +39,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+
 NAMES = {
     "AAPL": "Apple", "AMZN": "Amazon", "BA": "Boeing", "BAC": "Bank of America",
     "BRK-B": "Berkshire Hathaway", "CVX": "Chevron", "GOOGL": "Alphabet",
@@ -73,6 +74,8 @@ def load_chunks(chunks_dir):
             if c.get("n_tokens",0)<100:
                 continue
             if (c.get("section_title") or "").lower()=="preamble":
+                continue
+            if c.get("form")!="10-K":
                 continue
             idx[c["ticker"]].append(c)
     return idx

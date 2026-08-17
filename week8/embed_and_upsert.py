@@ -31,10 +31,9 @@ from tenacity import retry,stop_after_attempt,wait_exponential
 from chunk_loader import load_chunks
 from build_parents import build_parents
 from config import(EMBED_BATCH_SIZE,EMBED_DIM,EMBED_MODEL,INDEX_CLOUD,
-                   INDEX_METRIC,INDEX_NAME,INDEX_REGION,MANIFEST,
+                   INDEX_METRIC,INDEX_NAME,INDEX_REGION,MANIFEST,DEAD_LETTER
                    NAMESPACE,PARENT_DB)
 
-DEAD_LETTER=MANIFEST.parent/"dead_letter.json"
 
 openai_client=OpenAI()
 

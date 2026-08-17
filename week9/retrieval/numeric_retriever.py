@@ -101,33 +101,10 @@ def numeric_retrieve(nq,db_path):
     
     if results and not missing:
         status="ok"
-    elif result and missing:
+    elif results and missing:
         status="partial"
     else:
         status="no_data"
     return {"status":status,"results":results,"missing":missing,"query":nq}
 
-
-if __name__=="__main__":
-
-    import os 
-    DB=os.path.join(os.path.dirname(__file__),"facts.sqlite3")
-    def fake(route,concept,years,ticker,status="resolved"):
-        r={"route":route,"numeric_part":{"concept":concept,"years":years,"tickers":[]}}
-        res={"status":status,"tickers":tickers}
-
-        return build_query(r,res,"raw")
-    
-    cases = [
-        ("hit",        fake("NUMERIC", "net_income", [2025], ["AAPL"])),
-        ("miss-year",  fake("NUMERIC", "net_income", [2019], ["AAPL"])),
-        ("multi",      fake("NUMERIC", "revenue", [2024, 2019], ["AAPL"])),
-        ("bad-concept",fake("NUMERIC", "gross_margin", [2024], ["AAPL"])),
-        ("blocked",    fake("NUMERIC", "revenue", [2024], [], status="typo")),
-        ("not-numeric",fake("CONCEPTUAL", None, [], ["AAPL"])),
-    ]
-
-    for name,nq in cases:
-        out=numeric_retrieve(nq,DB)
-        print(f"{name:12} -> {out['status']:10} results={len(out['results'])} missing={len(out['missing'])}")
 

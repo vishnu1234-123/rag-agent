@@ -13,7 +13,7 @@ from pinecone import Pinecone
 import sys
 _WEEK8=_HERE.parent.parent.parent/"week8"
 sys.path.insert(0,str(_WEEK8))
-from config import EMBED_MODEL,INDEX_NAME,NAMESPACE,PARENT_DB
+from config import EMBED_MODEL,INDEX_NAME,NAMESPACE,PARENT_DB,PARENT_PER_QUERY
 
 _oai=OpenAI()
 _pc=Pinecone(api_key=os.environ["PINECONE_API_KEY"])
@@ -40,7 +40,7 @@ def _fetch_parents(parent_ids):
             "fiscal_year":r[3],"section_item":r[4],"text":r[5]}
             for r in rows}
 
-def retrieve(question,tickers=None,top_k=20,section_item=None):
+def retrieve(question,tickers=None,top_k=PARENT_PER_QUERY,section_item=None,form=None):
     qvec=embed_query(question)
 
     flt={}
@@ -50,6 +50,9 @@ def retrieve(question,tickers=None,top_k=20,section_item=None):
     
     if section_item:
         flt["section_item"]=section_item
+    
+    if form:
+        flt["form"]=form
     
     res=_index.query(vector=qvec,top_k=top_k,namespace=NAMESPACE,
                     include_metadata=True,filter=flt or None)
@@ -81,7 +84,7 @@ def retrieve(question,tickers=None,top_k=20,section_item=None):
         row["n_matched"]=len(child_by_parent[pid])
         parents.append(row)
     parents.sort(key=lambda r:(r["n_matched"],r["best_score"]),reverse=True)
-    
+
     return {"parents":parents,"children":children,"query":question}
 
 if __name__=="__main__":

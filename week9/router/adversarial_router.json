@@ -1,0 +1,182 @@
+[
+    {
+      "id": "syn_ni_1",
+      "category": "concept_synonym",
+      "attacks": "extract_concept synonym gap (net_income)",
+      "question": "For Apple in 2024, how much was left over after all costs and taxes were paid?",
+      "expected_route": "NUMERIC",
+      "expected_concept": "net_income",
+      "note": "No CONCEPT_PATTERNS synonym present; 'left over after all costs' = net income. Regex extract_concept -> None."
+    },
+    {
+      "id": "syn_rev_1",
+      "category": "concept_synonym",
+      "attacks": "extract_concept synonym gap (revenue)",
+      "question": "What did Microsoft bring in from its operations across fiscal 2023?",
+      "expected_route": "NUMERIC",
+      "expected_concept": "revenue",
+      "note": "'bring in from operations' = revenue, not in CONCEPT_PATTERNS. Regex -> None."
+    },
+    {
+      "id": "syn_ta_1",
+      "category": "concept_synonym",
+      "attacks": "extract_concept synonym gap (total_assets)",
+      "question": "What was the total value of everything Bank of America held on its books at the end of 2022?",
+      "expected_route": "NUMERIC",
+      "expected_concept": "total_assets",
+      "note": "'total value of everything held on its books' = total assets. 'balance sheet size'/'asset base' not used; regex likely -> None."
+    },
+    {
+      "id": "syn_rev_2",
+      "category": "concept_synonym",
+      "attacks": "extract_concept synonym gap (revenue, ranking form)",
+      "question": "Between Chevron and ExxonMobil in 2023, whose sales at the register of oil were greater?",
+      "expected_route": "NUMERIC",
+      "expected_concept": "revenue",
+      "note": "'sales at the register of oil' is an odd revenue phrasing; NUMERIC_ASK ('whose ... greater') may fire but concept -> None, so has_numeric_signal returns False."
+    },
+    {
+      "id": "np_1",
+      "category": "numeric_looking_prose",
+      "attacks": "Tier-1 short-circuit to NUMERIC on a narrative ask",
+      "question": "How did Tesla's revenue change in 2023, and what should investors take away from that trajectory?",
+      "expected_route": "HYBRID",
+      "expected_concept": "revenue",
+      "note": "'how did ... change' fires NUMERIC_ASK; but the real ask ('what should investors take away') is interpretive. Second-clause detector should escalate; test whether it does."
+    },
+    {
+      "id": "np_2",
+      "category": "numeric_looking_prose",
+      "attacks": "numeric regex fires but answer is qualitative",
+      "question": "Compare how Apple and Meta describe the meaning of their net income shifts to shareholders.",
+      "expected_route": "CONCEPTUAL",
+      "expected_concept": null,
+      "note": "'Compare' fires NUMERIC_ASK and 'net income' hits concept -> numeric signal True. But 'how they describe the meaning' is pure prose. Risk: routes NUMERIC."
+    },
+    {
+      "id": "np_3",
+      "category": "numeric_looking_prose",
+      "attacks": "ranking phrasing on a narrative question",
+      "question": "Which of Coca-Cola or PepsiCo gives the more detailed explanation of its revenue drivers?",
+      "expected_route": "CONCEPTUAL",
+      "expected_concept": null,
+      "note": "'Which ... more detailed' brushes NUMERIC_ASK ranking; real ask is about explanation quality (prose). Also PepsiCo may be out of corpus -> possible REJECT; primary target is the numeric-looking trap."
+    },
+    {
+      "id": "np_4",
+      "category": "numeric_looking_prose",
+      "attacks": "how-much on a prose target",
+      "question": "How much emphasis does JPMorgan place on net income growth in its outlook discussion?",
+      "expected_route": "CONCEPTUAL",
+      "expected_concept": null,
+      "note": "'How much' fires NUMERIC_ASK, 'net income' fires concept -> numeric signal. But 'how much emphasis ... in its outlook discussion' is narrative. 'outlook' fires PROSE too -> should land HYBRID/CONCEPTUAL, not pure NUMERIC."
+    },
+    {
+      "id": "pn_1",
+      "category": "prose_looking_numeric",
+      "attacks": "PROSE_ASK over-fires and hides a numeric answer",
+      "question": "Explain how much total revenue Walmart reported for fiscal 2024.",
+      "expected_route": "NUMERIC",
+      "expected_concept": "revenue",
+      "note": "'Explain' fires PROSE_ASK; but 'how much total revenue ... reported' has an exact numeric answer. prose && !num? -> wrongly CONCEPTUAL."
+    },
+    {
+      "id": "pn_2",
+      "category": "prose_looking_numeric",
+      "attacks": "'describe' fronting a pure figure ask",
+      "question": "Describe the exact net income figure Johnson & Johnson posted in 2023.",
+      "expected_route": "NUMERIC",
+      "expected_concept": "net_income",
+      "note": "'Describe' fires PROSE; 'exact net income figure ... posted' is a single number. Risk: CONCEPTUAL."
+    },
+    {
+      "id": "pn_3",
+      "category": "prose_looking_numeric",
+      "attacks": "'why' co-occurring with a clean numeric ask",
+      "question": "What was Amazon's total revenue in 2022 (I ask because I'm reconciling a spreadsheet)?",
+      "expected_route": "NUMERIC",
+      "expected_concept": "revenue",
+      "note": "Parenthetical adds no prose intent, but check that stray words don't trip PROSE. Clean numeric; should be NUMERIC. Control-ish case within this category."
+    },
+    {
+      "id": "pn_4",
+      "category": "prose_looking_numeric",
+      "attacks": "'discuss' fronting a comparison of figures",
+      "question": "Discuss which was larger: Microsoft's or Alphabet's total assets in 2024.",
+      "expected_route": "NUMERIC",
+      "expected_concept": "total_assets",
+      "note": "'Discuss' fires PROSE_ASK; the ask is a pure numeric comparison ('which was larger'). Risk: CONCEPTUAL when it should be NUMERIC."
+    },
+    {
+      "id": "dec_1",
+      "category": "decline_slips_regex",
+      "attacks": "unsupported concept dodging UNSUPPORTED_CONCEPTS",
+      "question": "What was Apple's profit for every share outstanding in 2023?",
+      "expected_route": "REJECT",
+      "expected_concept": null,
+      "note": "EPS phrased as 'profit for every share outstanding' dodges 'earnings per share|eps'. 'profit' hits net_income pattern -> risk of answering a concept not stored. WORST failure if it returns a number."
+    },
+    {
+      "id": "dec_2",
+      "category": "decline_slips_regex",
+      "attacks": "out-of-corpus company with clean numeric framing",
+      "question": "What was Netflix's total revenue in 2023?",
+      "expected_route": "REJECT",
+      "expected_concept": "revenue",
+      "note": "Netflix not in the 20-company corpus. Router does NOT resolve companies (by design) -> will likely route NUMERIC and defer reject to the gate. Tests the router/gate contract: acceptable as NUMERIC only if the gate reliably rejects. Flag for gate-side check."
+    },
+    {
+      "id": "dec_3",
+      "category": "decline_slips_regex",
+      "attacks": "unsupported metric via synonym",
+      "question": "How much cash did Chevron generate freely after capital spending in 2023?",
+      "expected_route": "REJECT",
+      "expected_concept": null,
+      "note": "'cash generated freely after capital spending' = free cash flow, unsupported. Dodges 'free cash flow|fcf'. No supported concept -> should REJECT, not answer."
+    },
+    {
+      "id": "dec_4",
+      "category": "decline_slips_regex",
+      "attacks": "unsupported ratio in plain words",
+      "question": "For Visa in 2024, how much did it earn relative to what shareholders put in?",
+      "expected_route": "REJECT",
+      "expected_concept": null,
+      "note": "'earn relative to what shareholders put in' = return on equity, unsupported. Dodges 'roe|return on equity'. Should REJECT."
+    },
+    {
+      "id": "yr_1",
+      "category": "year_handling",
+      "attacks": "numeric ask with no year",
+      "question": "What is Apple's net income?",
+      "expected_route": "NUMERIC",
+      "expected_concept": "net_income",
+      "note": "No year. Routes NUMERIC (concept + implied ask) but years=[] -> downstream must ask/clarify or use latest, not fail. Tests whether missing-year is handled or silently breaks like the decomposer did."
+    },
+    {
+      "id": "yr_2",
+      "category": "year_handling",
+      "attacks": "year range in a trend question (decomposer stress)",
+      "question": "How did Bank of America's net income change from fiscal 2021 to 2025, and what drove it?",
+      "expected_route": "HYBRID",
+      "expected_concept": "net_income",
+      "note": "The exact shape that produced yearless sub-questions downstream. Router should extract years [2021,2025] and route HYBRID. Confirms router-side year extraction is correct (isolating the bug to the decomposer)."
+    },
+    {
+      "id": "yr_3",
+      "category": "year_handling",
+      "attacks": "malformed year token",
+      "question": "What was ExxonMobil's revenue in fiscal year 20X4?",
+      "expected_route": "REJECT",
+      "expected_concept": "revenue",
+      "note": "'20X4' is a malformed year token; has_out_of_range_year should catch via YEAR_TOKEN and REJECT."
+    },
+    {
+      "id": "yr_4",
+      "category": "year_handling",
+      "attacks": "out-of-range but well-formed year",
+      "question": "What was Tesla's total revenue in 2019?",
+      "expected_route": "REJECT",
+      "expected_concept": "revenue",
+      "note": "2019 outside VALID_YEARS (2021-2025). has_out_of_range_year should REJECT before routing."
+    }
+  ]
