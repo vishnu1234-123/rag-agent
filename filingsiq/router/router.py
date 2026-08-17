@@ -20,7 +20,7 @@ import json
 import os
 import re
 
-from signals import (
+from filingsiq.router.signals import (
     has_numeric_signal, has_prose_signal,
     has_out_of_range_year, numeric_ask_unsupported_concept,
     extract_years, extract_concept,
