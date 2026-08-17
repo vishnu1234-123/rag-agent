@@ -14,7 +14,7 @@ import json
 import os
 import sys
 
-from router import route
+from filingsiq.router.router import route
 
 def severity(expected,got):
 
