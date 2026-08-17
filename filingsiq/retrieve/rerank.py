@@ -43,9 +43,8 @@ def rerank(question, parents, top_k=None):
 
 if __name__ == "__main__":
     # quick self-test on one question — compare order before/after rerank
-    import sys
-    sys.path.insert(0, ".")
-    from prose_retriever import retrieve
+    
+    from filingsiq.retrieve.prose import retrieve
     q = "What factors are critical for Alphabet to attract and retain advertisers?"
     out = retrieve(q, tickers="GOOGL", top_k=10)
     print("BEFORE rerank (embedding order):")

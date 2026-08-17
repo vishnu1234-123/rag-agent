@@ -40,5 +40,7 @@ NAMESPACE="v1"
 
 EXPECTED_CHUNKS=6779
 
+FACTS_DB=DATA/"facts.sqlite"
+
 
 

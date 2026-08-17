@@ -10,10 +10,8 @@ load_dotenv()
 from openai import OpenAI
 from pinecone import Pinecone
 
-import sys
-_WEEK8=_HERE.parent.parent.parent/"week8"
-sys.path.insert(0,str(_WEEK8))
-from config import EMBED_MODEL,INDEX_NAME,NAMESPACE,PARENT_DB,PARENT_PER_QUERY
+
+from filingsiq.config import EMBED_MODEL,INDEX_NAME,NAMESPACE,PARENT_DB,PARENT_PER_QUERY
 
 _oai=OpenAI()
 _pc=Pinecone(api_key=os.environ["PINECONE_API_KEY"])

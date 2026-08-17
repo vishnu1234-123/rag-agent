@@ -18,16 +18,14 @@ import sys,os,json
 
 HERE=os.path.dirname(os.path.abspath(__file__))
 ROOT=os.path.abspath(os.path.join(HERE,"..",".."))
-sys.path.insert(0,os.path.join(ROOT,"week9","gate"))
-sys.path.insert(0,os.path.join(ROOT,"week9","router"))
-sys.path.insert(0,HERE)
 
-import company_resolution as cr
-from router import route
-from numeric_retriever import build_query,numeric_retrieve
-from numeric_compute import compute
+from filingsiq.config import FACTS_DB
+from filingsiq.gate import company_resolution as cr
+from filingsiq.router.router import route
+from filingsiq.retrieve.numeric import build_query, numeric_retrieve
+from filingsiq.compute.numeric_compute import compute
 
-DB=os.path.join(ROOT,"week8","data","facts.sqlite")
+DB=str(FACTS_DB)
 EVAL_DIR=os.path.join(ROOT,"week8","eval")
 
 def close(a,b,rel=1e-6):

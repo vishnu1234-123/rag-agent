@@ -14,8 +14,7 @@ returned out_of_corpus / typo / need_company).
 
 import json,sys
 from collections import defaultdict
-import company_resolution as cr
-
+from filingsiq.gate import company_resolution as cr
 COMPANY_SUBTYPES=("corpus","misspelling","typo","notco","not_co","outof")
 
 def _is_company_subtype(sub):
