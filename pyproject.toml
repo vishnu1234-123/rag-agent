@@ -1,0 +1,13 @@
+[project]
+name = "filingsiq"
+version = "0.1.0"
+description = "RAG over SEC filings: numeric (SQL) + prose (vector) with routing, decomposition, grounded generation."
+requires-python = ">=3.12"
+dependencies = ["openai", "pinecone", "python-dotenv", "tiktoken"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["filingsiq*"]
