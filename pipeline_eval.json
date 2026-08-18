@@ -1,0 +1,213 @@
+[
+  {
+    "id": "num_point_1",
+    "type": "numeric",
+    "framing": "direct",
+    "question": "What was Apple's net income in 2024?",
+    "expected_behavior": "answer",
+    "expected_answer": "93736000000",
+    "verified": true
+  },
+  {
+    "id": "num_point_1_reframed",
+    "type": "numeric",
+    "framing": "reframed",
+    "question": "For fiscal year 2024, how much profit did Apple ultimately report on its bottom line?",
+    "expected_behavior": "answer",
+    "expected_answer": "93736000000",
+    "verified": true,
+    "note": "same fact reworded ('bottom line profit'); concept robustness"
+  },
+  {
+    "id": "num_point_2",
+    "type": "numeric",
+    "framing": "direct",
+    "question": "What was Walmart's total revenue in 2023?",
+    "expected_behavior": "answer",
+    "expected_answer": "605881000000",
+    "verified": true
+  },
+  {
+    "id": "num_trend_1",
+    "type": "numeric",
+    "framing": "direct",
+    "question": "How did Microsoft's total assets change from 2021 to 2025?",
+    "expected_behavior": "answer",
+    "expected_answer": "333779000000 -> 619003000000, +285224000000 (+85.5%)",
+    "verified": true
+  },
+  {
+    "id": "num_synonym_1",
+    "type": "numeric",
+    "framing": "reframed",
+    "question": "How much did Amazon bring in from operations in fiscal 2024?",
+    "expected_behavior": "answer",
+    "expected_answer": "637959000000",
+    "verified": true,
+    "note": "concept synonym ('bring in from operations' = revenue)"
+  },
+  {
+    "id": "num_scenario_1",
+    "type": "numeric",
+    "framing": "scenario",
+    "question": "An analyst is comparing 2024 results. She notes JPMorgan posted a certain net income that year. What figure would she be citing?",
+    "expected_behavior": "answer",
+    "expected_answer": "58471000000",
+    "verified": true,
+    "note": "scenario framing of JPM FY2024 net income"
+  },
+  {
+    "id": "prose_answerable_1",
+    "type": "prose",
+    "framing": "direct",
+    "question": "What supply chain risks does Apple describe?",
+    "expected_behavior": "answer",
+    "expected_answer": "Apple: majority of manufacturing outsourced to partners primarily in China, India, Japan, S.Korea, Taiwan, Vietnam; reliance on single-source partners; outsourced logistics reduces direct control over cost/quality/quantity; supplier code-of-conduct violations; supply-chain changes involve regulatory/operational risk; dependence on complex IT systems vulnerable to disasters, cyberattacks, ransomware.",
+    "verified": true,
+    "note": "OVER-DECLINING canary; ground truth from AAPL 10-K risk factors"
+  },
+  {
+    "id": "prose_answerable_2",
+    "type": "prose",
+    "framing": "direct",
+    "question": "What does Alphabet say about how it attracts and retains advertisers?",
+    "expected_behavior": "answer",
+    "expected_answer": "Alphabet: world-class ad technologies for advertisers/agencies/publishers; AI foundational (Demand Gen, Performance Max, Product Studio); performance + brand advertising across Search, YouTube, Network; invests in measurability; filters invalid traffic and removes bad ads to protect users/advertisers.",
+    "verified": true,
+    "note": "OVER-DECLINING canary; ground truth from GOOGL 10-K business section"
+  },
+  {
+    "id": "prose_answerable_3",
+    "type": "prose",
+    "framing": "direct",
+    "question": "What competitive risks does Tesla identify?",
+    "expected_behavior": "answer",
+    "expected_answer": "Tesla: highly competitive automotive market, growing number of established + new EV entrants; competes on segment + propulsion tech; established makers entering EV/hybrid; competition in AI/robotics/autonomy (Robotaxi vs ride-hailing); energy storage + generation markets competitive (vs utilities, solar cos); emphasis on IP protection.",
+    "verified": true,
+    "note": "OVER-DECLINING canary; ground truth from TSLA 10-K"
+  },
+  {
+    "id": "prose_boilerplate_1",
+    "type": "prose",
+    "framing": "direct",
+    "question": "What reasons does Chevron give for its revenue change?",
+    "expected_behavior": "answer",
+    "expected_answer": "CONCRETE narrative EXISTS in CVX 10-K MD&A: e.g. U.S. upstream earnings decreased $1.8B primarily due to lower liquids realizations ($2.4B), higher opex ($2.0B), higher DD&A ($1.4B), partly offset by higher volumes ($2.8B) and higher gas realizations; production up 16% from Hess acquisition + Permian/Gulf. Similar concrete drivers for intl upstream, downstream. NOTE: CORRECTED earlier assumption - content is present; a decline here = RETRIEVAL MISS (pulled risk factors/sec14, not MD&A sec7), not content absence.",
+    "verified": true,
+    "note": "RETRIEVAL-MISS test: concrete answer exists; if pipeline declines -> retrieval failed to fetch MD&A"
+  },
+  {
+    "id": "prose_scenario_cvx",
+    "type": "prose",
+    "framing": "scenario",
+    "question": "Suppose Chevron's revenue moved noticeably between 2021 and 2025 because of shifts in commodity prices, production volumes, and demand. Based on what Chevron actually states in its filing, which of these did it specifically cite as drivers of its revenue change?",
+    "expected_behavior": "answer",
+    "expected_answer": "CVX cites commodity prices (crude/gas/NGL) as the most significant factor affecting results - influenced by economic conditions, industry production/inventory, OPEC quotas, geopolitics, regulation. Concrete MD&A also attributes segment earnings changes to realizations, volumes, opex, DD&A. A grounded answer distinguishes GENERAL risk-factor language from SPECIFIC attributed drivers.",
+    "verified": true,
+    "note": "SCENARIO probe; tests concrete-vs-general grounding"
+  },
+  {
+    "id": "hybrid_1",
+    "type": "hybrid",
+    "framing": "direct",
+    "question": "What was JPMorgan's net income in 2024, and what does it attribute that to?",
+    "expected_behavior": "answer_numeric_maybe_decline_prose",
+    "expected_answer": "numeric: 58471000000. attribution (JPM MD&A): strong performance across all business lines; sharply higher investment banking fees; strong markets revenue; record payments revenue; continued consumer banking growth; robust AWM inflows.",
+    "verified": true,
+    "note": "re-pulled real MD&A attribution (not segment glossary)"
+  },
+  {
+    "id": "hybrid_2",
+    "type": "hybrid",
+    "framing": "direct",
+    "question": "How did Coca-Cola's revenue change from 2022 to 2025, and what drivers does it cite?",
+    "expected_behavior": "answer",
+    "expected_answer": "numeric: 43004000000 -> 47941000000 (+11.5%). drivers (KO 10-K): favorable pricing/price-mix; higher concentrate sales volume; slight unit case volume changes; foreign currency impacts.",
+    "verified": true
+  },
+  {
+    "id": "cc_num_1",
+    "type": "cross_company_numeric",
+    "framing": "direct",
+    "question": "Which had higher total assets in 2024, JPMorgan or Bank of America?",
+    "expected_behavior": "answer",
+    "expected_answer": "JPM 4002814000000 > BAC 3261299000000 -> JPMorgan larger",
+    "verified": true
+  },
+  {
+    "id": "cc_num_2",
+    "type": "cross_company_numeric",
+    "framing": "direct",
+    "question": "Between Nvidia and Tesla, whose revenue was larger in 2025?",
+    "expected_behavior": "answer",
+    "expected_answer": "NVDA 130497000000 > TSLA 94827000000 -> Nvidia larger",
+    "verified": true
+  },
+  {
+    "id": "cc_hybrid_1",
+    "type": "cross_company_hybrid",
+    "framing": "direct",
+    "question": "Between Meta and Alphabet, which grew net income faster from 2021 to 2025, and what reasons does each give?",
+    "expected_behavior": "answer_numeric_maybe_decline_prose",
+    "expected_answer": "numeric: GOOGL 76033000000->132170000000 (+73.9%) grew faster than META 39370000000->60458000000 (+53.6%). reasons: Meta - ad revenue recovery, AI ad improvements, Year of Efficiency cost cuts, lower opex, FoA profitability. Alphabet - strong Search/YouTube ads, Cloud revenue+margin, cost discipline, lower depreciation/real-estate costs.",
+    "verified": true,
+    "note": "flagship growth_compare; Alphabet faster"
+  },
+  {
+    "id": "cc_hybrid_2",
+    "type": "cross_company_hybrid",
+    "framing": "direct",
+    "question": "Which grew revenue faster from 2021 to 2025, Johnson & Johnson or UnitedHealth, and why?",
+    "expected_behavior": "decline_or_flag",
+    "expected_answer": "INCOMPLETE: JNJ has NO 2021 revenue in DB (data gap) -> growth_compare guard should fire (cannot compute JNJ growth). UNH alone: 287597000000->447567000000 (+55.6%). Expected: pipeline flags JNJ incomplete rather than fabricating. Tests the growth-guard on real missing data.",
+    "verified": true,
+    "note": "GUARD TEST: JNJ missing 2021 -> growth_compare must decline/incomplete for JNJ"
+  },
+  {
+    "id": "reject_company_1",
+    "type": "reject",
+    "framing": "direct",
+    "question": "What was Netflix's revenue in 2024?",
+    "expected_behavior": "reject",
+    "expected_answer": "REJECT: out_of_corpus",
+    "verified": true
+  },
+  {
+    "id": "reject_year_1",
+    "type": "reject",
+    "framing": "direct",
+    "question": "What was Apple's net income in 2019?",
+    "expected_behavior": "reject",
+    "expected_answer": "REJECT: year outside corpus 2021-2025",
+    "verified": true
+  },
+  {
+    "id": "reject_concept_1",
+    "type": "reject",
+    "framing": "direct",
+    "question": "What was Apple's earnings per share in 2024?",
+    "expected_behavior": "reject",
+    "expected_answer": "REJECT: unsupported concept (EPS)",
+    "verified": true
+  },
+  {
+    "id": "reject_concept_scenario_1",
+    "type": "reject",
+    "framing": "scenario",
+    "question": "A colleague wants to know how much cash Chevron generated after covering its capital spending in 2024, to assess free cash flow. What was that figure?",
+    "expected_behavior": "reject",
+    "expected_answer": "REJECT: free cash flow unsupported; must reject not fabricate",
+    "verified": true,
+    "note": "scenario framing of FCF unsupported-concept reject"
+  },
+  {
+    "id": "edge_missing_year_1",
+    "type": "edge",
+    "framing": "direct",
+    "question": "What is Apple's revenue?",
+    "expected_behavior": "answer_or_clarify",
+    "expected_answer": "NOT a reject. Missing year on numeric should default to latest (2025) or clarify. CORRECTED from earlier 'reject' label. VERIFY: does pipeline default-latest, clarify, or silently break (fiscal_year=None)?",
+    "verified": true,
+    "note": "missing-year edge; corrected label - answer-latest or clarify, NOT reject"
+  }
+]

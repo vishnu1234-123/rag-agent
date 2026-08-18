@@ -35,6 +35,7 @@ from filingsiq.contracts import(
 )
 from filingsiq.gate import company_resolution as cr
 from filingsiq.router import signals
+from filingsiq.router.signals import has_out_of_range_year, numeric_ask_unsupported_concept
 
 _HERE=Path(__file__).resolve()
 load_dotenv(_HERE.parent.parent.parent/".env")
@@ -114,6 +115,13 @@ def decompose(question:str)->QueryPlan:
         return QueryPlan(question,None,rejected=True,
                 reject_reason="need_company: which company?")
     
+    if has_out_of_range_year(question):
+        return QueryPlan(question, None, rejected=True,
+                reject_reason="year_out_of_range: corpus covers 2021-2025 only")
+    if numeric_ask_unsupported_concept(question):
+        return QueryPlan(question, None, rejected=True,
+                reject_reason="unsupported_concept: only revenue, net_income, total_assets")
+
     tickers=res.get("tickers",[])
 
     op_hint=_detect_operation(question)
