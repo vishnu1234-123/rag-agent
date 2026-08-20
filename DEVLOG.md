@@ -194,3 +194,14 @@ OpenAI prompt caching isn't available on gpt-4o-mini (snapshot `gpt-4o-mini-2024
 ---
 
 *Weeks 1–2 (transformer foundations) predate this log. Week 8 onward is in [week8/SESSION_LOG.md](week8/SESSION_LOG.md).*
+## RAGAS prose eval (38 10-K items)
+- faithfulness 0.971 (n=33), answer_relevancy 0.819 (n=28)
+- 7.9% honest-decline rate (3/38); relevancy NaNs (7) and declines (3) both
+  concentrate on explanatory/multi-concept questions ("how does X affect Y",
+  "consequences if X fails"), NOT factual questions.
+- Finding: single-chunk prose retrieval handles fact-retrieval well; reasoning
+  questions that require connecting multiple passages tend to decline honestly.
+  Candidate fix (future): query decomposition / multi-hop retrieval for the
+  prose path. Not built — characterized as a known boundary.
+- Context precision/recall skipped: eval references predate a corpus
+  re-ingestion (source_chunk_ids no longer resolve), so not source-verifiable.

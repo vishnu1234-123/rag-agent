@@ -1,0 +1,252 @@
+{
+  "n_total": 38,
+  "n_answered": 35,
+  "n_declined": 3,
+  "decline_rate": 0.0789,
+  "metrics_run": [
+    "faithfulness",
+    "answer_relevancy"
+  ],
+  "metric_means": {
+    "faithfulness": 0.9711,
+    "answer_relevancy": 0.8189
+  },
+  "metric_n": {
+    "faithfulness": 33,
+    "answer_relevancy": 28
+  },
+  "skipped_metrics": [
+    "context_precision",
+    "context_recall"
+  ],
+  "skip_reason": "source_chunk_ids predate corpus re-ingestion; references not source-verifiable",
+  "declined_items": [
+    {
+      "id": "prose_MSFT_10-K_00082",
+      "ticker": "MSFT",
+      "reason": "declined"
+    },
+    {
+      "id": "prose_KO_10-K_00138",
+      "ticker": "KO",
+      "reason": "declined"
+    },
+    {
+      "id": "prose_AMZN_10-K_00031",
+      "ticker": "AMZN",
+      "reason": "declined"
+    }
+  ],
+  "per_item": [
+    {
+      "id": "prose_GOOGL_10-K_00034",
+      "ticker": "GOOGL",
+      "faithfulness": 0.7857,
+      "answer_relevancy": 0.9263
+    },
+    {
+      "id": "prose_UNH_10-K_00063",
+      "ticker": "UNH",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9728
+    },
+    {
+      "id": "prose_GOOGL_10-K_00057",
+      "ticker": "GOOGL",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9364
+    },
+    {
+      "id": "prose_AAPL_10-K_00044",
+      "ticker": "AAPL",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0
+    },
+    {
+      "id": "prose_AMZN_10-K_00041",
+      "ticker": "AMZN",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9928
+    },
+    {
+      "id": "prose_MSFT_10-K_00127",
+      "ticker": "MSFT",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0
+    },
+    {
+      "id": "prose_CVX_10-K_00096",
+      "ticker": "CVX",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "id": "prose_JPM_10-K_00050",
+      "ticker": "JPM",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9898
+    },
+    {
+      "id": "prose_BA_10-K_00047",
+      "ticker": "BA",
+      "faithfulness": 0.8667,
+      "answer_relevancy": null
+    },
+    {
+      "id": "prose_JPM_10-K_00148",
+      "ticker": "JPM",
+      "faithfulness": 1.0,
+      "answer_relevancy": null
+    },
+    {
+      "id": "prose_BA_10-K_00105",
+      "ticker": "BA",
+      "faithfulness": 1.0,
+      "answer_relevancy": null
+    },
+    {
+      "id": "prose_AMZN_10-K_00082",
+      "ticker": "AMZN",
+      "faithfulness": 1.0,
+      "answer_relevancy": null
+    },
+    {
+      "id": "prose_NVDA_10-K_00060",
+      "ticker": "NVDA",
+      "faithfulness": null,
+      "answer_relevancy": 0.9286
+    },
+    {
+      "id": "prose_CVX_10-K_00106",
+      "ticker": "CVX",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0
+    },
+    {
+      "id": "prose_V_10-K_00058",
+      "ticker": "V",
+      "faithfulness": 1.0,
+      "answer_relevancy": null
+    },
+    {
+      "id": "prose_TSLA_10-K_00075",
+      "ticker": "TSLA",
+      "faithfulness": null,
+      "answer_relevancy": 0.9888
+    },
+    {
+      "id": "prose_JNJ_10-K_00032",
+      "ticker": "JNJ",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0
+    },
+    {
+      "id": "prose_V_10-K_00046",
+      "ticker": "V",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "id": "prose_PG_10-K_00017",
+      "ticker": "PG",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0
+    },
+    {
+      "id": "prose_META_10-K_00043",
+      "ticker": "META",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.8979
+    },
+    {
+      "id": "prose_AAPL_10-K_00075",
+      "ticker": "AAPL",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "id": "prose_NVDA_10-K_00073",
+      "ticker": "NVDA",
+      "faithfulness": 0.9643,
+      "answer_relevancy": 0.9992
+    },
+    {
+      "id": "prose_XOM_10-K_00059",
+      "ticker": "XOM",
+      "faithfulness": 1.0,
+      "answer_relevancy": null
+    },
+    {
+      "id": "prose_GOOGL_10-K_00043",
+      "ticker": "GOOGL",
+      "faithfulness": 0.5714,
+      "answer_relevancy": 0.9012
+    },
+    {
+      "id": "prose_JNJ_10-K_00107",
+      "ticker": "JNJ",
+      "faithfulness": 0.8571,
+      "answer_relevancy": 0.9891
+    },
+    {
+      "id": "prose_JPM_10-K_00076",
+      "ticker": "JPM",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9593
+    },
+    {
+      "id": "prose_UNH_10-K_00059",
+      "ticker": "UNH",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7731
+    },
+    {
+      "id": "prose_V_10-K_00057",
+      "ticker": "V",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9642
+    },
+    {
+      "id": "prose_WMT_10-K_00129",
+      "ticker": "WMT",
+      "faithfulness": 1.0,
+      "answer_relevancy": null
+    },
+    {
+      "id": "prose_KO_10-K_00049",
+      "ticker": "KO",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "id": "prose_XOM_10-K_00049",
+      "ticker": "XOM",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9866
+    },
+    {
+      "id": "prose_TSLA_10-K_00091",
+      "ticker": "TSLA",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9484
+    },
+    {
+      "id": "prose_V_10-K_00085",
+      "ticker": "V",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9512
+    },
+    {
+      "id": "prose_JNJ_10-K_00167",
+      "ticker": "JNJ",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9968
+    },
+    {
+      "id": "prose_T_10-K_00036",
+      "ticker": "T",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.8262
+    }
+  ]
+}
