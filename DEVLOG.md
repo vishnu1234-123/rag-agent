@@ -205,3 +205,16 @@ OpenAI prompt caching isn't available on gpt-4o-mini (snapshot `gpt-4o-mini-2024
   prose path. Not built — characterized as a known boundary.
 - Context precision/recall skipped: eval references predate a corpus
   re-ingestion (source_chunk_ids no longer resolve), so not source-verifiable.
+
+## RAGAS relevancy NaN — investigated (verified by reading all 7 answers)
+- All 7 relevancy-NaN answers are substantive, on-topic, grounded, cited
+  (459–2,349 chars, declined=False). NOT thin/wrong/off-topic.
+- Cause: they are multi-point enumerated list answers (thoroughness driven by
+  the generator's "include ALL relevant factors" prompt). RAGAS answer_relevancy
+  reverse-generates questions from the answer; long multi-aspect lists produce a
+  scattered question cloud that can't map cleanly to the single original
+  question -> metric returns NaN. Known limitation of the metric, not a
+  generation failure.
+- Implication: reported answer_relevancy 0.82 (n=28) is an UNDERCOUNT — the 7
+  excluded items are among the most thorough answers. True relevancy is higher.
+- Distinct from the 3 declines, which ARE a real retrieval-recall gap.
