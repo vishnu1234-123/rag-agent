@@ -18,3 +18,4 @@ week8/eval/cc_hybrid_refix.json
 *.bak.bak
 week9/router/stress_set.json
 *.egg-info/
+.env.docker
