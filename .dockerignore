@@ -1,0 +1,49 @@
+#Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# Version control
+.git/
+.gitignore
+
+#Secrets - NEVER copy into image
+.env
+
+#Ingestion junk - the live app does NOT need these (227MB of raw/processed)
+data/raw/
+data/processed/
+data/*.htm
+data/*json
+
+#Old week folders and experiments - not needed by the live backend
+week4/
+week5/
+week6/
+week7/
+week8/
+week9/
+
+#Experiment + eval scripts (not part of the serving app)
+retrieval_ab.py
+retrieval_quality.py
+rerank_quality.py
+hybrid_ab_test.py
+rerank_test.py
+run_ragas*.py
+run_pipeline_eval.py
+eval_runner.py
+embeddings_comparison.py
+faiss_test.py
+*_results.json
+pipeline_eval.json
+eval_set.json
+
+#Local dev
+.vscode/
+.DS_Store
+reports/
+faiss_index/
+frontend.py
