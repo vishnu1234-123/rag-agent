@@ -1,0 +1,828 @@
+{
+  "n_total": 38,
+  "n_abstract": 29,
+  "n_factual": 9,
+  "decline_all": {
+    "dense": {
+      "declined": 3,
+      "decline_rate": 0.0789
+    },
+    "rewrite": {
+      "declined": 1,
+      "decline_rate": 0.0263
+    },
+    "hyde": {
+      "declined": 1,
+      "decline_rate": 0.0263
+    }
+  },
+  "decline_abstract": {
+    "dense": {
+      "declined": 3,
+      "decline_rate": 0.1034
+    },
+    "rewrite": {
+      "declined": 1,
+      "decline_rate": 0.0345
+    },
+    "hyde": {
+      "declined": 1,
+      "decline_rate": 0.0345
+    }
+  },
+  "decline_factual": {
+    "dense": {
+      "declined": 0,
+      "decline_rate": 0.0
+    },
+    "rewrite": {
+      "declined": 0,
+      "decline_rate": 0.0
+    },
+    "hyde": {
+      "declined": 0,
+      "decline_rate": 0.0
+    }
+  },
+  "faithfulness_by_arm": {
+    "dense": 0.9876,
+    "rewrite": 0.989,
+    "hyde": 0.9948
+  },
+  "recovered_vs_dense": {
+    "rewrite": [
+      "prose_MSFT_10-K_00082",
+      "prose_KO_10-K_00138"
+    ],
+    "hyde": [
+      "prose_MSFT_10-K_00082",
+      "prose_KO_10-K_00138"
+    ]
+  },
+  "broke_vs_dense": {
+    "rewrite": [],
+    "hyde": []
+  },
+  "per_item": [
+    {
+      "id": "prose_GOOGL_10-K_00034",
+      "ticker": "GOOGL",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 15,
+        "query_used": "What factors are critical for Alphabet to attract and retain advertisers according to the business section of their 10-K filing?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "Critical factors for Alphabet to attract and retain advertisers include market competitiveness, advertising effectiveness, and technological advancements as outlined in the business section of their 10-K filing."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "To attract and retain advertisers, Alphabet Inc. focuses on several critical factors, including the effectiveness of its"
+      }
+    },
+    {
+      "id": "prose_UNH_10-K_00063",
+      "ticker": "UNH",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "What were the primary factors that impacted the earnings from operations for UnitedHealth in 2025 compared to the previous year?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "The primary factors impacting UnitedHealth's earnings from operations in 2025 compared to 2024 were identified."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "In 2025, UnitedHealth's earnings from operations were primarily impacted by an increase in premium revenue driven by a h"
+      }
+    },
+    {
+      "id": "prose_GOOGL_10-K_00057",
+      "ticker": "GOOGL",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "What potential consequences does Alphabet face if it fails to effectively promote high-quality content and detect problematic content on its platforms?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "Alphabet may face significant reputational damage, regulatory scrutiny, and potential financial penalties if it fails to effectively promote high-quality content and detect problematic content on its platforms."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 15,
+        "query_used": "If Alphabet Inc. fails to effectively promote high-quality content and detect problematic content on its platforms, it m"
+      }
+    },
+    {
+      "id": "prose_AAPL_10-K_00044",
+      "ticker": "AAPL",
+      "abstract": false,
+      "dense": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "What challenges does the Company face in securing a reliable supply of custom components for its products?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "The Company faces challenges in securing a reliable supply of custom components for its products."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "The Company faces several challenges in securing a reliable supply of custom components for its products, primarily due "
+      }
+    },
+    {
+      "id": "prose_AMZN_10-K_00041",
+      "ticker": "AMZN",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "How might evolving government regulations impact Amazon's operational costs and business practices?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "Evolving government regulations may impact Amazon's operational costs and business practices."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "Evolving government regulations may significantly impact Amazon's operational costs and business practices. Increased co"
+      }
+    },
+    {
+      "id": "prose_MSFT_10-K_00127",
+      "ticker": "MSFT",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "What factors are considered when determining the standalone selling price (SSP) for products and services that are not sold separately?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "The determination of the standalone selling price (SSP) for products and services not sold separately considers various factors."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "In determining the standalone selling price (SSP) for products and services that are not sold separately, the Company co"
+      }
+    },
+    {
+      "id": "prose_CVX_10-K_00096",
+      "ticker": "CVX",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "What factors could lead to a material adverse impact on Chevron's financial condition and liquidity?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "Factors that could lead to a material adverse impact on Chevron's financial condition and liquidity include market volatility, regulatory changes, and operational disruptions."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "Chevron Corporation's financial condition and liquidity may be materially adversely affected by several factors, includi"
+      }
+    },
+    {
+      "id": "prose_MSFT_10-K_00082",
+      "ticker": "MSFT",
+      "abstract": true,
+      "dense": {
+        "declined": true,
+        "n_ctx": 10,
+        "query_used": "What are the potential consequences for Microsoft's business if it fails to attract and retain talented employees?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "Failure to attract and retain talented employees may adversely affect Microsoft's business operations and competitive position."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "If Microsoft fails to attract and retain talented employees, the company may experience significant operational challeng"
+      }
+    },
+    {
+      "id": "prose_JPM_10-K_00050",
+      "ticker": "JPM",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "How might the regulatory environment impact JPMorgan Chase's competitive position in the financial services market?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "The regulatory environment may significantly impact JPMorgan Chase's competitive position in the financial services market."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "The regulatory environment significantly influences JPMorgan Chase's competitive position in the financial services mark"
+      }
+    },
+    {
+      "id": "prose_BA_10-K_00047",
+      "ticker": "BA",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "How could a prolonged government shutdown impact Boeing's operations according to the risk factors outlined in the 10-K?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "A prolonged government shutdown may adversely affect Boeing's operations as outlined in the risk factors section of the 10-K filing."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "A prolonged government shutdown could significantly disrupt Boeing's operations by delaying critical government contract"
+      }
+    },
+    {
+      "id": "prose_JPM_10-K_00148",
+      "ticker": "JPM",
+      "abstract": false,
+      "dense": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "What is the purpose of the Insider Trading Policy adopted by JPMorgan Chase?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 17,
+        "query_used": "The Insider Trading Policy adopted by JPMorgan Chase is designed to prevent insider trading and ensure compliance with applicable securities laws."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "The purpose of the Insider Trading Policy adopted by JPMorgan Chase is to prevent the misuse of material nonpublic infor"
+      }
+    },
+    {
+      "id": "prose_BA_10-K_00105",
+      "ticker": "BA",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "How do the varying structures of customer orders affect the predictability of Boeing's future operating results?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "The varying structures of customer orders impact the predictability of Boeing's future operating results."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "The varying structures of customer orders, including the mix of firm orders, options, and contingent orders, significant"
+      }
+    },
+    {
+      "id": "prose_AMZN_10-K_00082",
+      "ticker": "AMZN",
+      "abstract": false,
+      "dense": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "What are the limitations of free cash flow as described in the chunk?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "The limitations of free cash flow are outlined in the relevant section of the document."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "Free cash flow (FCF) is a key financial metric used by the Company to assess its liquidity and operational efficiency. H"
+      }
+    },
+    {
+      "id": "prose_NVDA_10-K_00060",
+      "ticker": "NVDA",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "What are some potential consequences of defects in NVIDIA's products as described in the risk factors section?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "Defects in NVIDIA's products may result in significant financial liabilities, reputational damage, and loss of customer trust, as outlined in the risk factors section of the company's filings."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "Defects in NVIDIA's products could lead to significant financial repercussions, including increased warranty costs, prod"
+      }
+    },
+    {
+      "id": "prose_CVX_10-K_00106",
+      "ticker": "CVX",
+      "abstract": false,
+      "dense": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "What are the potential financial impacts on Chevron due to climate change-related legislation and regulations?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "Chevron may experience financial impacts due to climate change-related legislation and regulations."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 9,
+        "query_used": "Chevron Corporation may experience significant financial impacts due to climate change-related legislation and regulatio"
+      }
+    },
+    {
+      "id": "prose_V_10-K_00058",
+      "ticker": "V",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "What are the potential consequences for Visa if it fails to comply with cybersecurity regulations and reporting requirements?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "Visa may face potential consequences, including regulatory penalties, reputational damage, and increased operational costs, if it fails to comply with cybersecurity regulations and reporting requirements."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "Failure to comply with cybersecurity regulations and reporting requirements could result in significant financial penalt"
+      }
+    },
+    {
+      "id": "prose_KO_10-K_00138",
+      "ticker": "KO",
+      "abstract": true,
+      "dense": {
+        "declined": true,
+        "n_ctx": 16,
+        "query_used": "What factors are influencing Coca-Cola's effective tax rate and how are tax incentive grants expected to impact future tax expenses?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "Coca-Cola's effective tax rate is influenced by various factors, including tax incentive grants, which are expected to impact future tax expenses."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "Coca-Cola's effective tax rate is influenced by various factors, including changes in domestic and international tax law"
+      }
+    },
+    {
+      "id": "prose_TSLA_10-K_00075",
+      "ticker": "TSLA",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "What potential consequences could arise from misalignment between the technologies associated with the 2025 CEO Performance Award and consumer demand?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 10,
+        "query_used": "Potential consequences may arise from misalignment between the technologies associated with the 2025 CEO Performance Award and consumer demand."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "The misalignment between the technologies associated with the 2025 CEO Performance Award and consumer demand could resul"
+      }
+    },
+    {
+      "id": "prose_JNJ_10-K_00032",
+      "ticker": "JNJ",
+      "abstract": false,
+      "dense": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "What are the potential impacts of increasing regulatory scrutiny on Johnson & Johnson's financial condition and business operations?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 15,
+        "query_used": "Increasing regulatory scrutiny may adversely affect Johnson & Johnson's financial condition and business operations."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "Increased regulatory scrutiny may adversely affect Johnson & Johnson's financial condition and business operations by im"
+      }
+    },
+    {
+      "id": "prose_V_10-K_00046",
+      "ticker": "V",
+      "abstract": false,
+      "dense": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "What potential impacts do evolving privacy and data protection laws have on Visa's compliance operations and business practices?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "Evolving privacy and data protection laws may significantly impact Visa's compliance operations and business practices."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "Evolving privacy and data protection laws, such as the General Data Protection Regulation (GDPR) and the California Cons"
+      }
+    },
+    {
+      "id": "prose_PG_10-K_00017",
+      "ticker": "PG",
+      "abstract": false,
+      "dense": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "What are the potential impacts of foreign currency fluctuations on Procter & Gamble's financial performance?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "Procter & Gamble may experience financial performance impacts due to fluctuations in foreign currency exchange rates."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "Procter & Gamble Company is exposed to foreign currency fluctuations, which can significantly impact its financial perfo"
+      }
+    },
+    {
+      "id": "prose_META_10-K_00043",
+      "ticker": "META",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "How does Meta aim to support the growth and career development of its employees?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "Meta implements strategies to support the growth and career development of its employees."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "Meta is committed to fostering a culture of continuous learning and professional development for its employees. The comp"
+      }
+    },
+    {
+      "id": "prose_AAPL_10-K_00075",
+      "ticker": "AAPL",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "How do macroeconomic conditions impact Apple's financial results according to the discussion in the 10-K?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "Macroeconomic conditions significantly impact Apple's financial results as discussed in the 10-K filing."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "Macroeconomic conditions significantly influence Apple's financial results, as fluctuations in consumer spending, curren"
+      }
+    },
+    {
+      "id": "prose_NVDA_10-K_00073",
+      "ticker": "NVDA",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "How have geopolitical tensions and export controls affected NVIDIA's ability to serve demand for its products and services?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "Geopolitical tensions and export controls have impacted NVIDIA's capacity to meet demand for its products and services."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "Geopolitical tensions and export controls have significantly impacted NVIDIA's ability to meet the growing demand for it"
+      }
+    },
+    {
+      "id": "prose_XOM_10-K_00059",
+      "ticker": "XOM",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "What are the potential consequences for ExxonMobil if it fails to effectively manage its cybersecurity risks?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "ExxonMobil may face significant consequences, including financial losses, reputational damage, and regulatory penalties, if it fails to effectively manage its cybersecurity risks."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "If ExxonMobil fails to effectively manage its cybersecurity risks, the company may face significant operational disrupti"
+      }
+    },
+    {
+      "id": "prose_GOOGL_10-K_00043",
+      "ticker": "GOOGL",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "How might discrepancies in the enforcement of existing laws impact Alphabet's competitive position against lesser-known competitors?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "Discrepancies in the enforcement of existing laws may adversely affect Alphabet's competitive position relative to lesser-known competitors."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "Discrepancies in the enforcement of existing laws may create an uneven playing field within the technology sector, poten"
+      }
+    },
+    {
+      "id": "prose_JNJ_10-K_00107",
+      "ticker": "JNJ",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "What factors contributed to the sales growth of OPSUMIT and UPTRAVI in the Pulmonary Hypertension product category?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "Sales growth of OPSUMIT and UPTRAVI in the Pulmonary Hypertension product category was driven by multiple contributing factors."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "Sales growth of OPSUMIT and UPTRAVI in the Pulmonary Hypertension product category was primarily driven by an increase i"
+      }
+    },
+    {
+      "id": "prose_JPM_10-K_00076",
+      "ticker": "JPM",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "What are some factors that could impair JPMorgan Chase's liquidity according to the risk factors discussed?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "Factors that could impair JPMorgan Chase's liquidity include market conditions, regulatory changes, and operational disruptions as discussed in the risk factors section."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "JPMorgan Chase's liquidity may be impaired by several factors, including adverse changes in market conditions that could"
+      }
+    },
+    {
+      "id": "prose_UNH_10-K_00059",
+      "ticker": "UNH",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "What significant business realignment occurred at UnitedHealth Group on January 1, 2026, and how did it affect the reporting of Optum Financial?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "On January 1, 2026, UnitedHealth Group implemented a significant business realignment that impacted the reporting structure of Optum Financial."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "On January 1, 2026, UnitedHealth Group implemented a significant business realignment that resulted in the reclassificat"
+      }
+    },
+    {
+      "id": "prose_V_10-K_00057",
+      "ticker": "V",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "What are some potential consequences of disruptions or breaches in Visa's networks or systems as outlined in the risk factors section?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "Potential consequences of disruptions or breaches in Visa's networks or systems include operational inefficiencies, financial losses, reputational damage, and regulatory penalties, as detailed in the risk factors section."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "Disruptions or breaches in Visa's networks or systems could result in significant financial losses, reputational damage,"
+      }
+    },
+    {
+      "id": "prose_WMT_10-K_00129",
+      "ticker": "WMT",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 17,
+        "query_used": "What factors could affect Walmart's credit ratings according to the text?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 16,
+        "query_used": "Factors that could affect Walmart's credit ratings include financial performance, market conditions, and changes in economic outlook."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 17,
+        "query_used": "Walmart's credit ratings may be influenced by several factors, including changes in its operating performance, fluctuati"
+      }
+    },
+    {
+      "id": "prose_KO_10-K_00049",
+      "ticker": "KO",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "What potential impact could new regulations regarding ingredients or substances in food and beverage products have on Coca-Cola's sales and product formulation?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "New regulations regarding ingredients or substances in food and beverage products may impact Coca-Cola's sales and product formulation."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 11,
+        "query_used": "The implementation of new regulations concerning ingredients or substances in food and beverage products may significant"
+      }
+    },
+    {
+      "id": "prose_XOM_10-K_00049",
+      "ticker": "XOM",
+      "abstract": false,
+      "dense": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "What types of risks does ExxonMobil face due to the lack of legal certainty in some countries where it operates?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 15,
+        "query_used": "ExxonMobil faces various risks associated with the lack of legal certainty in certain countries of operation."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 14,
+        "query_used": "ExxonMobil faces significant risks associated with the lack of legal certainty in certain jurisdictions, which may inclu"
+      }
+    },
+    {
+      "id": "prose_TSLA_10-K_00091",
+      "ticker": "TSLA",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "How does Tesla determine the fair value of stock options and restricted stock units granted to employees?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "Tesla utilizes specific methodologies to determine the fair value of stock options and restricted stock units granted to employees."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "Tesla determines the fair value of stock options and restricted stock units (RSUs) granted to employees using a combinat"
+      }
+    },
+    {
+      "id": "prose_V_10-K_00085",
+      "ticker": "V",
+      "abstract": false,
+      "dense": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "What are the primary drivers of Visa's service revenue and data processing revenue?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 13,
+        "query_used": "The primary drivers of Visa's service revenue and data processing revenue include transaction volume, customer growth, and pricing strategies."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 12,
+        "query_used": "Visa's service revenue is primarily driven by the volume of transactions processed through its network, which includes f"
+      }
+    },
+    {
+      "id": "prose_JNJ_10-K_00167",
+      "ticker": "JNJ",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 17,
+        "query_used": "What factors does Johnson & Johnson consider when estimating the accruals for legal contingencies related to ongoing litigation?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 17,
+        "query_used": "Johnson & Johnson considers various factors in estimating accruals for legal contingencies associated with ongoing litigation."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 17,
+        "query_used": "In estimating the accruals for legal contingencies related to ongoing litigation, Johnson & Johnson considers several ke"
+      }
+    },
+    {
+      "id": "prose_T_10-K_00036",
+      "ticker": "T",
+      "abstract": true,
+      "dense": {
+        "declined": false,
+        "n_ctx": 18,
+        "query_used": "How could adverse changes in the U.S. securities markets impact AT&T's benefit plan costs and future funding requirements?"
+      },
+      "rewrite": {
+        "declined": false,
+        "n_ctx": 17,
+        "query_used": "Adverse changes in the U.S. securities markets may impact AT&T's benefit plan costs and future funding requirements."
+      },
+      "hyde": {
+        "declined": false,
+        "n_ctx": 17,
+        "query_used": "Adverse changes in the U.S. securities markets could significantly impact AT&T's benefit plan costs and future funding r"
+      }
+    },
+    {
+      "id": "prose_AMZN_10-K_00031",
+      "ticker": "AMZN",
+      "abstract": true,
+      "dense": {
+        "declined": true,
+        "n_ctx": 14,
+        "query_used": "How do fluctuations in demand for Amazon's products and services impact its revenue and profitability during peak periods?"
+      },
+      "rewrite": {
+        "declined": true,
+        "n_ctx": 13,
+        "query_used": "Fluctuations in demand for Amazon's products and services significantly impact its revenue and profitability during peak periods."
+      },
+      "hyde": {
+        "declined": true,
+        "n_ctx": 13,
+        "query_used": "During peak periods, fluctuations in demand for Amazon's products and services significantly impact the Company's revenu"
+      }
+    }
+  ]
+}

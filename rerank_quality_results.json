@@ -1,0 +1,281 @@
+{
+  "n": 38,
+  "wide": 25,
+  "top_k": 5,
+  "mean_p_dense": 0.2895,
+  "mean_p_dense_rerank": 0.3684,
+  "mean_p_rewrite_rerank": 0.3579,
+  "dense_rerank_vs_dense": {
+    "better": 18,
+    "same": 16,
+    "worse": 4
+  },
+  "per_item": [
+    {
+      "id": "prose_GOOGL_10-K_00034",
+      "ticker": "GOOGL",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_UNH_10-K_00063",
+      "ticker": "UNH",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_GOOGL_10-K_00057",
+      "ticker": "GOOGL",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.6,
+      "p_rewrite_rerank": 0.6
+    },
+    {
+      "id": "prose_AAPL_10-K_00044",
+      "ticker": "AAPL",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.6,
+      "p_rewrite_rerank": 0.6
+    },
+    {
+      "id": "prose_AMZN_10-K_00041",
+      "ticker": "AMZN",
+      "p_dense": 0.6,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_MSFT_10-K_00127",
+      "ticker": "MSFT",
+      "p_dense": 0.0,
+      "p_dense_rerank": 0.0,
+      "p_rewrite_rerank": 0.0
+    },
+    {
+      "id": "prose_CVX_10-K_00096",
+      "ticker": "CVX",
+      "p_dense": 0.8,
+      "p_dense_rerank": 1.0,
+      "p_rewrite_rerank": 1.0
+    },
+    {
+      "id": "prose_MSFT_10-K_00082",
+      "ticker": "MSFT",
+      "p_dense": 0.0,
+      "p_dense_rerank": 0.0,
+      "p_rewrite_rerank": 0.0
+    },
+    {
+      "id": "prose_JPM_10-K_00050",
+      "ticker": "JPM",
+      "p_dense": 0.6,
+      "p_dense_rerank": 0.8,
+      "p_rewrite_rerank": 0.8
+    },
+    {
+      "id": "prose_BA_10-K_00047",
+      "ticker": "BA",
+      "p_dense": 0.0,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_JPM_10-K_00148",
+      "ticker": "JPM",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_BA_10-K_00105",
+      "ticker": "BA",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.6,
+      "p_rewrite_rerank": 0.6
+    },
+    {
+      "id": "prose_AMZN_10-K_00082",
+      "ticker": "AMZN",
+      "p_dense": 0.0,
+      "p_dense_rerank": 0.0,
+      "p_rewrite_rerank": 0.0
+    },
+    {
+      "id": "prose_NVDA_10-K_00060",
+      "ticker": "NVDA",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_CVX_10-K_00106",
+      "ticker": "CVX",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_V_10-K_00058",
+      "ticker": "V",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_KO_10-K_00138",
+      "ticker": "KO",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.6,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_TSLA_10-K_00075",
+      "ticker": "TSLA",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_JNJ_10-K_00032",
+      "ticker": "JNJ",
+      "p_dense": 0.8,
+      "p_dense_rerank": 0.6,
+      "p_rewrite_rerank": 0.6
+    },
+    {
+      "id": "prose_V_10-K_00046",
+      "ticker": "V",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.6,
+      "p_rewrite_rerank": 0.6
+    },
+    {
+      "id": "prose_PG_10-K_00017",
+      "ticker": "PG",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.6,
+      "p_rewrite_rerank": 0.8
+    },
+    {
+      "id": "prose_META_10-K_00043",
+      "ticker": "META",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_AAPL_10-K_00075",
+      "ticker": "AAPL",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_NVDA_10-K_00073",
+      "ticker": "NVDA",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_XOM_10-K_00059",
+      "ticker": "XOM",
+      "p_dense": 0.0,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_GOOGL_10-K_00043",
+      "ticker": "GOOGL",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_JNJ_10-K_00107",
+      "ticker": "JNJ",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_JPM_10-K_00076",
+      "ticker": "JPM",
+      "p_dense": 0.8,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_UNH_10-K_00059",
+      "ticker": "UNH",
+      "p_dense": 0.0,
+      "p_dense_rerank": 0.0,
+      "p_rewrite_rerank": 0.0
+    },
+    {
+      "id": "prose_V_10-K_00057",
+      "ticker": "V",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_WMT_10-K_00129",
+      "ticker": "WMT",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_KO_10-K_00049",
+      "ticker": "KO",
+      "p_dense": 0.0,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_XOM_10-K_00049",
+      "ticker": "XOM",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.0,
+      "p_rewrite_rerank": 0.0
+    },
+    {
+      "id": "prose_TSLA_10-K_00091",
+      "ticker": "TSLA",
+      "p_dense": 0.0,
+      "p_dense_rerank": 0.2,
+      "p_rewrite_rerank": 0.2
+    },
+    {
+      "id": "prose_V_10-K_00085",
+      "ticker": "V",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_JNJ_10-K_00167",
+      "ticker": "JNJ",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.8,
+      "p_rewrite_rerank": 0.8
+    },
+    {
+      "id": "prose_T_10-K_00036",
+      "ticker": "T",
+      "p_dense": 0.2,
+      "p_dense_rerank": 0.6,
+      "p_rewrite_rerank": 0.4
+    },
+    {
+      "id": "prose_AMZN_10-K_00031",
+      "ticker": "AMZN",
+      "p_dense": 0.4,
+      "p_dense_rerank": 0.4,
+      "p_rewrite_rerank": 0.6
+    }
+  ]
+}
