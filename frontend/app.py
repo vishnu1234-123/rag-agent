@@ -38,7 +38,7 @@ if st.button("Ask", type="primary"):
             st.info(f"I can't answer that. Reason: {data.get('reason')}")
         else:
             st.markdown("### Answer")
-            st.markdown(data.get("synthesis", "(no answer)"))
+            st.markdown(data.get("synthesis", "(no answer)").replace("$", "\\$"))
 
         with st.expander("How it answered (details)"):
             st.json(data)

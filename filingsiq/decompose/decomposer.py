@@ -83,6 +83,14 @@ _SYSTEM = (
     "- Separate a NUMERIC ask from a PROSE ask into DIFFERENT sub-questions.\n"
     "- Numeric sub-questions carry their specific year(s). Prose sub-questions ask "
     "for reasons/factors plainly.\n"
+    "- CRITICAL for delta/trend/growth_compare: a change/growth across years is ONE "
+    "sub-question per company carrying BOTH years together in `years`, NOT separate "
+    "single-year sub-questions. Example: \"Between Chevron and ExxonMobil, which grew "
+    "revenue faster from 2021 to 2025?\" -> operation=growth_compare, and TWO "
+    "sub-questions: {company:Chevron, concept:revenue, years:[2021,2025]} and "
+    "{company:ExxonMobil, concept:revenue, years:[2021,2025]} -- each with BOTH years, "
+    "so each computes as a delta. NEVER emit four single-year point sub-questions for "
+    "a growth comparison.\n"
     'Return JSON exactly: {"operation": "...", "sub_questions": '
     '[{"text":"...","kind":"...","concept":"...","company":"...","years":[...]}]}'
 )
