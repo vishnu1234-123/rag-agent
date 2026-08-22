@@ -26,7 +26,7 @@ from filingsiq.decompose.decomposer import decompose
 from filingsiq.retrieve.numeric import numeric_retrieve
 from filingsiq.compute.numeric_compute import compute
 from filingsiq.retrieve.prose import retrieve
-from filingsiq.generate.prose_generate import generate
+from filingsiq.generate.prose_generate import generate, rewrite_query
 
 DB=str(FACTS_DB)
 

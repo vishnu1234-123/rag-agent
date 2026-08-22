@@ -67,6 +67,19 @@ def _build_context(parents, budget=CONTEXT_TOKEN_BUDGET, max_passages=None):
         used += n
     return "\n\n".join(blocks)
 
+def rewrite_query(question):
+    resp=_oai.chat.completions.create(
+        model=GEN_MODEL,temperature=0,
+        messages=[
+            {"role":"system","content":
+            "Rewrite the user's question as a short declarative statement phrased "
+            "the way a 10-K filing would state the underlying fact, so it matches "
+            "filing text for retrieval. Keep it under 40 words. Output ONLY the "
+            "rewritten query, no preamble."},
+            {"role":"user","content":question},
+        ],
+    )
+    return resp.choices[0].message.content.strip()
 
 def generate(question, parents, max_passages=10):
     """Generate a grounded answer from retrieved parents. Returns answer + meta."""
