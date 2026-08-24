@@ -6,7 +6,7 @@ A retrieval-augmented question-answering system over SEC filings that **routes e
 _(Free-tier backend — the first request may take ~30s to wake up, then it's fast.)_
 
 <!-- Add your demo GIF here once recorded, e.g.: -->
-<!-- ![demo](docs/demo.gif) -->
+![demo](docs/demo.gif)
 
 ---
 
