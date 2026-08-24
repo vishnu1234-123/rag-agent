@@ -218,3 +218,31 @@ OpenAI prompt caching isn't available on gpt-4o-mini (snapshot `gpt-4o-mini-2024
 - Implication: reported answer_relevancy 0.82 (n=28) is an UNDERCOUNT — the 7
   excluded items are among the most thorough answers. True relevancy is higher.
 - Distinct from the 3 declines, which ARE a real retrieval-recall gap.
+
+## Retrieval investigation — findings & decisions (prose path)
+Baseline: dense retrieval, precision@5 ~0.29 (LLM-judged), faithfulness 0.97.
+
+Experiments run on the 38-item 10-K prose eval:
+- Query rewrite: recovered 2/3 declines, NO broad precision gain (10 better /
+  7 worse vs dense — noise). Decision: wire as DECLINE-ONLY fallback.
+- HyDE: matched rewrite on declines, no precision edge, higher cost. Not adopted.
+- Cross-encoder rerank (ms-marco-MiniLM): precision@5 0.29 -> 0.37 (18 better /
+  4 worse — consistent), BUT ~8.8s/query on CPU. Too slow to ship as always-on.
+  Not wired. (Viable later via GPU or hosted rerank API.)
+- Fallback-gate idea (trigger rewrite on low dense score/precision): INVALID —
+  dense cosine score does not correlate with chunk relevance; no usable trigger.
+
+ROOT CAUSE (the real finding): low precision traces to INGESTION, not query-time.
+Retrieved pools are boilerplate-heavy (forward-looking-statement disclaimers,
+TOC/legal headers). ~4-5 questions score 0.0 precision even after reranking a
+wide pool -> relevant content not cleanly retrievable at any depth = recall/
+chunking ceiling. Query rewrite and rerank are downstream patches that can't
+fix a noisy pool.
+
+FUTURE WORK (scoped out — multi-day, invalidates eval baseline): boilerplate
+stripping + semantic chunking at ingestion, then re-embed + rebuild index.
+This is the correct fix for precision; deferred as it's a re-ingestion project.
+
+DECISION: ship dense + rewrite-decline-fallback. Retrieval is "good enough" —
+faithfulness 0.97 holds despite low precision because generation grounds on
+relevant chunks and honestly declines otherwise. Move to frontend/deploy.
