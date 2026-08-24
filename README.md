@@ -34,8 +34,8 @@ graph TD
     API --> R[Router / decompose<br/>classify, split, resolve company]
     R --> N[Numeric path<br/>SQL lookup + math in code]
     R --> P[Prose path<br/>retrieve + grounded generation]
-    N --> DB[(SQL facts store<br/>revenue, net income, assets)]
-    P --> VDB[(Pinecone + OpenAI<br/>FY2025 10-K passages)]
+    N --> DB[SQL facts store<br/>revenue, net income, assets]
+    P --> VDB[Pinecone + OpenAI<br/>FY2025 10-K passages]
     DB --> S[Synthesizer<br/>final answer or honest decline]
     VDB --> S
 ```
